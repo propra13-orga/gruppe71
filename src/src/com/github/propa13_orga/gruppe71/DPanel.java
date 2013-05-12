@@ -12,15 +12,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+import java.util.Arrays;
+
 public class DPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private int[][] StaticObjects;
 	private int[][] DynamicObjects;
+	private int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
 	private boolean StaticObjectsLoaded; //Statische Objekte geladen?
 	private boolean StaticObjectsPainted; //Statische Objekte gemalt?
 	private boolean DynamicObjectsLoaded; //Dynamische Objekte geladen?
 	private boolean DynamicObjectsPainted; //Dynamische Objekte gemalt?
+	private boolean LevelObjectsLoaded; //Level Objekte zwischengespeichert/geladen aus Datei?
+	private int CurrentLevelSection;
 	
 	/**
 	 * Initialisiert die Klassenattribute
@@ -32,10 +37,13 @@ public class DPanel extends JPanel {
 		//Setze alles auf Start-Wert
 		this.StaticObjects = new int[12][20];
 		this.DynamicObjects = new int[2][6];
+		this.LevelObjects = new int[3][12][20]; 
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
 		this.DynamicObjectsLoaded = false;
 		this.DynamicObjectsPainted = false;
+		this.LevelObjectsLoaded = false;
+		this.CurrentLevelSection = 0;
 	}
 	
 	/**
@@ -172,7 +180,18 @@ public class DPanel extends JPanel {
 	 * Liest eine Datei aus und laed sie als Level
 	 * @param Pfad/Dateiname der LevelDatei
 	 */
-	public void loadStaticObjects(String pFilename){
+	public void loadLevelFromFile(String pFilename){
+		
+		//Setze alle Variablen auf Startwert
+		this.StaticObjects = new int[12][20];
+		this.DynamicObjects = new int[2][6];
+		this.LevelObjects = new int[3][12][20]; 
+		this.StaticObjectsLoaded = false;
+		this.StaticObjectsPainted = false;
+		this.DynamicObjectsLoaded = false;
+		this.DynamicObjectsPainted = false;
+		this.LevelObjectsLoaded = false;
+		this.CurrentLevelSection = 0;
 		
 		File LevelFile = new File(pFilename); //Dateiname der LevelDatei
 		BufferedReader LevelReader = null; //DateiLeser
@@ -180,33 +199,39 @@ public class DPanel extends JPanel {
 		try {
 		    LevelReader = new BufferedReader(new FileReader(LevelFile)); //Dateileser wird erzeugt
 		    
-		    String[] LevelFileContent = new String[12];
+		    String[][] LevelFileContent = new String[3][12];
 		    String TmpTextLine = null; //Momentaner Zeileninhalt
 		    int LevelFileCurrentLine = 0; //Momentane Zeile
+		    int LevelFileCurrentSection = 0; //Momentaner Levelabschnitt
 		    
 		    while ((TmpTextLine = LevelReader.readLine()) != null) // Momentane Zeile wird gelesen und gespeichert und dann abgefragt, ob es null ist(Datei-Ende)
-		    { 
-		    	LevelFileContent[LevelFileCurrentLine] = TmpTextLine; // Zeile wird gespeichert
-		    	LevelFileCurrentLine++; //Zeilennummer um 1 erhoeht
+		    {
+		    	if(TmpTextLine.length() < 20){ // Wenn eine Zeile leer ist, faengt neuer Abschnitt an
+		    		LevelFileCurrentLine = 0;
+		    		LevelFileCurrentSection++;
+		    	}else{
+		    		LevelFileContent[LevelFileCurrentSection][LevelFileCurrentLine] = TmpTextLine; // Zeile wird gespeichert
+		    		LevelFileCurrentLine++; //Zeilennummer um 1 erhoeht
+		    	}
 		    }
 		    
 		    //Momentan haben wir nur String[], brauchen aber int
-		    int[][] TmpStaticObjects = new int[12][20]; 
+		    int[][][] TmpLevelObjects = new int[3][12][20]; 
 		    
 		    //Dazu lesen wir jetzt den String Zeile für Zeile auf
 		    //und speichern jedes Zeichen(Char) als Nummer(int) in das int[][]
-			for (int y = 0; y < 12; y++) {
-	            for (int x = 0; x < 20; x++) {
-					TmpStaticObjects[y][x] = Character.getNumericValue(LevelFileContent[y].charAt(x));
-	            }
-	        }
+		    for (int z = 0; z < 3; z++){ //Level-Abschnitt
+		    	for (int y = 0; y < 12; y++){ //Spalte
+	            	for (int x = 0; x < 20; x++) { //Alle Buchstaben der Spalte durchgehen
+						TmpLevelObjects[z][y][x] = Character.getNumericValue(LevelFileContent[z][y].charAt(x));
+	            	}
+	        	}
+		    }
 
-			//Jetzt haben wir das int[][]
-			//Der ausgelesene Text sind jetzt Nummern, also laden wir es in StaticObjects
-			this.setStaticObjects(TmpStaticObjects);
-			
-			//und setzen eine Variable, damit man weiss, dass der Level geladen wurde
-			this.StaticObjectsLoaded = true;
+			// Jetzt haben wir das int[][]
+			// Der ausgelesene Text sind jetzt Nummern, also laden wir es in LevelObjects
+		    // Dort wird es zwischengespeichert und kann bei Bedarf geladen werden
+			this.setLevelObjects(TmpLevelObjects);
 			
 		} 
 		catch (FileNotFoundException e) {//DateiName nicht gefunden
@@ -226,6 +251,34 @@ public class DPanel extends JPanel {
 		    }
 		}
 		
+	}
+	
+	/**
+	 * Liest eine Datei aus und laed sie als Level
+	 * @param pSection Zu ladender Levelabschnitt
+	 */
+	public void loadLevelIntoStaticObjects(int pSection){
+		// Setze alles zurueck auf Startwert, damit es neu gezeichnet wird
+		this.StaticObjects = new int[12][20];
+		this.DynamicObjects = new int[2][6]; 
+		this.StaticObjectsLoaded = false;
+		this.StaticObjectsPainted = false;
+		this.DynamicObjectsLoaded = false;
+		this.DynamicObjectsPainted = false;
+		this.CurrentLevelSection = pSection;
+
+		this.StaticObjectsLoaded = true;
+		this.setStaticObjects(LevelObjects[pSection]);
+	}
+	
+	
+	/**
+	 * Liest eine Datei aus und laed sie als Level
+	 * @param NICHTS
+	 */
+	public void loadNextLevel(){
+		if(this.CurrentLevelSection < 2) //Max 3 Abschnitte, daher
+		this.loadLevelIntoStaticObjects((CurrentLevelSection+1));
 	}
 	
 	/**
@@ -260,6 +313,23 @@ public class DPanel extends JPanel {
 	 */
 	public void setStaticObjects(int[][] pStaticObjects){
 		this.StaticObjects = pStaticObjects;
+	}
+	
+	/**
+	 * Gibt den Array der Level-Objekte zurueck
+	 * @param NICHTS
+	 */
+	public int[][][] getLevelObjects(){
+		return this.LevelObjects;
+	}
+	
+	/**
+	 * Setzt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.)
+	 * zu einem uebergebenen Wert
+	 * @param pStaticObjects Array von Statischen Objekten
+	 */
+	public void setLevelObjects(int[][][] pLevelObjects){
+		this.LevelObjects = pLevelObjects;
 	}
 	
 	

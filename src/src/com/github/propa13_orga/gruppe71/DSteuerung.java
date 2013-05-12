@@ -22,8 +22,11 @@ public class DSteuerung {
 		final DPanel panel = new DPanel();
 		jf.setContentPane(panel);
 		
-		//Lade einen Level in das Spielfeld
-		panel.loadStaticObjects("src/src/com/github/propa13_orga/gruppe71/level.txt");
+		//Lade eine Level Datei in den Zwischenspeicher
+		panel.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level.txt");
+		
+		//Lade den 1. Abschnitt(0) des Levels nach Statische Objekte
+		panel.loadLevelIntoStaticObjects(0);
 		
 		//Gebe dem Panel Focus, so dass es Tasteneingaben erkennt
 		panel.setFocusable( true );
@@ -52,6 +55,11 @@ public class DSteuerung {
 	    		else if(e.getKeyCode()==KeyEvent.VK_RIGHT)
 	    		{
 	    			panel.dynamicObjectMove(0, "right"); //Bewege Spieler 1 nach rechts
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_T) //TEST KNOPF T
+	    		{
+	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
+    				panel.loadNextLevel();
 	    		}
 	    			else 
 	    			{	
