@@ -6,33 +6,35 @@ import java.awt.event.KeyAdapter;
 
 public class DSteuerung {
 
+	private JFrame SpielFenster;
+	private DPanel SpielPanel;
 	/**
-	 * Initialisiert das Spielfeld Fenster
+	 * Initialisiert das SpielFenster Fenster
 	 */
 	public DSteuerung(){
-		JFrame jf = new JFrame();
+		JFrame SpielFenster = new JFrame();
 		
 		//Fenster-Eigenschaften werden gesetzt
-		jf.setSize(610, 390);
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jf.setTitle("DungeonCrawler");
-		jf.setResizable(false);
+		SpielFenster.setSize(610, 390);
+		SpielFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		SpielFenster.setTitle("DungeonCrawler");
+		SpielFenster.setResizable(false);
 		
-		//Panel zum Fenster hinzugefuegt, hier wird das Spielfeld gemalt
-		final DPanel panel = new DPanel();
-		jf.setContentPane(panel);
+		//Panel zum Fenster hinzugefuegt, hier wird das SpielFenster gemalt
+		final DPanel SpielPanel = new DPanel();
+		SpielFenster.setContentPane(SpielPanel);
 		
 		//Lade eine Level Datei in den Zwischenspeicher
-		panel.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level.txt");
+		SpielPanel.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level.txt");
 		
 		//Lade den 1. Abschnitt(0) des Levels nach Statische Objekte
-		panel.loadLevelIntoStaticObjects(0);
+		SpielPanel.loadLevelIntoStaticObjects(0);
 		
 		//Gebe dem Panel Focus, so dass es Tasteneingaben erkennt
-		panel.setFocusable( true );
+		SpielPanel.setFocusable( true );
 	    
 		//Setze Listener damit die gedrueckte Taste erkannt werden kann
-	    panel.addKeyListener(new KeyAdapter(){
+	    SpielPanel.addKeyListener(new KeyAdapter(){
 	    
 	    	/*Methode für Taste herunter gedrueckt
     		 * (non-Javadoc)
@@ -42,24 +44,24 @@ public class DSteuerung {
 
 	    		if(e.getKeyCode()==KeyEvent.VK_UP)
 	    		{
-	    			panel.dynamicObjectMove(0, "up"); //Bewege Spieler 1 hoch
+	    			SpielPanel.dynamicObjectMove(0, "up"); //Bewege Spieler 1 hoch
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_DOWN)
 	    		{
-	    			panel.dynamicObjectMove(0, "down"); //Bewege Spieler 1 runter	
+	    			SpielPanel.dynamicObjectMove(0, "down"); //Bewege Spieler 1 runter	
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_LEFT)
 	    		{
-	    			panel.dynamicObjectMove(0, "left"); //Bewege Spieler 1 nach links
+	    			SpielPanel.dynamicObjectMove(0, "left"); //Bewege Spieler 1 nach links
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_RIGHT)
 	    		{
-	    			panel.dynamicObjectMove(0, "right"); //Bewege Spieler 1 nach rechts
+	    			SpielPanel.dynamicObjectMove(0, "right"); //Bewege Spieler 1 nach rechts
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_T) //TEST KNOPF T
 	    		{
 	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
-    				panel.loadNextLevel();
+    				SpielPanel.loadNextLevel();
 	    		}
 	    			else 
 	    			{	
@@ -99,7 +101,7 @@ public class DSteuerung {
 	       });
 
 		// Alles fertig also kann das Fenster gemalt werden
-		jf.setVisible(true);
+		SpielFenster.setVisible(true);
 	}
 
 }

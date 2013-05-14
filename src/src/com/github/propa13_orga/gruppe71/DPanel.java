@@ -118,7 +118,7 @@ public class DPanel extends JPanel {
 	 * @param pXPos X Position
 	 * @param pYPos Y Position
 	 */
-	public void drawImageAtPos(Graphics pGraphics, int pIndex, int pXPos, int pYPos){ 
+	private void drawImageAtPos(Graphics pGraphics, int pIndex, int pXPos, int pYPos){ 
 		//Bild Array, enthaelt Bilder von Objekten aus JPEG Dateien, Boden/Mauer etc.
 		Image[] bb = {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //0
@@ -139,7 +139,7 @@ public class DPanel extends JPanel {
 	 * es sich an der Position befindet wo es hin soll
 	 * @param pIndex Index des dyn. Objektes
 	 */
-	public void animateMovingDynamicObject(int pIndex){
+	private void animateMovingDynamicObject(int pIndex){
 		if(this.DynamicObjects[pIndex][0] < this.DynamicObjects[pIndex][3])
 			this.DynamicObjects[pIndex][0] += 2;  //muss noch ein Stück nach rechts
 		
