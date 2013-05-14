@@ -119,8 +119,15 @@ public class DPanel extends JPanel {
 	 * @param pYPos Y Position
 	 */
 	public void drawImageAtPos(Graphics pGraphics, int pIndex, int pXPos, int pYPos){ 
-		//Bild Array, enthält Bilder von Objekten aus JPEG Dateien, Boden/Mauer etc.
-		Image[] bb = {Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"),Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall.jpg"),Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_in.jpg"),Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"),Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"),Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg")};
+		//Bild Array, enthaelt Bilder von Objekten aus JPEG Dateien, Boden/Mauer etc.
+		Image[] bb = {
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //0
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall.jpg"), //1
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_in.jpg"), //2
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg") //5
+				};
 		
 		//Zeichne das Bild
 		pGraphics.drawImage(bb[pIndex], pXPos, pYPos, 30, 30, this);
@@ -273,7 +280,7 @@ public class DPanel extends JPanel {
 	
 	
 	/**
-	 * Liest eine Datei aus und laed sie als Level
+	 * Laed den naechsten Levelabschnitt
 	 * @param NICHTS
 	 */
 	public void loadNextLevel(){
