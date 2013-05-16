@@ -17,7 +17,7 @@ import java.util.Arrays;
 public class DPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private int[][] StaticObjects;
+	private StaticObject[][] StaticObjects;
 	private int[][] DynamicObjects;
 	private int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
 	private boolean StaticObjectsLoaded; //Statische Objekte geladen?
@@ -35,7 +35,7 @@ public class DPanel extends JPanel {
 		super();
 
 		//Setze alles auf Start-Wert
-		this.StaticObjects = new int[12][20];
+		this.StaticObjects = new StaticObject[12][20];
 		this.DynamicObjects = new int[2][6];
 		this.LevelObjects = new int[3][12][20]; 
 		this.StaticObjectsLoaded = false;
@@ -65,9 +65,9 @@ public class DPanel extends JPanel {
 			for (int y = 0; y < 12; y++) {
 				for (int x = 0; x < 20; x++) {
 					//Dann jedes an der richtigen Stelle malt
-					this.drawImageAtPos(pGraphics, this.StaticObjects[y][x], (x*30), (y*30));
+					this.drawImageAtPos(pGraphics, this.StaticObjects[y][x].getType(), (x*30), (y*30));
 					
-					if(this.StaticObjects[y][x] == 2){ //und wenn das Objekt ein Eingang ist
+					if(this.StaticObjects[y][x].getType() == 2){ //und wenn das Objekt ein Eingang ist
 						TmpXStart = x; //Speichert es wo der Eingang ist
 						TmpYStart = y; //in 2 Variablen
 					}
@@ -126,7 +126,9 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_in.jpg"), //2
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg") //5
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5
+				/* Aendern sobald neue Grafik*/Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //6
+				/* Aendern sobald neue Grafik*/Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg") //7
 				};
 		
 		//Zeichne das Bild
@@ -190,7 +192,7 @@ public class DPanel extends JPanel {
 	public void loadLevelFromFile(String pFilename){
 		
 		//Setze alle Variablen auf Startwert
-		this.StaticObjects = new int[12][20];
+		this.StaticObjects = new StaticObject[12][20];
 		this.DynamicObjects = new int[2][6];
 		this.LevelObjects = new int[3][12][20]; 
 		this.StaticObjectsLoaded = false;
@@ -266,8 +268,8 @@ public class DPanel extends JPanel {
 	 */
 	public void loadLevelIntoStaticObjects(int pSection){
 		// Setze alles zurueck auf Startwert, damit es neu gezeichnet wird
-		this.StaticObjects = new int[12][20];
-		this.DynamicObjects = new int[2][6]; 
+		this.StaticObjects = new StaticObject[12][20];
+		this.DynamicObjects = new int[2][6];
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
 		this.DynamicObjectsLoaded = false;
@@ -275,7 +277,15 @@ public class DPanel extends JPanel {
 		this.CurrentLevelSection = pSection;
 
 		this.StaticObjectsLoaded = true;
-		this.setStaticObjects(LevelObjects[pSection]);
+		
+		//Schleife, die die Typen der statischen Objekte gleich den Werten der LevelObjekte setzt
+		for (int y = 0; y < 12; y++) {
+			for (int x = 0; x < 20; x++) {
+				// Es wird ein neues StaticObject mit neuem Typ erzeugt(Typ = was auch immer in LevelObject
+				// steht, am Ende ist der StaticObject Array gefüllt mit neuen StatiObject Objekten
+				this.StaticObjects[y][x] = new StaticObject(LevelObjects[pSection][y][x]);
+			}
+		}
 	}
 	
 	
@@ -309,7 +319,7 @@ public class DPanel extends JPanel {
 	 * Gibt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.) zurueck
 	 * @param NICHTS
 	 */
-	public int[][] getStaticObjects(){
+	public StaticObject[][] getStaticObjects(){
 		return this.StaticObjects;
 	}
 	
@@ -318,7 +328,7 @@ public class DPanel extends JPanel {
 	 * zu einem uebergebenen Wert
 	 * @param pStaticObjects Array von Statischen Objekten
 	 */
-	public void setStaticObjects(int[][] pStaticObjects){
+	public void setStaticObjects(StaticObject[][] pStaticObjects){
 		this.StaticObjects = pStaticObjects;
 	}
 	
@@ -331,9 +341,9 @@ public class DPanel extends JPanel {
 	}
 	
 	/**
-	 * Setzt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.)
+	 * Setzt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang/Fallen etc.)
 	 * zu einem uebergebenen Wert
-	 * @param pStaticObjects Array von Statischen Objekten
+	 * @param pLevelObjects Array von Level-Objekten
 	 */
 	public void setLevelObjects(int[][][] pLevelObjects){
 		this.LevelObjects = pLevelObjects;
@@ -426,7 +436,7 @@ public class DPanel extends JPanel {
 	/**
 	 * Gibt zurueck, ob das dyn. Objekt(z.B. Player), existiert/aktiviert ist
 	 * @param Index des dyn. Objekts
-	 */	
+	 */
 	public boolean getDynamicObjectIsEnabled(int pIndex){
 		if(this.DynamicObjects[pIndex][5] == 1)
 			return true;
