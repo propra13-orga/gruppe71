@@ -80,23 +80,23 @@ public class DSteuerung {
 	    			
 	    			if(e.getKeyCode()==KeyEvent.VK_UP)
 	    			{	
-	    				System.out.println("Release Hoch");
+	    				
 	    			}
 	    			else if(e.getKeyCode()==KeyEvent.VK_DOWN)
 	    			{
-	    				System.out.println("Release Unten");
+	    			
 	    			}
 	    			else if(e.getKeyCode()==KeyEvent.VK_LEFT)
 	    			{
-	    				System.out.println("Release Links");
+	    			
 	    			}
 	    			else if(e.getKeyCode()==KeyEvent.VK_RIGHT)
 	    			{
-	    				System.out.println("Release Rechts");
+	    			
 	    			}
 	    				else
 	    				{
-	    					System.out.println("Keine Lauftaste");
+	    			
 	    				}
 	    			
 	    		}
