@@ -7,22 +7,22 @@ import java.awt.event.KeyAdapter;
 public class DSteuerung {
 
 	private JFrame SpielFenster;
-	private DPanel SpielPanel;
+	//private DPanel SpielPanel;
 	/**
 	 * Initialisiert das SpielFenster Fenster
 	 */
 	public DSteuerung(){
-		JFrame SpielFenster = new JFrame();
+		this.SpielFenster = new JFrame();
 		
 		//Fenster-Eigenschaften werden gesetzt
-		SpielFenster.setSize(610, 390);
-		SpielFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		SpielFenster.setTitle("DungeonCrawler");
-		SpielFenster.setResizable(false);
+		this.SpielFenster.setSize(610, 390);
+		this.SpielFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.SpielFenster.setTitle("DungeonCrawler");
+		this.SpielFenster.setResizable(false);
 		
 		//Panel zum Fenster hinzugefuegt, hier wird das SpielFenster gemalt
-		final DPanel SpielPanel = new DPanel();
-		SpielFenster.setContentPane(SpielPanel);
+		final DPanel SpielPanel = new DPanel(SpielFenster);
+		this.SpielFenster.setContentPane(SpielPanel);
 		
 		//Lade eine Level Datei in den Zwischenspeicher
 		SpielPanel.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level.txt");
@@ -32,6 +32,8 @@ public class DSteuerung {
 		
 		//Gebe dem Panel Focus, so dass es Tasteneingaben erkennt
 		SpielPanel.setFocusable( true );
+		
+		//final DDynamic[] Spieler = SpielPanel.getDynamicObjects();
 	    
 		//Setze Listener damit die gedrueckte Taste erkannt werden kann
 	    SpielPanel.addKeyListener(new KeyAdapter(){
@@ -44,19 +46,19 @@ public class DSteuerung {
 
 	    		if(e.getKeyCode()==KeyEvent.VK_UP)
 	    		{
-	    			SpielPanel.dynamicObjectMove(0, "up"); //Bewege Spieler 1 hoch
+	    			SpielPanel.getDynamicObject(0).moveTo("up"); //Bewege Spieler 1 hoch
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_DOWN)
 	    		{
-	    			SpielPanel.dynamicObjectMove(0, "down"); //Bewege Spieler 1 runter	
+	    			SpielPanel.getDynamicObject(0).moveTo("down"); //Bewege Spieler 1 runter	
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_LEFT)
 	    		{
-	    			SpielPanel.dynamicObjectMove(0, "left"); //Bewege Spieler 1 nach links
+	    			SpielPanel.getDynamicObject(0).moveTo("left"); //Bewege Spieler 1 nach links
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_RIGHT)
 	    		{
-	    			SpielPanel.dynamicObjectMove(0, "right"); //Bewege Spieler 1 nach rechts
+	    			SpielPanel.getDynamicObject(0).moveTo("right"); //Bewege Spieler 1 nach rechts
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_T) //TEST KNOPF T
 	    		{

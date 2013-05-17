@@ -10,9 +10,8 @@ public class DDynamic {
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
 
-	//public DynamicObject(DPanel pPanel, int[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos){
 	
-	    public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.CurrentXPos = pCurrentXPos;
@@ -39,7 +38,6 @@ public class DDynamic {
 	
 	//Routine
 	public boolean IsMoving(){
-		this.moves=true;
 		return this.moves;
 	}
 	
@@ -60,28 +58,23 @@ public class DDynamic {
 	public void setMoveToPosition(int pXPos, int pYPos){
 		if( this.StaticObjects[(pYPos/30)][(pXPos/30)].getCollision() == false){ //Keine Kollision also bewege
 			this.moves = true; //Objekt bewegt sich jetzt also = 1
-			this.CurrentXPos = pXPos;
-			this.CurrentYPos = pYPos;
+			this.MoveToXPos = pXPos;
+			this.MoveToYPos = pYPos;
 		}
-		 if(this.StaticObjects[(pYPos/30)][(pXPos/30)].getCollision() == true){
 		// AKTIONEN JE NACH TYP
 		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 		
-		case 1://eine Wand
-			this.moves=false; //Objekt bewegt sich nicht Richtung Wand
+		case 3: //lade neues Level -neuer Level Abschnitt
+			this.SpielPanel.loadNextLevel();
 			break;
+			
 		case 4: //Ziel erreicht NeuStart des Spiels
 			this.SpielPanel.neuStart();
 			break;
-		case 3: //lade neues Level -neuer Level Abschnitt
 		case 6: // Objekt ist ein Gegner/ eine Falle
 			this.SpielPanel.beendeSpiel(); // Spiel wird beendet, zurueck zu Startbildschirm
-			break;
-			
-		 // Objekt ist ein Gegenstand
-				
+			break;		
 		}
-		 }
 			
 		}
 	
@@ -96,6 +89,7 @@ public class DDynamic {
 	
 	
 	public void moveTo(String pWhere){
+
 		if(this.moves == false){ //Wird das Objekt momentan schon bewegt?
 			
 			int[] tmpCurrentPosition = new int[2];
@@ -114,13 +108,13 @@ public class DDynamic {
 				this.setMoveToPosition(tmpCurrentPosition[0], (tmpCurrentPosition[1]+30));
 		}
 	}
-	//Hilfsfunktionen für Animate Moving
+	//Hilfsfunktionen fï¿½r Animate Moving
 	public void ErhoeheXUm(int add){
 		this.CurrentXPos+=add;
 		
 	}
 	public void ErhoeheYUm(int add){
-		this.CurrentXPos+=add;
+		this.CurrentYPos+=add;
 		
 	}
 	
@@ -132,20 +126,20 @@ public class DDynamic {
 	public void AnimateMoving(){
 		
 		if(this.CurrentXPos < this.MoveToXPos)
-			this.ErhoeheXUm(2); //muss noch ein Stück nach rechts
+			this.ErhoeheXUm(2); //muss noch ein Stï¿½ck nach rechts
 
 			if(this.CurrentXPos > this.MoveToXPos)
-			this.ErhoeheXUm(-2); //muss noch ein Stück nach links
+			this.ErhoeheXUm(-2); //muss noch ein Stï¿½ck nach links
 
 			if(this.CurrentYPos < this.MoveToYPos)
-			this.ErhoeheYUm(2); //muss noch ein Stück nach unten
+			this.ErhoeheYUm(2); //muss noch ein Stï¿½ck nach unten
 
 			if(this.CurrentYPos > this.MoveToYPos)
-			this.ErhoeheYUm(-2); //muss noch ein Stück nach oben
+			this.ErhoeheYUm(-2); //muss noch ein Stï¿½ck nach oben
 
 			//Wenn wir fertig sind, setzen wir die Variable wieder, dass es sich momentan nicht bewegt
 			if(this.CurrentYPos == this.MoveToYPos && this.CurrentXPos == this.MoveToXPos)
-			this.IsMoving(); // bewegt sich nicht mehr, moveTo ist IsMoving
+			this.moves = false; // bewegt sich nicht mehr, moveTo ist IsMoving
 		
 	}
 	

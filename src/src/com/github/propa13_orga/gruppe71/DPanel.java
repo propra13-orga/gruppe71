@@ -13,12 +13,14 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 import java.util.Arrays;
+import javax.swing.JFrame;
 
 public class DPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	private JFrame SpielFenster;
 	private StaticObject[][] StaticObjects;
-	private int[][] DynamicObjects;
+	private DDynamic[] DynamicObjects;
 	private int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
 	private boolean StaticObjectsLoaded; //Statische Objekte geladen?
 	private boolean StaticObjectsPainted; //Statische Objekte gemalt?
@@ -30,13 +32,14 @@ public class DPanel extends JPanel {
 	/**
 	 * Initialisiert die Klassenattribute
 	 */
-	public DPanel(){
+	public DPanel(JFrame pJFrame){
 		//Konstruktor
 		super();
 
 		//Setze alles auf Start-Wert
+		this.SpielFenster = pJFrame;
 		this.StaticObjects = new StaticObject[12][20];
-		this.DynamicObjects = new int[2][6];
+		this.DynamicObjects = new DDynamic[2];
 		this.LevelObjects = new int[3][12][20]; 
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
@@ -77,10 +80,11 @@ public class DPanel extends JPanel {
 			this.StaticObjectsPainted = true;
 			
 			
-			if(this.DynamicObjectsLoaded == false && DynamicObjects[0][5] <= 0){
+			if(this.DynamicObjectsLoaded == false && DynamicObjects[0] == null){
 				//Wenn noch nichts initialisiert wurde
+				System.out.println("DYNOBJECT INIT"); // tue nichts	
 				
-				this.initDynamicObjects(TmpXStart,TmpYStart); //initialisiere, damit Objekt neben Eingang
+				this.DynamicObjects[0]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang
 			
 				this.DynamicObjectsLoaded = true;
 			}
@@ -89,16 +93,18 @@ public class DPanel extends JPanel {
 			if(this.StaticObjectsPainted == true){
 
 				//Schleife, die durch die dynamischen Objekte geht
-				for (int i = 0; i < 2; i++) {
+				for (int i = 0; i < 1; i++) {
 					
-					if(this.getDynamicObjectIsEnabled(i)){ //Wenn Objekt aktiv
+					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
 						
-						if(this.getDynamicObjectIsMoving(i)){ //Soll es bewegt werden?
-							this.animateMovingDynamicObject(i); //Bewege es ein Stückchen
+						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
+							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						}
 						
+						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
+						
 						//Und male das Objekt dann an der (neuen) Position
-						this.drawImageAtPos(pGraphics, 5 , this.DynamicObjects[i][0], this.DynamicObjects[i][1]);
+						this.drawImageAtPos(pGraphics, 5 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 					}
 				}
 			}
@@ -134,56 +140,7 @@ public class DPanel extends JPanel {
 		//Zeichne das Bild
 		pGraphics.drawImage(bb[pIndex], pXPos, pYPos, 30, 30, this);
 	}
-	
-	
-	/**
-	 * Animiert das Objekt, hiermit wird das dyn. Objekt Stück für Stück um 2 Pixel bewegt, bis
-	 * es sich an der Position befindet wo es hin soll
-	 * @param pIndex Index des dyn. Objektes
-	 */
-	private void animateMovingDynamicObject(int pIndex){
-		if(this.DynamicObjects[pIndex][0] < this.DynamicObjects[pIndex][3])
-			this.DynamicObjects[pIndex][0] += 2;  //muss noch ein Stück nach rechts
 		
-		if(this.DynamicObjects[pIndex][0] > this.DynamicObjects[pIndex][3])
-			this.DynamicObjects[pIndex][0] -= 2; //muss noch ein Stück nach links
-		
-		if(this.DynamicObjects[pIndex][1] < this.DynamicObjects[pIndex][4])
-			this.DynamicObjects[pIndex][1] += 2; //muss noch ein Stück nach unten
-		
-		if(this.DynamicObjects[pIndex][1] > this.DynamicObjects[pIndex][4])
-			this.DynamicObjects[pIndex][1] -= 2; //muss noch ein Stück nach oben
-		
-		//Wenn wir fertig sind, setzen wir die Variable wieder, dass es sich momentan nicht bewegt
-		if(this.DynamicObjects[pIndex][1] == this.DynamicObjects[pIndex][4] && this.DynamicObjects[pIndex][0] == this.DynamicObjects[pIndex][3])
-			this.DynamicObjects[pIndex][2] = 0; // bewegt sich nicht mehr
-	}
-		
-	/**
-	 * Bewegt ein dynamisches Objekt rauf, runter, rechts oder links
-	 * @param pIndex Index des dyn. Objektes
-	 * @param pWhere Wohin es bewegt werden soll
-	 */
-	public void dynamicObjectMove(int pIndex, String pWhere){
-		
-		if(this.getDynamicObjectIsMoving(pIndex) == false){ //Wird das Objekt momentan schon bewegt?
-			
-			int[] tmpCurrentPosition = new int[2];
-			tmpCurrentPosition = getDynamicObjectCurrentPosition(pIndex); //die momentane X, Y Position des dyn. Objektes
-			
-			if(pWhere == "up" && tmpCurrentPosition[1] > 0) //bewege nach oben
-				this.setDynamicObjectMoveToPosition(pIndex, tmpCurrentPosition[0], (tmpCurrentPosition[1]-30));
-			
-			if(pWhere == "right" && tmpCurrentPosition[0] < 570) //bewege nach rechts
-				this.setDynamicObjectMoveToPosition(pIndex, (tmpCurrentPosition[0]+30), tmpCurrentPosition[1]);
-			
-			if(pWhere == "left" && tmpCurrentPosition[0] > 0) //bewege nach links
-				this.setDynamicObjectMoveToPosition(pIndex, (tmpCurrentPosition[0]-30), tmpCurrentPosition[1]);
-			
-			if(pWhere == "down" && tmpCurrentPosition[1] < 330) //bewege nach unten
-				this.setDynamicObjectMoveToPosition(pIndex, tmpCurrentPosition[0], (tmpCurrentPosition[1]+30));
-		}
-	}
 	
 	/**
 	 * Liest eine Datei aus und laed sie als Level
@@ -193,7 +150,7 @@ public class DPanel extends JPanel {
 		
 		//Setze alle Variablen auf Startwert
 		this.StaticObjects = new StaticObject[12][20];
-		this.DynamicObjects = new int[2][6];
+		this.DynamicObjects = new DDynamic[2];
 		this.LevelObjects = new int[3][12][20]; 
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
@@ -269,7 +226,7 @@ public class DPanel extends JPanel {
 	public void loadLevelIntoStaticObjects(int pSection){
 		// Setze alles zurueck auf Startwert, damit es neu gezeichnet wird
 		this.StaticObjects = new StaticObject[12][20];
-		this.DynamicObjects = new int[2][6];
+		this.DynamicObjects = new DDynamic[2];
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
 		this.DynamicObjectsLoaded = false;
@@ -302,8 +259,16 @@ public class DPanel extends JPanel {
 	 * Gibt den Array der Dynamischen Objekte(bewegliche Objekte wie Player/Gegner/Gegenstaende) zurueck
 	 * @param NICHTS
 	 */
-	public int[][] getDynamicObjects(){
+	public DDynamic[] getDynamicObjects(){
 		return this.DynamicObjects;
+	}
+	
+	/**
+	 * Gibt ein Dynamisches Objekt zurueck an der Stelle pIndex Spieler 0,1,2...
+	 * @param pIndex Nummer des Spielers
+	 */
+	public DDynamic getDynamicObject(int pIndex){
+		return this.DynamicObjects[pIndex];
 	}
 
 	/**
@@ -311,7 +276,7 @@ public class DPanel extends JPanel {
 	 * zu einem uebergebenen Wert
 	 * @param int[][] Array von Dynamischen Objekten
 	 */
-	public void setDynamicObjects(int[][] pDynamicObjects){
+	public void setDynamicObjects(DDynamic[] pDynamicObjects){
 		this.DynamicObjects = pDynamicObjects;
 	}
 	
@@ -348,100 +313,23 @@ public class DPanel extends JPanel {
 	public void setLevelObjects(int[][][] pLevelObjects){
 		this.LevelObjects = pLevelObjects;
 	}
-	
-	
-	/**
-	 * Initialisiert die Dynamischen Objekte(bewegliche Objekte wie Player/Gegner etc.)
-	 * @param pXStart X Position des Eingangs
-	 * @param pYStart Y Position des Eingangs
-	 */
-	public void initDynamicObjects(int pXStart, int pYStart){
-		this.DynamicObjects[0][0] = pXStart*30; //Setzt X erst einmal der X Pos des Eingangs 30
-		this.DynamicObjects[0][1] = pYStart*30; //Setzt Y erst einmal der Y Pos des Eingangs 30
-		this.DynamicObjects[0][2] = 0; //Objekt bewegt sich nicht
-		this.DynamicObjects[0][3] = -1; //Daher auch keine X Pos wo es hin gehen soll 60
-		this.DynamicObjects[0][4] = -1; //Und auch keine Y Pos wo es hin gehen soll 30 
-		this.DynamicObjects[0][5] = 1; //Das Objekt ist aber aktiv
 		
-		this.DynamicObjects[1][0] = -1; //2. Objekt, alles so wie oben, aber nicht aktiv
-		this.DynamicObjects[1][1] = -1;
-		this.DynamicObjects[1][2] = 0;
-		this.DynamicObjects[1][3] = -1;
-		this.DynamicObjects[1][4] = -1;
-		this.DynamicObjects[1][5] = 0;
-		
-		//Start Position vom Objekt
-		if(pXStart == 0) //Wenn Eingang am linken Rand ist
-			this.DynamicObjects[0][0] += 30; //Player rechts daneben
-		if(pXStart == 19) //Wenn Eingang am rechten Rand ist
-			this.DynamicObjects[0][0] -= 30;  //Player links daneben
-		if(pYStart == 0) //Wenn Eingang am oberen Rand ist
-			this.DynamicObjects[0][1] += 30;  //Player darunter
-		if(pYStart == 11) //Wenn Eingang am unteren Rand ist
-			this.DynamicObjects[0][1] -= 30;  //Player darüber
-	}
-	
-	/**
-	 * Gibt die momentane Position x und y eines dyn. Objektes(z.B. Player) zurueck
-	 * @param Index des dyn. Objekts
-	 */
-	public int[] getDynamicObjectCurrentPosition(int pIndex){
-		return new int[] {this.DynamicObjects[pIndex][0],this.DynamicObjects[pIndex][1]};
-	}
 
 	/**
-	 * Setzt die momentane Position x und y eines dyn. Objektes(z.B. Player)
-	 * @param pIndex Index des dyn. Objektes
-	 * @param pXStart Neue X Position
-	 * @param pYStart Neue Y Position
+	 * Startet Das Spiel neu, Reset zum ersten Levelabschnitt
+	 * @param NICHTS
 	 */
-	public void setDynamicObjectCurrentPosition(int pIndex, int pXPos, int pYPos){
-		this.DynamicObjects[pIndex][0] = pXPos;
-		this.DynamicObjects[pIndex][1] = pYPos;
+	public void neuStart(){
+		this.loadLevelIntoStaticObjects(0); // Lade ersten Levelabschnitt
 	}
 	
 	/**
-	 * Gibt zurueck, ob das dyn. Objekt(z.B. Player), momentan eine Bewegung durchführt
-	 * @param Index des dyn. Objekts
+	 * Beendet das Spiel und geht zurueck zum Startmenue
+	 * @param NICHTS
 	 */
-	public boolean getDynamicObjectIsMoving(int pIndex){
-		if(this.DynamicObjects[pIndex][2] == 1)
-			return true;
-		else
-			return false;	
-	}
-	
-
-	/**
-	 * Gibt die neue Position x und y eines dyn. Objektes(z.B. Player) zurueck, zu der 
-	 * es momentan bewegt wird
-	 * @param Index des dyn. Objekts
-	 */
-	public int[] getDynamicObjectMoveToPosition(int pIndex){
-		return new int[] {this.DynamicObjects[pIndex][3],this.DynamicObjects[pIndex][4]};	
-	}
-	
-	/**
-	 * Setzt die neue Position x und y eines dyn. Objektes(z.B. Player), wo es hin gehen soll
-	 * @param pIndex Index des dyn. Objektes
-	 * @param pXStart Neue X Position
-	 * @param pYStart Neue Y Position
-	 */
-	public void setDynamicObjectMoveToPosition(int pIndex, int pXPos, int pYPos){
-		this.DynamicObjects[pIndex][2] = 1; //Objekt bewegt sich jetzt also = 1
-		this.DynamicObjects[pIndex][3] = pXPos;
-		this.DynamicObjects[pIndex][4] = pYPos;
-	}
-	
-	/**
-	 * Gibt zurueck, ob das dyn. Objekt(z.B. Player), existiert/aktiviert ist
-	 * @param Index des dyn. Objekts
-	 */
-	public boolean getDynamicObjectIsEnabled(int pIndex){
-		if(this.DynamicObjects[pIndex][5] == 1)
-			return true;
-		else
-			return false;	
+	public void beendeSpiel(){
+		this.SpielFenster.dispose(); // Schliesst das Spielfenster
+		DStartMenu StartMenu2 = new DStartMenu() ; //Oeffnet neues Startmenue
 	}
 
 }
