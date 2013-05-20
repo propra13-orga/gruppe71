@@ -82,7 +82,6 @@ public class DPanel extends JPanel {
 			
 			if(this.DynamicObjectsLoaded == false && DynamicObjects[0] == null){
 				//Wenn noch nichts initialisiert wurde
-				System.out.println("DYNOBJECT INIT"); // tue nichts	
 				
 				this.DynamicObjects[0]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang
 			
@@ -133,8 +132,8 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5
-				/* Aendern sobald neue Grafik*/Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //6
-				/* Aendern sobald neue Grafik*/Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg") //7
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg") //7
 				};
 		
 		//Zeichne das Bild
