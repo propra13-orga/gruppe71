@@ -1,5 +1,7 @@
 package src.com.github.propa13_orga.gruppe71;
 
+
+
 public class DDynamic {
 
 	private DPanel SpielPanel;
@@ -12,7 +14,7 @@ public class DDynamic {
 	private short Lives;
 	private short Points;
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos,short Leben){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos,short Leben,short Punkte){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.CurrentXPos = pCurrentXPos;
@@ -20,7 +22,8 @@ public class DDynamic {
 		this.MoveToXPos = -1;
 		this.MoveToYPos = -1;
 		this.moves = false;
-		this.Lives=Leben;
+		this.Lives=Leben; //Jeder Level 3 Leben
+		this.Points=Punkte;
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -66,8 +69,11 @@ public class DDynamic {
 		// AKTIONEN JE NACH TYP
 		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 		
-		case 3: //lade neues Level -neuer Level Abschnitt
+		case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
+			this.setPoints((short) 1);
+			SpielPanel.Spielstand(this.getPoints());
 			this.SpielPanel.loadNextLevel();
+			this.getPoints();
 			break;
 			
 		case 4: //Ziel erreicht NeuStart des Spiels
@@ -151,11 +157,19 @@ public class DDynamic {
 		
 	}
 	
-	public short getLives(){
+	public short getLives(){//Setzt Leben
 		return this.Lives;	
 	}
 	public void setLives(short lp){ //lp=Lifepoints
 		this.Lives+=lp;
+	}
+	
+	public short getPoints(){ //Bekomme Punkte
+		return this.Points;
+	}
+	public void setPoints(short pkt) //Erhoeht Punkte des Spielers bei Erreichen eines Levelabschnitts
+	{
+		this.Points+=pkt;
 	}
 	
 	

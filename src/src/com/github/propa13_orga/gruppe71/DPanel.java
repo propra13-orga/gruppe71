@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import java.io.BufferedReader;
@@ -82,9 +83,11 @@ public class DPanel extends JPanel {
 			
 			if(this.DynamicObjectsLoaded == false && DynamicObjects[0] == null){
 				//Wenn noch nichts initialisiert wurde
+				short Life=3;
+			    short Points=0;
 				
-				this.DynamicObjects[0]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),(short) 3); //initialisiere, damit Objekt neben Eingang
-				this.DynamicObjects[1]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),(short) 3); //initialisiere, damit Objekt neben Eingang
+				this.DynamicObjects[0]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),Life,Points); //initialisiere, damit Objekt neben Eingang
+				this.DynamicObjects[1]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),Life,Points); //initialisiere, damit Objekt neben Eingang
 				
 				this.DynamicObjectsLoaded = true;
 			}
@@ -331,5 +334,13 @@ public class DPanel extends JPanel {
 		this.SpielFenster.dispose(); // Schliesst das Spielfenster
 		DStartMenu StartMenu2 = new DStartMenu() ; //Oeffnet neues Startmenue
 	}
-
+/*Messagedialog 
+ * -> Spieler bekommen Spielstand
+ * @param NICHTS
+ */
+	public void Spielstand(short pkt)
+	{
+		final JOptionPane optionPane = new JOptionPane();
+		JOptionPane.showMessageDialog(optionPane, "Spieler 1 hat:"+pkt+"Punkte!");   
+	}
 }
