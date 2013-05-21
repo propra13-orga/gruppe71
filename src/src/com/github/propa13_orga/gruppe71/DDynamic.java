@@ -9,9 +9,10 @@ public class DDynamic {
 	private int MoveToXPos; //Bewegung in X Richtung
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
-
+	private short Lives;
+	private short Points;
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos,short Leben){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.CurrentXPos = pCurrentXPos;
@@ -19,6 +20,7 @@ public class DDynamic {
 		this.MoveToXPos = -1;
 		this.MoveToYPos = -1;
 		this.moves = false;
+		this.Lives=Leben;
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -71,9 +73,15 @@ public class DDynamic {
 		case 4: //Ziel erreicht NeuStart des Spiels
 			this.SpielPanel.beendeSpiel();
 			break;
-		case 6: // Objekt ist ein Gegner/ eine Falle
-			this.SpielPanel.beendeSpiel(); // Spiel wird beendet, zurueck zu Startbildschirm
-			break;		
+		case 6: // Objekt ist ein Mensch!
+			if(this.getLives()!=0){
+				this.setLives((short) -1);
+			}
+			else
+			this.SpielPanel.beendeSpiel();// Spiel wird beendet, zurueck zu Startbildschirm
+			break;
+		case 7: //Bekomme Leben bei Berührung mit Items
+			
 		}
 			
 		}
@@ -142,5 +150,13 @@ public class DDynamic {
 			this.moves = false; // bewegt sich nicht mehr, moveTo ist IsMoving
 		
 	}
+	
+	public short getLives(){
+		return this.Lives;	
+	}
+	public void setLives(short lp){ //lp=Lifepoints
+		this.Lives+=lp;
+	}
+	
 	
 }

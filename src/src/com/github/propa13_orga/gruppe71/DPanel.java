@@ -83,8 +83,8 @@ public class DPanel extends JPanel {
 			if(this.DynamicObjectsLoaded == false && DynamicObjects[0] == null){
 				//Wenn noch nichts initialisiert wurde
 				
-				this.DynamicObjects[0]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang
-				this.DynamicObjects[1]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang
+				this.DynamicObjects[0]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),(short) 3); //initialisiere, damit Objekt neben Eingang
+				this.DynamicObjects[1]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),(short) 3); //initialisiere, damit Objekt neben Eingang
 				
 				this.DynamicObjectsLoaded = true;
 			}
