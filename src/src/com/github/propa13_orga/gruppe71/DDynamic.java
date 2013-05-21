@@ -69,7 +69,7 @@ public class DDynamic {
 			break;
 			
 		case 4: //Ziel erreicht NeuStart des Spiels
-			this.SpielPanel.neuStart();
+			this.SpielPanel.beendeSpiel();
 			break;
 		case 6: // Objekt ist ein Gegner/ eine Falle
 			this.SpielPanel.beendeSpiel(); // Spiel wird beendet, zurueck zu Startbildschirm
