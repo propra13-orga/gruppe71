@@ -16,6 +16,7 @@ public class DSteuerung {
 		
 		//Fenster-Eigenschaften werden gesetzt
 		this.SpielFenster.setSize(610, 390);
+		this.SpielFenster.setLocation(350, 150) ;
 		this.SpielFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.SpielFenster.setTitle("DungeonCrawler");
 		this.SpielFenster.setResizable(false);

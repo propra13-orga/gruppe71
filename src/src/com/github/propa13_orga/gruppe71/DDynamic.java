@@ -80,7 +80,7 @@ public class DDynamic {
 			this.SpielPanel.beendeSpiel();
 			break;
 		case 6: // Objekt ist ein Mensch!
-			if(this.getLives()!=0){
+			if(this.getLives()!=1){
 				this.setLives((short) -1);
 			}
 			else

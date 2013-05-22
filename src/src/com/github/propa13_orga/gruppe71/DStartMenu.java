@@ -11,6 +11,7 @@ public class DStartMenu extends JFrame {
 	
 	JButton bStart;
 	JButton bExit;
+	JButton bMulti;
 	
 	/**
 	 * Oeffnet das Startmenu des Spiels
@@ -19,20 +20,26 @@ public class DStartMenu extends JFrame {
 	//Fenster-Eigenschaften werden gesetzt
 	setSize(600, 400) ;
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
-	setLocation(200, 200) ;
+	setTitle("Dungeon Crawler Startmenü");
+	setLocation(350, 150) ;
 	setResizable(false);
 	setLayout(null) ;
 	
-	//Start-Knopf
-	bStart = new JButton("Start") ;
+	//Single Modi -Knopf
+	bStart = new JButton("Single") ;
 	bStart.setBounds(50, 50, 100, 100) ;
 	bStart.addActionListener(new TestListenerStart());
-	
 	add(bStart) ;
 	
+	//Multiplayer -Knopf
+	bMulti=new JButton("Multi");
+	bMulti.setBounds(225,50,100,100);
+	bMulti.addActionListener(null);
+	add(bMulti);
+	
 	//Exit-Knopf
-	bExit = new JButton("Exit") ;
-	bExit.setBounds(200, 50, 100, 100) ;
+	bExit = new JButton("EXIT") ;
+	bExit.setBounds(400, 50, 100, 100) ;
 	bExit.addActionListener(new TestListenerExit());
 	add(bExit);
 	
