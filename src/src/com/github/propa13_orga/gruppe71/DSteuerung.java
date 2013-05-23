@@ -11,7 +11,7 @@ public class DSteuerung {
 	/**
 	 * Initialisiert das SpielFenster Fenster
 	 */
-	public DSteuerung(){
+	public DSteuerung(int pAnzahlSpieler){
 		this.SpielFenster = new JFrame();
 		
 		//Fenster-Eigenschaften werden gesetzt
@@ -22,7 +22,7 @@ public class DSteuerung {
 		this.SpielFenster.setResizable(false);
 		
 		//Panel zum Fenster hinzugefuegt, hier wird das SpielFenster gemalt
-		final DPanel SpielPanel = new DPanel(SpielFenster);
+		final DPanel SpielPanel = new DPanel(SpielFenster, pAnzahlSpieler);
 		this.SpielFenster.setContentPane(SpielPanel);
 		
 		//Lade eine Level Datei in den Zwischenspeicher
@@ -60,6 +60,22 @@ public class DSteuerung {
 	    		else if(e.getKeyCode()==KeyEvent.VK_RIGHT)
 	    		{
 	    			SpielPanel.getDynamicObject(0).moveTo("right"); //Bewege Spieler 1 nach rechts
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_W)
+	    		{
+	    			SpielPanel.getDynamicObject(1).moveTo("up"); //Bewege Spieler 1 hoch
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_S)
+	    		{
+	    			SpielPanel.getDynamicObject(1).moveTo("down"); //Bewege Spieler 1 runter	
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_A)
+	    		{
+	    			SpielPanel.getDynamicObject(1).moveTo("left"); //Bewege Spieler 1 nach links
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_D)
+	    		{
+	    			SpielPanel.getDynamicObject(1).moveTo("right"); //Bewege Spieler 1 nach rechts
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_T) //TEST KNOPF T
 	    		{

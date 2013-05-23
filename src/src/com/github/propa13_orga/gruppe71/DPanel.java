@@ -29,11 +29,12 @@ public class DPanel extends JPanel {
 	private boolean DynamicObjectsPainted; //Dynamische Objekte gemalt?
 	private boolean LevelObjectsLoaded; //Level Objekte zwischengespeichert/geladen aus Datei?
 	private int CurrentLevelSection;
+	private int AnzahlSpieler;
 	
 	/**
 	 * Initialisiert die Klassenattribute
 	 */
-	public DPanel(JFrame pJFrame){
+	public DPanel(JFrame pJFrame, int pAnzahlSpieler){
 		//Konstruktor
 		super();
 
@@ -48,6 +49,7 @@ public class DPanel extends JPanel {
 		this.DynamicObjectsPainted = false;
 		this.LevelObjectsLoaded = false;
 		this.CurrentLevelSection = 0;
+		this.AnzahlSpieler = pAnzahlSpieler;
 	}
 	
 	/**
@@ -58,7 +60,6 @@ public class DPanel extends JPanel {
 
 		super.paintComponent(pGraphics);
 		
-		this.DynamicObjectsLoaded = false; //Dynamische Objekte wurden noch nicht geladen
 		// Variablen um zu Speichern, wo der Eingang ist
 		int TmpXStart = -1;
 		int TmpYStart = -1;
@@ -81,14 +82,27 @@ public class DPanel extends JPanel {
 			this.StaticObjectsPainted = true;
 			
 			
-			if(this.DynamicObjectsLoaded == false && DynamicObjects[0] == null){
-				//Wenn noch nichts initialisiert wurde
-				short Life=3;
-			    short Points=0;
+			if(this.DynamicObjectsLoaded == false){
 				
-				this.DynamicObjects[0]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),Life,Points); //initialisiere, damit Objekt neben Eingang
-				this.DynamicObjects[1]= new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30),Life,Points); //initialisiere, damit Objekt neben Eingang
-				
+				if(this.DynamicObjects[0] == null && this.DynamicObjects[1] == null)
+				{
+					//Wenn noch nichts initialisiert wurde, Level Start
+					int Life=3;
+					int Points = 0;
+					
+					this.DynamicObjects[0] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
+				}
+				else
+				{
+					//Wenn schon einmal etwas initialisiert wurde, z.B. Naechster Levelabschnitt
+					this.DynamicObjects[0].setCurrentPosition((TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1].setCurrentPosition((TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang	
+					this.DynamicObjects[0].setMoves(false); //Objekt bewegt sich nicht
+					this.DynamicObjects[1].setMoves(false); //Objekt bewegt sich nicht	
+					this.DynamicObjects[0].setStaticObjects(this.StaticObjects); //StaticObjects vom neuen Levelabschnitt
+					this.DynamicObjects[1].setStaticObjects(this.StaticObjects); //StaticObjects vom neuen Levelabschnitt	
+				}
 				this.DynamicObjectsLoaded = true;
 			}
 			
@@ -96,7 +110,7 @@ public class DPanel extends JPanel {
 			if(this.StaticObjectsPainted == true){
 
 				//Schleife, die durch die dynamischen Objekte geht
-				for (int i = 0; i < 1; i++) {
+				for (int i = 0; i < this.AnzahlSpieler; i++) {
 					
 					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
 						
@@ -153,7 +167,7 @@ public class DPanel extends JPanel {
 		
 		//Setze alle Variablen auf Startwert
 		this.StaticObjects = new StaticObject[12][20];
-		this.DynamicObjects = new DDynamic[2];
+		//this.DynamicObjects = new DDynamic[2];
 		this.LevelObjects = new int[3][12][20]; 
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
@@ -229,7 +243,7 @@ public class DPanel extends JPanel {
 	public void loadLevelIntoStaticObjects(int pSection){
 		// Setze alles zurueck auf Startwert, damit es neu gezeichnet wird
 		this.StaticObjects = new StaticObject[12][20];
-		this.DynamicObjects = new DDynamic[2];
+		//this.DynamicObjects = new DDynamic[2];
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
 		this.DynamicObjectsLoaded = false;
@@ -334,13 +348,13 @@ public class DPanel extends JPanel {
 		this.SpielFenster.dispose(); // Schliesst das Spielfenster
 		DStartMenu StartMenu2 = new DStartMenu() ; //Oeffnet neues Startmenue
 	}
-/*Messagedialog 
- * -> Spieler bekommen Spielstand
- * @param NICHTS
- */
-	public void Spielstand(short pkt)
+	
+	/** Messagedialog 
+	 * -> Spieler bekommen Spielstand
+	 * @param NICHTS
+	 */
+	public void Spielstand()
 	{
-		final JOptionPane optionPane = new JOptionPane();
-		JOptionPane.showMessageDialog(optionPane, "Spieler 1 hat:"+pkt+"Punkte!");   
+		JOptionPane.showMessageDialog(null, "Spieler 1 hat: " + Integer.toString(this.DynamicObjects[0].getPoints()) + " Punkte!\nSpieler 2 hat: " + Integer.toString(this.DynamicObjects[1].getPoints()) + " Punkte!\n");   
 	}
 }

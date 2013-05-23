@@ -20,7 +20,7 @@ public class DStartMenu extends JFrame {
 	//Fenster-Eigenschaften werden gesetzt
 	setSize(600, 400) ;
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
-	setTitle("Dungeon Crawler Startmenü");
+	setTitle("Dungeon Crawler Startmenï¿½");
 	setLocation(350, 150) ;
 	setResizable(false);
 	setLayout(null) ;
@@ -55,7 +55,7 @@ public class DStartMenu extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose(); // schliesst Menu
-			DSteuerung fSpiel = new DSteuerung();
+			DSteuerung fSpiel = new DSteuerung(2);
 			
 		}
 	}

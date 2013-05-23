@@ -11,10 +11,10 @@ public class DDynamic {
 	private int MoveToXPos; //Bewegung in X Richtung
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
-	private short Lives;
-	private short Points;
+	private int Lives;
+	private int Points;
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos,short Leben,short Punkte){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.CurrentXPos = pCurrentXPos;
@@ -22,8 +22,8 @@ public class DDynamic {
 		this.MoveToXPos = -1;
 		this.MoveToYPos = -1;
 		this.moves = false;
-		this.Lives=Leben; //Jeder Level 3 Leben
-		this.Points=Punkte;
+		this.Lives = pLeben; //Jeder Level 3 Leben
+		this.Points = pPunkte;
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -40,10 +40,15 @@ public class DDynamic {
 		this.CurrentXPos=pXPos;
 		this.CurrentYPos=pYPos;
 	}
-	
+
 	//Routine
 	public boolean IsMoving(){
 		return this.moves;
+	}
+	
+	//Routine
+	public void setMoves(boolean pMoves){
+		this.moves = pMoves;
 	}
 	
 	// Bekomme Wert der Position des dynamischen Objektes
@@ -53,6 +58,16 @@ public class DDynamic {
 		PositionMoving[1]=this.MoveToYPos;
 		return PositionMoving;
 			
+	}
+	
+	//Gibt StaticObjects aus
+	public StaticObject[][] getStaticObjects(){
+		return this.StaticObjects;
+	}
+	
+	//Setzt StaticObjects
+	public void setStaticObjects(StaticObject[][] pStaticObjects){
+		this.StaticObjects = pStaticObjects;
 	}
 	
 	/**
@@ -70,23 +85,22 @@ public class DDynamic {
 		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 		
 		case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
-			this.setPoints((short) 1);
-			SpielPanel.Spielstand(this.getPoints());
+			this.Points += 1;
+			SpielPanel.Spielstand();
 			this.SpielPanel.loadNextLevel();
-			this.getPoints();
 			break;
 			
 		case 4: //Ziel erreicht NeuStart des Spiels
 			this.SpielPanel.beendeSpiel();
 			break;
 		case 6: // Objekt ist ein Mensch!
-			if(this.getLives()!=1){
-				this.setLives((short) -1);
+			if(this.getLives() != 1){
+				this.setLives(-1);
 			}
 			else
 			this.SpielPanel.beendeSpiel();// Spiel wird beendet, zurueck zu Startbildschirm
 			break;
-		case 7: //Bekomme Leben bei Berührung mit Items
+		case 7: //Bekomme Leben bei Berï¿½hrung mit Items
 			
 		}
 			
@@ -157,19 +171,19 @@ public class DDynamic {
 		
 	}
 	
-	public short getLives(){//Setzt Leben
+	public int getLives(){//Setzt Leben
 		return this.Lives;	
 	}
-	public void setLives(short lp){ //lp=Lifepoints
-		this.Lives+=lp;
+	public void setLives(int lp){ //lp=Lifepoints
+		this.Lives += lp;
 	}
 	
-	public short getPoints(){ //Bekomme Punkte
+	public int getPoints(){ //Bekomme Punkte
 		return this.Points;
 	}
-	public void setPoints(short pkt) //Erhoeht Punkte des Spielers bei Erreichen eines Levelabschnitts
+	public void setPoints(int pkt) //Erhoeht Punkte des Spielers bei Erreichen eines Levelabschnitts
 	{
-		this.Points+=pkt;
+		this.Points = pkt;
 	}
 	
 	
