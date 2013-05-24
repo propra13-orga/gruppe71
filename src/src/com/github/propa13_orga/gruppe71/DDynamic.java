@@ -87,11 +87,15 @@ public class DDynamic {
 		case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
 			this.Points += 1;
 			SpielPanel.Spielstand();
-			this.SpielPanel.loadNextLevel();
+			this.SpielPanel.loadNextLevelSection();
 			break;
 			
 		case 4: //Ziel erreicht NeuStart des Spiels
-			this.SpielPanel.beendeSpiel();
+			if(this.SpielPanel.getCurrentLevel() < 2){ //Wenn noch nicht letzter Level
+				this.SpielPanel.loadNextLevel(); //Lade naechsten Level
+			}else{
+				this.SpielPanel.beendeSpiel(); //Sonst beende Spiel
+			}
 			break;
 		case 6: // Objekt ist ein Mensch!
 			if(this.getLives() != 1){

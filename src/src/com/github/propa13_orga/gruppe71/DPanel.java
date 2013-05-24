@@ -29,6 +29,7 @@ public class DPanel extends JPanel {
 	private boolean DynamicObjectsPainted; //Dynamische Objekte gemalt?
 	private boolean LevelObjectsLoaded; //Level Objekte zwischengespeichert/geladen aus Datei?
 	private int CurrentLevelSection;
+	private int CurrentLevel;
 	private int AnzahlSpieler;
 	
 	/**
@@ -49,7 +50,10 @@ public class DPanel extends JPanel {
 		this.DynamicObjectsPainted = false;
 		this.LevelObjectsLoaded = false;
 		this.CurrentLevelSection = 0;
+		this.CurrentLevel = 0;
 		this.AnzahlSpieler = pAnzahlSpieler;
+
+		this.loadLevel(0); //Laed 1. Level
 	}
 	
 	/**
@@ -158,6 +162,28 @@ public class DPanel extends JPanel {
 		pGraphics.drawImage(bb[pIndex], pXPos, pYPos, 30, 30, this);
 	}
 		
+	/**
+	 * Laed Level Nummer....
+	 * @param Nummer des Levels
+	 */
+	public void loadLevel(int pLevel){	
+		//Lade eine Level Datei in den Zwischenspeicher
+		this.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(pLevel)+".txt");
+		this.CurrentLevel = pLevel;
+		
+		//Lade den 1. Abschnitt(0) des Levels nach Statische Objekte
+		this.loadLevelIntoStaticObjects(0);	
+	}
+
+	
+	/**
+	 * Laed den naechsten Level
+	 * @param NICHTS
+	 */
+	public void loadNextLevel(){
+		if(this.CurrentLevel < 2) //Max 3 Abschnitte, daher
+			this.loadLevel((this.CurrentLevel+1));
+	}
 	
 	/**
 	 * Liest eine Datei aus und laed sie als Level
@@ -267,9 +293,9 @@ public class DPanel extends JPanel {
 	 * Laed den naechsten Levelabschnitt
 	 * @param NICHTS
 	 */
-	public void loadNextLevel(){
+	public void loadNextLevelSection(){
 		if(this.CurrentLevelSection < 2) //Max 3 Abschnitte, daher
-		this.loadLevelIntoStaticObjects((CurrentLevelSection+1));
+		this.loadLevelIntoStaticObjects((this.CurrentLevelSection+1));
 	}
 	
 	/**
@@ -330,6 +356,38 @@ public class DPanel extends JPanel {
 	public void setLevelObjects(int[][][] pLevelObjects){
 		this.LevelObjects = pLevelObjects;
 	}
+
+	/**
+	 * Gibt den momentanen Level zurueck
+	 * @param NICHTS
+	 */
+	public int getCurrentLevel(){
+		return this.CurrentLevel;
+	}
+	
+	/**
+	 * Setzt den momentanen Level
+	 * @param pLevel Nummer des zu setzenden Levels
+	 */
+	public void setCurrentLevel(int pLevel){
+		this.CurrentLevel = pLevel;
+	}
+
+	/**
+	 * Gibt den momentanen Levelabschnitt zurueck
+	 * @param NICHTS
+	 */
+	public int getCurrentLevelSection(){
+		return this.CurrentLevelSection;
+	}
+	
+	/**
+	 * Setzt den momentanen Levelabschnitt
+	 * @param pLevel Nummer des zu setzenden Levelabscnitts
+	 */
+	public void setCurrentLevelSection(int pLevelSection){
+		this.CurrentLevelSection = pLevelSection;
+	}
 		
 
 	/**
@@ -357,4 +415,6 @@ public class DPanel extends JPanel {
 	{
 		JOptionPane.showMessageDialog(null, "Spieler 1 hat: " + Integer.toString(this.DynamicObjects[0].getPoints()) + " Punkte!\nSpieler 2 hat: " + Integer.toString(this.DynamicObjects[1].getPoints()) + " Punkte!\n");   
 	}
+	
+	
 }

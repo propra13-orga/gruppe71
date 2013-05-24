@@ -25,12 +25,6 @@ public class DSteuerung {
 		final DPanel SpielPanel = new DPanel(SpielFenster, pAnzahlSpieler);
 		this.SpielFenster.setContentPane(SpielPanel);
 		
-		//Lade eine Level Datei in den Zwischenspeicher
-		SpielPanel.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level.txt");
-		
-		//Lade den 1. Abschnitt(0) des Levels nach Statische Objekte
-		SpielPanel.loadLevelIntoStaticObjects(0);
-		
 		//Gebe dem Panel Focus, so dass es Tasteneingaben erkennt
 		SpielPanel.setFocusable( true );
 		
