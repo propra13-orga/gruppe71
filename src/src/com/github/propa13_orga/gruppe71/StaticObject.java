@@ -6,6 +6,7 @@ public class StaticObject {
 	private boolean Collision;
 	
 	
+	
 	public StaticObject (int pType){
 	this.Type = pType;
 
@@ -33,5 +34,7 @@ public class StaticObject {
 	public int getType() {
 		return this.Type;
 	}
+	
+	
 	
 }

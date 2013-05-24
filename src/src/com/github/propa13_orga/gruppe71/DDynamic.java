@@ -1,5 +1,7 @@
 package src.com.github.propa13_orga.gruppe71;
 
+import javax.swing.JOptionPane;
+
 
 
 public class DDynamic {
@@ -12,8 +14,9 @@ public class DDynamic {
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
 	private int Lives;
 	private int Points;
+	private boolean checkpoint;
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte,boolean check){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.CurrentXPos = pCurrentXPos;
@@ -21,8 +24,9 @@ public class DDynamic {
 		this.MoveToXPos = -1;
 		this.MoveToYPos = -1;
 		this.moves = false;
-		this.Lives = pLeben; //Jeder Level 3 Leben
+		this.Lives = pLeben; 
 		this.Points = pPunkte;
+		this.checkpoint=check;
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -84,7 +88,7 @@ public class DDynamic {
 		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 		
 		case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
-			if(SpielPanel.Modus2Spieler()==2){
+			if(SpielPanel.Modus2Spieler()==2){ //2 Spieler Modus
 			this.Points += 1;
 			SpielPanel.Spielstand();
 			}
@@ -99,28 +103,22 @@ public class DDynamic {
 			}
 			break;
 		case 6: // Objekt ist ein Mensch!
-			
-			if(this.getLives() != 1){
-				this.setLives(-1);
-			}
-			else
-			this.SpielPanel.beendeSpiel();// Spiel wird beendet, zurueck zu Startbildschirm
+			this.LoseLife();
 			break;
-		case 7: //Bekomme Leben bei Beruehrung mit Items
+		case 7: //Checkpoint
+			this.setCheck(true); //Hier noch Position speichern und des Checkpoints
+			break;
+			
+			
 			
 		}
 			
 		}
-	
-	
-	
-	
 	
 	/**
 	 * Bewegt ein dynamisches Objekt rauf, runter, rechts oder links
 	 * @param pWhere Wohin es bewegt werden soll
 	 */
-	
 	
 	public void moveTo(String pWhere){
 
@@ -192,5 +190,43 @@ public class DDynamic {
 		this.Points = pkt;
 	}
 	
+	/*Methode Leben verlieren kann in
+	 *  Verknüpfung mit Schadenssystem
+	 *   benutzt werden
+	 * @param Nichts
+	 */
+	public void LoseLife(){ 
+		int p;
+			if(this.getLives()!=0){
+					this.setLives(-1);	
+				}
+			else if(this.getLives()==0){
+						p=this.SpielPanel.Revive();
+							if(p!=JOptionPane.YES_OPTION){
+								this.SpielPanel.beendeSpiel();
+							}
+								else if(p==JOptionPane.YES_OPTION){//Hier Wiederbeleben
+								}	
+							}
+			else this.SpielPanel.beendeSpiel();
+		}
+	
+	public boolean getCheck(){//Ist CheckPoint vorhanden?
+		return checkpoint;
+	}
+	public void setCheck(boolean c){//Setzt CheckPoint
+		this.checkpoint=c;
+	}
+	public String CheckAussage(){
+		if(getCheck()==true)
+			return "Sie haben einen Checkpoint, wenn Sie ihn Nutzen wollen... Dann nur zu!";
+			else 
+				return "Sie haben sowieso keinen Checkpoint! Pech gehabt :)!";
+		}
+
+	
+	public void Items(){
+		
+	}
 	
 }

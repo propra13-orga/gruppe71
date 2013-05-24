@@ -93,9 +93,10 @@ public class DPanel extends JPanel {
 					//Wenn noch nichts initialisiert wurde, Level Start
 					int Life=3;
 					int Points = 0;
+					boolean Check=false;
 					
-					this.DynamicObjects[0] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check); //initialisiere, damit Objekt neben Eingang
 				}
 				else
 				{
@@ -418,6 +419,13 @@ public class DPanel extends JPanel {
 	public void Spielstand()
 	{
 		JOptionPane.showMessageDialog(null, "Spieler 1 hat: " + Integer.toString(this.DynamicObjects[0].getPoints()) + " Punkte!\nSpieler 2 hat: " + Integer.toString(this.DynamicObjects[1].getPoints()) + " Punkte!\n");   
+	}
+	public int Revive(){//Fragt nach Checkpoint Benutzung wenn möglich.
+		int opt=JOptionPane.showOptionDialog(null, "Checkpoint:\n"+this.DynamicObjects[0].CheckAussage(),
+                "Checkpoint", JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.WARNING_MESSAGE, null, 
+                new String[]{"Wiederbeleben!", "Ich geb auf!"}, "Ich geb auf");
+		return opt;
 	}
 	
 	
