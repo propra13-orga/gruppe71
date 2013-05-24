@@ -9,9 +9,11 @@ import javax.swing.JFrame;
 public class DStartMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
+	
 	JButton bStart;
 	JButton bExit;
 	JButton bMulti;
+	JButton bRules;
 	
 	/**
 	 * Oeffnet das Startmenu des Spiels
@@ -20,7 +22,7 @@ public class DStartMenu extends JFrame {
 	//Fenster-Eigenschaften werden gesetzt
 	setSize(600, 400) ;
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
-	setTitle("Dungeon Crawler Startmen�");
+	setTitle("Dungeon Crawler Menu");
 	setLocation(350, 150) ;
 	setResizable(false);
 	setLayout(null) ;
@@ -31,10 +33,17 @@ public class DStartMenu extends JFrame {
 	bStart.addActionListener(new TestListenerStart());
 	add(bStart) ;
 	
+	//Regel - Knopf
+	bRules=new JButton("Rules");
+	bRules.setBounds(225,200,100,100);
+	bRules.addActionListener(new TestListenerRules());
+	add(bRules);
+	
 	//Multiplayer -Knopf
 	bMulti=new JButton("Multi");
 	bMulti.setBounds(225,50,100,100);
 	bMulti.addActionListener(null);
+	bMulti.addActionListener(new TestListenerMulti());
 	add(bMulti);
 	
 	//Exit-Knopf
@@ -50,12 +59,32 @@ public class DStartMenu extends JFrame {
 	/**
 	 * Oeffnet Spielfeld
 	 */
-	private class TestListenerStart implements ActionListener {
+	private class TestListenerStart implements ActionListener { //Single
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose(); // schliesst Menu
-			DSteuerung fSpiel = new DSteuerung(2);
+			DSteuerung fSpiel = new DSteuerung(1);
+			
+		}
+	}
+private class TestListenerMulti implements ActionListener { //Multi
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose(); // schliesst Menu
+			DSteuerung fSpiel2 = new DSteuerung(2);
+			
+		}
+	}
+	private class TestListenerRules implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e){
+			DRules rules=new DRules();
+			
+			
+			
+			
 			
 		}
 	}

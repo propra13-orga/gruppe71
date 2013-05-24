@@ -411,6 +411,10 @@ public class DPanel extends JPanel {
 	 * -> Spieler bekommen Spielstand
 	 * @param NICHTS
 	 */
+	public int Modus2Spieler(){
+		return this.AnzahlSpieler;
+		
+	}
 	public void Spielstand()
 	{
 		JOptionPane.showMessageDialog(null, "Spieler 1 hat: " + Integer.toString(this.DynamicObjects[0].getPoints()) + " Punkte!\nSpieler 2 hat: " + Integer.toString(this.DynamicObjects[1].getPoints()) + " Punkte!\n");   

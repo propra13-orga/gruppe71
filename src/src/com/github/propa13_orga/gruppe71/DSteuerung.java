@@ -7,11 +7,14 @@ import java.awt.event.KeyAdapter;
 public class DSteuerung {
 
 	private JFrame SpielFenster;
+	
+	
 	//private DPanel SpielPanel;
 	/**
 	 * Initialisiert das SpielFenster Fenster
 	 */
 	public DSteuerung(int pAnzahlSpieler){
+		
 		this.SpielFenster = new JFrame();
 		
 		//Fenster-Eigenschaften werden gesetzt
@@ -116,5 +119,5 @@ public class DSteuerung {
 		// Alles fertig also kann das Fenster gemalt werden
 		SpielFenster.setVisible(true);
 	}
-
+	
 }

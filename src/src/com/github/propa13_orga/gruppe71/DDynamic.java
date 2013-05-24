@@ -3,7 +3,6 @@ package src.com.github.propa13_orga.gruppe71;
 
 
 public class DDynamic {
-
 	private DPanel SpielPanel;
 	private StaticObject[][] StaticObjects; // private int[][] StaticObjects; 
 	private int CurrentXPos;  //Die derzeitige X Position
@@ -85,8 +84,10 @@ public class DDynamic {
 		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 		
 		case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
+			if(SpielPanel.Modus2Spieler()==2){
 			this.Points += 1;
 			SpielPanel.Spielstand();
+			}
 			this.SpielPanel.loadNextLevelSection();
 			break;
 			
@@ -98,13 +99,14 @@ public class DDynamic {
 			}
 			break;
 		case 6: // Objekt ist ein Mensch!
+			
 			if(this.getLives() != 1){
 				this.setLives(-1);
 			}
 			else
 			this.SpielPanel.beendeSpiel();// Spiel wird beendet, zurueck zu Startbildschirm
 			break;
-		case 7: //Bekomme Leben bei Ber�hrung mit Items
+		case 7: //Bekomme Leben bei Beruehrung mit Items
 			
 		}
 			
