@@ -197,18 +197,31 @@ public class DDynamic {
 	 */
 	public void LoseLife(){ 
 		int p;
-			if(this.getLives()!=0){
-					this.setLives(-1);	
-				}
-			else if(this.getLives()==0){
-						p=this.SpielPanel.Revive();
-							if(p!=JOptionPane.YES_OPTION){
-								this.SpielPanel.beendeSpiel();
-							}
-								else if(p==JOptionPane.YES_OPTION){//Hier Wiederbeleben
+		if(this.SpielPanel.Modus2Spieler()==1){
+					if(this.getLives()!=0){
+								this.setLives(-1);	
+							              }
+									else if(this.getLives()==0){
+											p=this.SpielPanel.Revive();
+													if(p!=JOptionPane.YES_OPTION){
+																this.SpielPanel.beendeSpiel();
+																			}
+													this.SpielPanel.beendeSpiel();
+													}
+								else if((p=this.SpielPanel.Revive())==JOptionPane.YES_OPTION){//Hier Wiederbeleben
 								}	
+								else this.SpielPanel.beendeSpiel();
 							}
-			else this.SpielPanel.beendeSpiel();
+		else if(this.SpielPanel.Modus2Spieler()==2){
+								if(this.getLives()!=0){
+											this.setLives(-1);	
+											}
+												else if(this.getLives()==0){
+							
+														this.SpielPanel.beendeSpiel();
+															}
+		}
+			
 		}
 	
 	public boolean getCheck(){//Ist CheckPoint vorhanden?
