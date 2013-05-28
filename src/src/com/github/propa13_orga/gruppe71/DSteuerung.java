@@ -85,7 +85,7 @@ public class DSteuerung {
 	    			}
 	    	}
 	    		
-	    		/*Methode für Taste loslassen
+	    		/**Methode für Taste loslassen
 	    		 * (non-Javadoc)
 	    		 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	    		 */

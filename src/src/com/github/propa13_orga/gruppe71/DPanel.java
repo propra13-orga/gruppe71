@@ -52,7 +52,6 @@ public class DPanel extends JPanel {
 		this.CurrentLevelSection = 0;
 		this.CurrentLevel = 0;
 		this.AnzahlSpieler = pAnzahlSpieler;
-
 		this.loadLevel(0); //Laed 1. Level
 	}
 	
@@ -92,12 +91,15 @@ public class DPanel extends JPanel {
 				{
 					//Wenn noch nichts initialisiert wurde, Level Start
 					int Life=3;
-					int Points = 0;
-					boolean Check=false;
+					int Points = 0; //Punkte Marke
+					boolean Check=false; //Checkpoint Marke
+					boolean death=false; //Todesmarke
 					
-					this.DynamicObjects[0] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
 				}
+				
+					
 				else
 				{
 					//Wenn schon einmal etwas initialisiert wurde, z.B. Naechster Levelabschnitt
@@ -408,25 +410,35 @@ public class DPanel extends JPanel {
 		DStartMenu StartMenu2 = new DStartMenu() ; //Oeffnet neues Startmenue
 	}
 	
+	
+	public int Modus2Spieler(){
+		return this.AnzahlSpieler;
+	}
+	
 	/** Messagedialog 
 	 * -> Spieler bekommen Spielstand
 	 * @param NICHTS
 	 */
-	public int Modus2Spieler(){
-		return this.AnzahlSpieler;
-		
-	}
 	public void Spielstand()
 	{
 		JOptionPane.showMessageDialog(null, "Spieler 1 hat: " + Integer.toString(this.DynamicObjects[0].getPoints()) + " Punkte!\nSpieler 2 hat: " + Integer.toString(this.DynamicObjects[1].getPoints()) + " Punkte!\n");   
 	}
-	public int Revive(){//Fragt nach Checkpoint Benutzung wenn möglich.
-		int opt=JOptionPane.showOptionDialog(null, "Checkpoint:\n"+this.DynamicObjects[0].CheckAussage(),
+	
+	public int Checkpoint(){//Fragt nach Checkpoint Benutzung wenn möglich.
+		int opt=JOptionPane.showOptionDialog(null, "OH LEIDER GEGESSEN WORDEN!\nCheckpoint:\n"+this.DynamicObjects[0].CheckAussage(),
                 "Checkpoint", JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.WARNING_MESSAGE, null, 
                 new String[]{"Wiederbeleben!", "Ich geb auf!"}, "Ich geb auf");
 		return opt;
 	}
+	
+	public void RevivePaint(){//Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
+		this.DynamicObjectsLoaded=false;
+		this.DynamicObjects[0] = new DDynamic(this, StaticObjects, this.DynamicObjects[0].RevivePosition()[0],  this.DynamicObjects[0].RevivePosition()[1], 1, 0,false,false);
+		this.DynamicObjectsPainted = true;			
+		
+	}
+	
 	
 	
 }
