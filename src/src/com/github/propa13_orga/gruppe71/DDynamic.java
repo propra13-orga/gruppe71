@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 public class DDynamic {
 	private DPanel SpielPanel;
 	private StaticObject[][] StaticObjects; // private int[][] StaticObjects; 
+	private DDynamic[] DynamicObjects; // private int[][] StaticObjects; 
 	private int CurrentXPos;  //Die derzeitige X Position
 	private int CurrentYPos; //Die derzeitige Y Position
 	private int MoveToXPos; //Bewegung in X Richtung
@@ -18,9 +19,10 @@ public class DDynamic {
 	private boolean death;
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte,boolean check,boolean tod){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte,boolean check,boolean tod){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
+		this.DynamicObjects = pDynamicObjects;
 		this.CurrentXPos = pCurrentXPos;
 		this.CurrentYPos = pCurrentYPos;
 		this.MoveToXPos = -1;
@@ -108,10 +110,6 @@ public class DDynamic {
 		case 6: // Objekt ist ein Mensch!
 			this.LoseLife();
 			break;
-		case 7: //Checkpoint
-			this.setCheck(true);
-			this.RevivePosition();//Hier noch Position speichern und des Checkpoints
-			break;
 			
 			
 			
@@ -144,7 +142,7 @@ public class DDynamic {
 				this.setMoveToPosition(tmpCurrentPosition[0], (tmpCurrentPosition[1]+30));
 		}
 	}
-	//Hilfsfunktionen fï¿½r Animate Moving
+	//Hilfsfunktionen fuer Animate Moving
 	public void ErhoeheXUm(int add){
 		this.CurrentXPos+=add;
 		
@@ -194,73 +192,67 @@ public class DDynamic {
 		this.Points = pkt;
 	}
 	
-	/**Methode Leben verlieren; kann in
-	 *  Verknüpfung mit Schadenssystem
+	/** Methode Leben verlieren; kann in
+	 *  Verknuepfung mit Schadenssystem
 	 *   benutzt werden
 	 * @param Nichts
 	 */
 	public void LoseLife(){ 
 		int p;
 		if(this.SpielPanel.Modus2Spieler()==1){ // gucke nach Modi
-					if(this.getLives()!=0){// Ist Leben schon 0?
-								this.setLives(-1);	// Leben weniger
-							              }
-									else if(this.getLives()==0){ //wennleben 0 ist!
-											this.Death();
-											p=this.SpielPanel.Checkpoint();//Führe Aktion Message durch
-													if(p!=JOptionPane.YES_OPTION){// Ist ja ,nicht gedrükt
-																this.SpielPanel.beendeSpiel();// Beende Spiel
-																			}
-									else if((this.getCheck()==true) && (p==JOptionPane.YES_OPTION)){
-												SpielPanel.RevivePaint();
-													}
-									else SpielPanel.beendeSpiel();
-									}
-								}
-					else if(this.SpielPanel.Modus2Spieler()==2){ //Modus 2 Spieler
-								if(this.getLives()!=0){
-											this.setLives(-1);	
-											}
-												else if(this.getLives()==0){ //Leben einer der Spieler 0?
-														this.SpielPanel.beendeSpiel();
-												}
-												else this.SpielPanel.beendeSpiel();
+			if(this.getLives()!=0){// Ist Leben schon 0?
+				this.setLives(-1);	// Leben weniger
+			}
+			else if(this.getLives()==0){ //wennleben 0 ist!
+				this.Death();
+				if(this.SpielPanel.CheckpointExists() == false || (this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == true)){
+				// Wenn kein Checkpoint existiert oder schon mal ein Checkpoint geladen wurde	
+					this.SpielPanel.beendeSpiel(); // Beende Spiel
+				}else{
+				
+				p=this.SpielPanel.Checkpoint();//Fuehre Aktion Message durch
+				if(p!=JOptionPane.YES_OPTION){// Ist ja ,nicht gedrueckt
+					this.SpielPanel.beendeSpiel();// Beende Spiel
+				}
+				else if((this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == false) && (p == JOptionPane.YES_OPTION)){
+					SpielPanel.RevivePaint();
+				}
+				else 
+					this.SpielPanel.beendeSpiel();// Beende Spiel
+				}
+			}
+					
+		}else if(this.SpielPanel.Modus2Spieler()==2){ //Modus 2 Spieler
+			if(this.getLives()!=0){
+				this.setLives(-1);	
+			}
+			else if(this.getLives()==0){ //Leben einer der Spieler 0?
+				this.SpielPanel.beendeSpiel();
+			}
+			else this.SpielPanel.beendeSpiel();
 		}
 			
 	}
 	
-	public boolean getCheck(){//Ist CheckPoint vorhanden?
-		return checkpoint;
-	}
-	public void setCheck(boolean c){//Setzt CheckPoint
-		this.checkpoint=c;
-	}
 	
-	
-	public String CheckAussage(){
-		if(getCheck()==true)
-			return "Sie haben einen Checkpoint, wenn Sie ihn Nutzen wollen... Dann nur zu!";
-			else 
-				return "Sie haben sowieso keinen Checkpoint! Pech gehabt :)!";
-		}
-	
-	
-	/** Gibt die
-	 * Position des Dynamischen Objekts zurück, immer wenn getCheck true ist
-	 * @param
+	/** Gibt die Aussage fÃ¼r das Checkpoint Fenster zurueck
+	 * @param NICHTS
 	 */
-	public int[] RevivePosition(){
-		int[] positioncheck = {this.CurrentXPos,this.CurrentYPos};
-			return positioncheck;	
-	}
+	public String CheckAussage(){
+		if(this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == false)
+				return "Sie haben einen Checkpoint, wenn Sie ihn Nutzen wollen... Dann nur zu!";
+			else{
+				return "Sie haben sowieso keinen Checkpoint! Pech gehabt :)!";
+			}
+		}
 	
 	public boolean Death(){
 		return this.death=true;
 	}
 	
-	public int[] Items(){
+	/*public int[] Items(){
 		
 		
-	}
+	}*/
 	
 }

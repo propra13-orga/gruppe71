@@ -80,7 +80,7 @@ private class TestListenerMulti implements ActionListener { //Multi
 	private class TestListenerRules implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e){
-			DRules rules=new DRules();
+			//DRules rules=new DRules();
 			
 			
 			

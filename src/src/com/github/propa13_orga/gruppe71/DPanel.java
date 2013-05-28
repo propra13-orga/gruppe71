@@ -23,6 +23,8 @@ public class DPanel extends JPanel {
 	private StaticObject[][] StaticObjects;
 	private DDynamic[] DynamicObjects;
 	private int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
+	private DDynamic CheckpointObject;
+	private boolean CheckpointLoaded;
 	private boolean StaticObjectsLoaded; //Statische Objekte geladen?
 	private boolean StaticObjectsPainted; //Statische Objekte gemalt?
 	private boolean DynamicObjectsLoaded; //Dynamische Objekte geladen?
@@ -44,6 +46,7 @@ public class DPanel extends JPanel {
 		this.StaticObjects = new StaticObject[12][20];
 		this.DynamicObjects = new DDynamic[2];
 		this.LevelObjects = new int[3][12][20]; 
+		this.CheckpointLoaded = false;
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
 		this.DynamicObjectsLoaded = false;
@@ -95,11 +98,9 @@ public class DPanel extends JPanel {
 					boolean Check=false; //Checkpoint Marke
 					boolean death=false; //Todesmarke
 					
-					this.DynamicObjects[0] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, StaticObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
-				}
-				
-					
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
+				}	
 				else
 				{
 					//Wenn schon einmal etwas initialisiert wurde, z.B. Naechster Levelabschnitt
@@ -109,7 +110,12 @@ public class DPanel extends JPanel {
 					this.DynamicObjects[1].setMoves(false); //Objekt bewegt sich nicht	
 					this.DynamicObjects[0].setStaticObjects(this.StaticObjects); //StaticObjects vom neuen Levelabschnitt
 					this.DynamicObjects[1].setStaticObjects(this.StaticObjects); //StaticObjects vom neuen Levelabschnitt	
+					
+					// Neuer Levelabschnitt, also Checkpoint speichern
+					this.CheckpointObject = DynamicObjects[0];
 				}
+
+
 				this.DynamicObjectsLoaded = true;
 			}
 			
@@ -297,8 +303,10 @@ public class DPanel extends JPanel {
 	 * @param NICHTS
 	 */
 	public void loadNextLevelSection(){
-		if(this.CurrentLevelSection < 2) //Max 3 Abschnitte, daher
+		if(this.CurrentLevelSection < 2){ //Max 3 Abschnitte, daher
+		this.CheckpointLoaded = false;
 		this.loadLevelIntoStaticObjects((this.CurrentLevelSection+1));
+		}
 	}
 	
 	/**
@@ -324,6 +332,21 @@ public class DPanel extends JPanel {
 	 */
 	public void setDynamicObjects(DDynamic[] pDynamicObjects){
 		this.DynamicObjects = pDynamicObjects;
+	}
+	
+	/**
+	 * Gibt das Checkpointobject zurÃ¼ck
+	 */
+	public DDynamic getCheckpointObject(){
+		return this.CheckpointObject;
+	}
+	
+	/**
+	 * Setzt den Wert des Checkpointobjects
+	 * @param DDynamic zu speicherndes Checkpointobject
+	 */
+	public void setCheckpointObject(DDynamic pCheckpointObject){
+		this.CheckpointObject = pCheckpointObject;
 	}
 	
 	/**
@@ -391,7 +414,41 @@ public class DPanel extends JPanel {
 	public void setCurrentLevelSection(int pLevelSection){
 		this.CurrentLevelSection = pLevelSection;
 	}
-		
+	
+	/**
+	 * Gibt zurueck, ob ein Checkpoint existiert
+	 * @param NICHTS
+	 */
+	public boolean CheckpointExists(){
+		if(this.CheckpointObject != null)
+			return true;
+		else
+			return false;
+	}
+	
+	/**
+	 * Gibt zurueck, ob ein Checkpoint geladen wurde
+	 * @param NICHTS
+	 */
+	public boolean CheckpointLoaded(){
+		return this.CheckpointLoaded;
+	}
+	
+	/**
+	 * Gibt den momentanen Checkpoint zurueck
+	 * @param NICHTS
+	 */
+	public DDynamic getCheckpoint(){
+		return this.CheckpointObject;
+	}
+	
+	/**
+	 * Setzt den momentanen Checkpoint
+	 * @param pCheckpointObject zu setzendes CheckpointObject
+	 */
+	public void setCheckpoint(DDynamic pCheckpointObject){
+		this.CheckpointObject = pCheckpointObject;
+	}
 
 	/**
 	 * Startet Das Spiel neu, Reset zum ersten Levelabschnitt
@@ -424,19 +481,21 @@ public class DPanel extends JPanel {
 		JOptionPane.showMessageDialog(null, "Spieler 1 hat: " + Integer.toString(this.DynamicObjects[0].getPoints()) + " Punkte!\nSpieler 2 hat: " + Integer.toString(this.DynamicObjects[1].getPoints()) + " Punkte!\n");   
 	}
 	
-	public int Checkpoint(){//Fragt nach Checkpoint Benutzung wenn möglich.
-		int opt=JOptionPane.showOptionDialog(null, "OH LEIDER GEGESSEN WORDEN!\nCheckpoint:\n"+this.DynamicObjects[0].CheckAussage(),
-                "Checkpoint", JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.WARNING_MESSAGE, null, 
-                new String[]{"Wiederbeleben!", "Ich geb auf!"}, "Ich geb auf");
-		return opt;
+	public int Checkpoint(){//Fragt nach Checkpoint Benutzung wenn moeglich.
+		int opt = JOptionPane.showOptionDialog(null, "OH LEIDER GEGESSEN WORDEN!\nCheckpoint:\n"+this.DynamicObjects[0].CheckAussage(),
+                  "Checkpoint", JOptionPane.YES_NO_CANCEL_OPTION,
+                  JOptionPane.WARNING_MESSAGE, null, 
+                  new String[]{"Wiederbeleben!", "Ich geb auf!"}, "Ich geb auf");
+			return opt;
 	}
 	
 	public void RevivePaint(){//Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
-		this.DynamicObjectsLoaded=false;
-		this.DynamicObjects[0] = new DDynamic(this, StaticObjects, this.DynamicObjects[0].RevivePosition()[0],  this.DynamicObjects[0].RevivePosition()[1], 1, 0,false,false);
-		this.DynamicObjectsPainted = true;			
-		
+		if(this.CheckpointLoaded == false){
+			this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
+			this.DynamicObjects[0] = this.CheckpointObject;
+			this.CheckpointLoaded = true;
+			this.setCheckpointObject(null);
+		}
 	}
 	
 	
