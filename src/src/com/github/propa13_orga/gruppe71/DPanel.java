@@ -137,6 +137,30 @@ public class DPanel extends JPanel {
 						this.drawImageAtPos(pGraphics, 5 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 					}
 				}
+				
+				/*
+				//Schleife, die durch die dynamischen Objekte geht
+				for (int i = 2; i < 10; i++) {
+					
+					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
+						
+						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
+							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
+						}else{
+							randomnumber = 0
+							switch(randomnumber){
+							this.DynamicObjects[i].setMoves("right");
+							
+							}
+							this.DynamicObjects[i].setMoves("right");
+						}
+						
+						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
+						
+						//Und male das Objekt dann an der (neuen) Position
+						this.drawImageAtPos(pGraphics, 5 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+					}
+				}*/
 			}
 					
 		}
