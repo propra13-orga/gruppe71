@@ -1,5 +1,7 @@
 package src.com.github.propa13_orga.gruppe71;
 
+import java.awt.Graphics;
+
 import javax.swing.JOptionPane;
 
 
@@ -17,6 +19,7 @@ public class DDynamic {
 	private int Points;
 	private boolean checkpoint;
 	private boolean death;
+	private Graphics graphics;
 	
 	
 	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte,boolean check,boolean tod){
@@ -201,9 +204,12 @@ public class DDynamic {
 		int p;
 		if(this.SpielPanel.Modus2Spieler()==1){ // gucke nach Modi
 			if(this.getLives()!=0){// Ist Leben schon 0?
-				this.setLives(-1);	// Leben weniger
+				this.setLives(-1);// Leben weniger
+				SpielPanel.ChangePlayer();
+				 
 			}
-			else if(this.getLives()==0){ //wennleben 0 ist!
+			else if(this.getLives()==0){ //wenn Leben 0 ist!
+				SpielPanel.ChangePlayer();
 				this.Death();
 				if(this.SpielPanel.CheckpointExists() == false || (this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == true)){
 				// Wenn kein Checkpoint existiert oder schon mal ein Checkpoint geladen wurde	
@@ -249,10 +255,18 @@ public class DDynamic {
 	public boolean Death(){
 		return this.death=true;
 	}
+	/*
+	 * Methode um den Spieler ein anderes Aussehen zu geben
+	 * bei Leben /Hitpoints Änderung
+	 * 
+	 */
 	
+	
+	
+		
+	}
 	/*public int[] Items(){
 		
 		
 	}*/
-	
-}
+

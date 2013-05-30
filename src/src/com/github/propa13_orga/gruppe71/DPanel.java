@@ -93,7 +93,7 @@ public class DPanel extends JPanel {
 				if(this.DynamicObjects[0] == null && this.DynamicObjects[1] == null)
 				{
 					//Wenn noch nichts initialisiert wurde, Level Start
-					int Life=3;
+					int Life=4;
 					int Points = 0; //Punkte Marke
 					boolean Check=false; //Checkpoint Marke
 					boolean death=false; //Todesmarke
@@ -187,8 +187,13 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg") //7
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"),
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //7
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"),//8
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_1.jpg"),//9 action
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_2.jpg"),//10
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_3.jpg"),//11
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_4.jpg") //12
 				};
 		
 		//Zeichne das Bild
@@ -521,7 +526,29 @@ public class DPanel extends JPanel {
 			this.setCheckpointObject(null);
 		}
 	}
+	public void ChangePlayer(){
+		
+		int[] TmpDynamicObjectPosition = this.DynamicObjects[0].getCurrentPosition();
+		
+			switch(this.DynamicObjects[0].getLives()){
+			case 3:
+				this.drawImageAtPos(getGraphics(),9 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+				this.repaint();
+				break;
+			case 2:
+				this.drawImageAtPos(getGraphics(), 10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+				this.repaint();
+				break;
+			case 1:
+				this.drawImageAtPos(getGraphics(), 11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+				this.repaint();
+				break;
+			case 0:
+				this.drawImageAtPos(getGraphics(), 12 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+				this.repaint();
+				break;
+			}
+		
 	
-	
-	
-}
+		}
+	}
