@@ -135,7 +135,6 @@ public class DPanel extends JPanel {
 						}
 						
 						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
-						System.out.println("Lives: "+Integer.toString(this.DynamicObjects[i].getLives()));
 						
 						switch(this.DynamicObjects[i].getLives()){
 						case 4:
