@@ -84,7 +84,9 @@ public class DPanel extends JPanel {
 						TmpXStart = x; //Speichert es wo der Eingang ist
 						TmpYStart = y; //in 2 Variablen
 					}
+					
 				}
+				
 			}
 
 			this.StaticObjectsPainted = true;
@@ -100,10 +102,10 @@ public class DPanel extends JPanel {
 					boolean Check=false; //Checkpoint Marke
 					boolean death=false; //Todesmarke
 					
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), Life, Points, true); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), Life, Points, true); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), Life, Points, true,0); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), Life, Points, true,0); //initialisiere, damit Objekt neben Eingang
 				}	
 				else
 				{
@@ -119,7 +121,7 @@ public class DPanel extends JPanel {
 					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
 					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
 					
-					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),DynamicObjects[0].getPoints(), false);
+					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),DynamicObjects[0].getPoints(), false,3);
 				}
 
 
@@ -137,8 +139,10 @@ public class DPanel extends JPanel {
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						}
-						
+						//Hier werden die Burger neu gezeichnet bei Leben Verlust.
 						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
+						
+						
 						
 						switch(this.DynamicObjects[i].getLives()){
 						case 4:
@@ -157,11 +161,16 @@ public class DPanel extends JPanel {
 							this.drawImageAtPos(pGraphics, 14 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 							break;
 						}
-					
+						
+								
+								
+							
 				
 					}
 				}
 				
+					
+				}
 				//Schleife, die durch die dynamischen Objekte der Gegner geht
 				for (int i = 2; i < 10; i++) {
 					
@@ -197,8 +206,8 @@ public class DPanel extends JPanel {
 					}
 				} 
 			}
-					
-		}
+			
+		
 		this.DynamicObjectsPainted = true;
 
 		//Jetzt kann alles was wir gerade gemalt haben neu gezeichnet werden
@@ -224,7 +233,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //7
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //8
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //8
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //9
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"),//10
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_1.jpg"),//11

@@ -17,13 +17,14 @@ public class DDynamic {
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
 	private int Lives;
 	private int Points;
-	private boolean checkpoint;
 	private boolean death;
-	private Graphics graphics;
+	private boolean check;
 	private boolean isBot;
+	private boolean[] items;
+	private boolean hit;
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte, boolean pisBot){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte, boolean pisBot,int itemnumber){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
@@ -35,6 +36,9 @@ public class DDynamic {
 		this.Lives = pLeben; 
 		this.Points = pPunkte;
 		this.isBot = pisBot;
+		this.items=new boolean[itemnumber];
+		this.InitItems();
+		this.hit=false;
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -113,9 +117,12 @@ public class DDynamic {
 		case 6: // Objekt ist ein Mensch!
 			this.LoseLife();
 			break;
-			
-			
-			
+		
+		case 8:
+			this.ItemSetHit(true);
+			this.ItemBag();
+			break;
+				
 		}
 			
 		}
@@ -249,18 +256,48 @@ public class DDynamic {
 	public boolean Death(){
 		return this.death=true;
 	}
+	
 	/*
-	 * Methode um den Spieler ein anderes Aussehen zu geben
-	 * bei Leben /Hitpoints �nderung
-	 * 
+	 * Guckt wie viele Items gesetzt wurden
 	 */
-	
-	
-	
-		
+	public int NumberItems(){
+		return this.items.length;
 	}
-	/*public int[] Items(){
+	//Initialisiert Items 
+	public boolean[] InitItems(){
+		this.items=new boolean[NumberItems()];
+		for(int i=0;i<=NumberItems()-1;i++){
+			this.items[i]=false;
+		}
+		return this.items;
+	}
+	
+	public boolean ItemSetHit(boolean q){
+		return this.hit=q;
+	}
+	
+	public boolean ItemHit(){
+		return this.hit;
+	}
 		
+	
+	public boolean[] ItemBag(){
 		
-	}*/
+		for(int i=0;i<=NumberItems()-1;i++){
+		if(this.hit== true && this.items[i]==false){
+			System.out.println("YES!");
+			this.items[i]=this.hit;
+			this.hit=false;
+		}
+		else if(this.hit==true && this.items[i]==true){
+			System.out.println("Already picked up!");
+			this.hit=false;
+		}
+		}
+		
+		return this.items;
 
+	}
+	
+	
+}
