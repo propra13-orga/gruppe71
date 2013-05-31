@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.io.FileNotFoundException;
 
 import java.util.Arrays;
+import java.util.Random;
+
 import javax.swing.JFrame;
 
 public class DPanel extends JPanel {
@@ -44,7 +46,7 @@ public class DPanel extends JPanel {
 		//Setze alles auf Start-Wert
 		this.SpielFenster = pJFrame;
 		this.StaticObjects = new StaticObject[12][20];
-		this.DynamicObjects = new DDynamic[2];
+		this.DynamicObjects = new DDynamic[10];
 		this.LevelObjects = new int[3][12][20]; 
 		this.CheckpointLoaded = false;
 		this.StaticObjectsLoaded = false;
@@ -100,6 +102,8 @@ public class DPanel extends JPanel {
 					
 					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
 					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), Life, Points); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), Life, Points); //initialisiere, damit Objekt neben Eingang
 				}	
 				else
 				{
@@ -158,21 +162,32 @@ public class DPanel extends JPanel {
 					}
 				}
 				
-				/*
-				//Schleife, die durch die dynamischen Objekte geht
+				//Schleife, die durch die dynamischen Objekte der Gegner geht
 				for (int i = 2; i < 10; i++) {
 					
 					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
 						
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein StÃ¼ckchen
-						}else{
-							randomnumber = 0
-							switch(randomnumber){
-							this.DynamicObjects[i].setMoves("right");
+						} else {
+							Random zufallsZahl = new Random();						// ZufallsZahl
+							int randomnumber = zufallsZahl.nextInt(4);
+							int delaycounter = zufallsZahl.nextInt(100);			//Verzšgerung von Zufalls-Bewegung
+							if (delaycounter == 0){								
+								switch(randomnumber){								// Zufalls-Bewegung
+								case 0: this.DynamicObjects[i].moveTo("right");
+										break;
+								case 1: this.DynamicObjects[i].moveTo("left");
+										break;
+								case 2: this.DynamicObjects[i].moveTo("down");
+										break;
+								case 3: this.DynamicObjects[i].moveTo("up");
+										break;
+								default: System.out.println("Fehler bei den Zufallszahlen");
+										break;
 							
+								}
 							}
-							this.DynamicObjects[i].setMoves("right");
 						}
 						
 						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
@@ -180,7 +195,7 @@ public class DPanel extends JPanel {
 						//Und male das Objekt dann an der (neuen) Position
 						this.drawImageAtPos(pGraphics, 5 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 					}
-				}*/
+				} 
 			}
 					
 		}

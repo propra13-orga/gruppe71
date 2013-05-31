@@ -161,16 +161,16 @@ public class DDynamic {
 	public void AnimateMoving(){
 		
 		if(this.CurrentXPos < this.MoveToXPos)
-			this.ErhoeheXUm(2); //muss noch ein St�ck nach rechts
+			this.ErhoeheXUm(3); //muss noch ein St�ck nach rechts
 
 			if(this.CurrentXPos > this.MoveToXPos)
-			this.ErhoeheXUm(-2); //muss noch ein St�ck nach links
+			this.ErhoeheXUm(-3); //muss noch ein St�ck nach links
 
 			if(this.CurrentYPos < this.MoveToYPos)
-			this.ErhoeheYUm(2); //muss noch ein St�ck nach unten
+			this.ErhoeheYUm(3); //muss noch ein St�ck nach unten
 
 			if(this.CurrentYPos > this.MoveToYPos)
-			this.ErhoeheYUm(-2); //muss noch ein St�ck nach oben
+			this.ErhoeheYUm(-3); //muss noch ein St�ck nach oben
 
 			//Wenn wir fertig sind, setzen wir die Variable wieder, dass es sich momentan nicht bewegt
 			if(this.CurrentYPos == this.MoveToYPos && this.CurrentXPos == this.MoveToXPos)
