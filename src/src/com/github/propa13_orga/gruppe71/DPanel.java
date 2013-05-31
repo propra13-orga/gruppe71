@@ -100,10 +100,10 @@ public class DPanel extends JPanel {
 					boolean Check=false; //Checkpoint Marke
 					boolean death=false; //Todesmarke
 					
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), Life, Points); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), Life, Points); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), Life, Points, true); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), Life, Points, true); //initialisiere, damit Objekt neben Eingang
 				}	
 				else
 				{
@@ -119,7 +119,7 @@ public class DPanel extends JPanel {
 					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
 					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
 					
-					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),DynamicObjects[0].getPoints());
+					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),DynamicObjects[0].getPoints(), false);
 				}
 
 

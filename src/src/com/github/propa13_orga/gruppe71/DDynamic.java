@@ -20,9 +20,10 @@ public class DDynamic {
 	private boolean checkpoint;
 	private boolean death;
 	private Graphics graphics;
+	private boolean isBot;
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte, boolean pisBot){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
@@ -33,6 +34,7 @@ public class DDynamic {
 		this.moves = false;
 		this.Lives = pLeben; 
 		this.Points = pPunkte;
+		this.isBot = pisBot;
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -201,29 +203,9 @@ public class DDynamic {
 	public void LoseLife(){ 
 		int p;
 		if(this.SpielPanel.Modus2Spieler()==1){ // gucke nach Modi
-			if(this.getLives()!=0){// Ist Leben schon 0?
-				this.setLives(-1);// Leben weniger
-				
-				if(this.getLives()==0){ //wenn Leben 0 ist!
-					this.Death();
-					if(this.SpielPanel.CheckpointExists() == false || (this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == true)){
-					// Wenn kein Checkpoint existiert oder schon mal ein Checkpoint geladen wurde	
-						this.SpielPanel.beendeSpiel(); // Beende Spiel
-					}else{
-					
-					p=this.SpielPanel.Checkpoint();//Fuehre Aktion Message durch
-					if(p!=JOptionPane.YES_OPTION){// Ist ja ,nicht gedrueckt
-						this.SpielPanel.beendeSpiel();// Beende Spiel
-					}
-					else if((this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == false) && (p == JOptionPane.YES_OPTION)){
-						SpielPanel.RevivePaint();
-					}
-					else 
-						this.SpielPanel.beendeSpiel();// Beende Spiel
-					}
-				}
-			}
-			else if(this.getLives()==0){ //wenn Leben 0 ist!
+			this.setLives(-1);// Leben weniger
+			
+			if(this.getLives()==0 && this.isBot == false){ //wenn Leben 0 ist!
 				this.Death();
 				if(this.SpielPanel.CheckpointExists() == false || (this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == true)){
 				// Wenn kein Checkpoint existiert oder schon mal ein Checkpoint geladen wurde	
@@ -243,13 +225,11 @@ public class DDynamic {
 			}
 					
 		}else if(this.SpielPanel.Modus2Spieler()==2){ //Modus 2 Spieler
-			if(this.getLives()!=0){
-				this.setLives(-1);	
-			}
-			else if(this.getLives()==0){ //Leben einer der Spieler 0?
+			this.setLives(-1);	// L
+			
+			if(this.getLives()==0 && this.isBot == false){ //Leben einer der Spieler 0?
 				this.SpielPanel.beendeSpiel();
 			}
-			else this.SpielPanel.beendeSpiel();
 		}
 			
 	}
