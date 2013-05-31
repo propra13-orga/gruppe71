@@ -22,7 +22,7 @@ public class DDynamic {
 	private Graphics graphics;
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte,boolean check,boolean tod){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
@@ -33,8 +33,6 @@ public class DDynamic {
 		this.moves = false;
 		this.Lives = pLeben; 
 		this.Points = pPunkte;
-		this.checkpoint=check;
-		this.death=tod;
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -205,11 +203,27 @@ public class DDynamic {
 		if(this.SpielPanel.Modus2Spieler()==1){ // gucke nach Modi
 			if(this.getLives()!=0){// Ist Leben schon 0?
 				this.setLives(-1);// Leben weniger
-				SpielPanel.ChangePlayer();
-				 
+				
+				if(this.getLives()==0){ //wenn Leben 0 ist!
+					this.Death();
+					if(this.SpielPanel.CheckpointExists() == false || (this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == true)){
+					// Wenn kein Checkpoint existiert oder schon mal ein Checkpoint geladen wurde	
+						this.SpielPanel.beendeSpiel(); // Beende Spiel
+					}else{
+					
+					p=this.SpielPanel.Checkpoint();//Fuehre Aktion Message durch
+					if(p!=JOptionPane.YES_OPTION){// Ist ja ,nicht gedrueckt
+						this.SpielPanel.beendeSpiel();// Beende Spiel
+					}
+					else if((this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == false) && (p == JOptionPane.YES_OPTION)){
+						SpielPanel.RevivePaint();
+					}
+					else 
+						this.SpielPanel.beendeSpiel();// Beende Spiel
+					}
+				}
 			}
 			else if(this.getLives()==0){ //wenn Leben 0 ist!
-				SpielPanel.ChangePlayer();
 				this.Death();
 				if(this.SpielPanel.CheckpointExists() == false || (this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == true)){
 				// Wenn kein Checkpoint existiert oder schon mal ein Checkpoint geladen wurde	
@@ -257,7 +271,7 @@ public class DDynamic {
 	}
 	/*
 	 * Methode um den Spieler ein anderes Aussehen zu geben
-	 * bei Leben /Hitpoints Änderung
+	 * bei Leben /Hitpoints ï¿½nderung
 	 * 
 	 */
 	

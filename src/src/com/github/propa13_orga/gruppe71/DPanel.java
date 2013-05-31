@@ -98,8 +98,8 @@ public class DPanel extends JPanel {
 					boolean Check=false; //Checkpoint Marke
 					boolean death=false; //Todesmarke
 					
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points,Check,death); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points); //initialisiere, damit Objekt neben Eingang
 				}	
 				else
 				{
@@ -112,7 +112,10 @@ public class DPanel extends JPanel {
 					this.DynamicObjects[1].setStaticObjects(this.StaticObjects); //StaticObjects vom neuen Levelabschnitt	
 					
 					// Neuer Levelabschnitt, also Checkpoint speichern
-					this.CheckpointObject = DynamicObjects[0];
+					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
+					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
+					
+					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),DynamicObjects[0].getPoints());
 				}
 
 
@@ -132,9 +135,27 @@ public class DPanel extends JPanel {
 						}
 						
 						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
+						System.out.println("Lives: "+Integer.toString(this.DynamicObjects[i].getLives()));
 						
-						//Und male das Objekt dann an der (neuen) Position
-						this.drawImageAtPos(pGraphics, 5 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+						switch(this.DynamicObjects[i].getLives()){
+						case 4:
+							this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+							break;
+						case 3:
+							this.drawImageAtPos(pGraphics,11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+							break;
+						case 2:
+							this.drawImageAtPos(pGraphics, 12 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+							break;
+						case 1:
+							this.drawImageAtPos(pGraphics, 13 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+							break;
+						case 0:
+							this.drawImageAtPos(pGraphics, 14 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+							break;
+						}
+					
+				
 					}
 				}
 				
@@ -187,13 +208,15 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"),
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //7
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"),//8
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_1.jpg"),//9 action
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_2.jpg"),//10
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_3.jpg"),//11
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_4.jpg") //12
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //8
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //9
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"),//10
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_1.jpg"),//11
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_2.jpg"),//12
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_3.jpg"),//13
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_4.jpg") //14
 				};
 		
 		//Zeichne das Bild
@@ -526,29 +549,6 @@ public class DPanel extends JPanel {
 			this.setCheckpointObject(null);
 		}
 	}
-	public void ChangePlayer(){
-		
-		int[] TmpDynamicObjectPosition = this.DynamicObjects[0].getCurrentPosition();
-		
-			switch(this.DynamicObjects[0].getLives()){
-			case 3:
-				this.drawImageAtPos(getGraphics(),9 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-				this.repaint();
-				break;
-			case 2:
-				this.drawImageAtPos(getGraphics(), 10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-				this.repaint();
-				break;
-			case 1:
-				this.drawImageAtPos(getGraphics(), 11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-				this.repaint();
-				break;
-			case 0:
-				this.drawImageAtPos(getGraphics(), 12 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-				this.repaint();
-				break;
-			}
-		
 	
-		}
-	}
+}
+
