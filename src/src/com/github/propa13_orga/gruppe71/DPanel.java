@@ -35,6 +35,7 @@ public class DPanel extends JPanel {
 	private int CurrentLevelSection;
 	private int CurrentLevel;
 	private int AnzahlSpieler;
+	private boolean loaded;
 	
 	/**
 	 * Initialisiert die Klassenattribute
@@ -58,6 +59,7 @@ public class DPanel extends JPanel {
 		this.CurrentLevel = 0;
 		this.AnzahlSpieler = pAnzahlSpieler;
 		this.loadLevel(0); //Laed 1. Level
+		this.loaded=false;
 	}
 	
 	/**
@@ -71,7 +73,8 @@ public class DPanel extends JPanel {
 		// Variablen um zu Speichern, wo der Eingang ist
 		int TmpXStart = -1;
 		int TmpYStart = -1;
-		
+		int TmpXObject=-1;
+		int TmpYObject=-1;
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
 			//Schleife, die durch die statischen Objekte geht
@@ -84,8 +87,10 @@ public class DPanel extends JPanel {
 						TmpXStart = x; //Speichert es wo der Eingang ist
 						TmpYStart = y; //in 2 Variablen
 					}
+						
+					}
 					
-				}
+				
 				
 			}
 
@@ -139,6 +144,18 @@ public class DPanel extends JPanel {
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						}
+						
+						for (int y = 0; y < 12; y++) {
+							for (int x = 0; x < 20; x++) {
+								 if(this.DynamicObjects[0].ItemHit()==true && this.StaticObjects[y][x].getType() == 8){
+											this.StaticObjects[y][x].setType(0);
+											this.drawImageAtPos(pGraphics, this.StaticObjects[y][x].getType(),(x*30), (y*30));
+											this.Geladen(true);
+											this.DynamicObjects[0].ItemBag();
+											
+									}
+								}
+						
 						//Hier werden die Burger neu gezeichnet bei Leben Verlust.
 						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
 						
@@ -214,7 +231,7 @@ public class DPanel extends JPanel {
 		this.repaint();
 	}
 	
-	
+	}
 	/**
 	 * Malt ein Bild an der angegebenen Position
 	 * @param pGraphics Java-Graphicsobjekt
@@ -571,6 +588,14 @@ public class DPanel extends JPanel {
 			this.CheckpointLoaded = true;
 			this.setCheckpointObject(null);
 		}
+	}
+	
+	public boolean Setladen(){
+		return this.loaded;
+	}
+
+public boolean Geladen(boolean p){
+		return this.loaded=p;
 	}
 	
 }

@@ -120,7 +120,6 @@ public class DDynamic {
 		
 		case 8:
 			this.ItemSetHit(true);
-			this.ItemBag();
 			break;
 				
 		}
@@ -284,10 +283,13 @@ public class DDynamic {
 	public boolean[] ItemBag(){
 		
 		for(int i=0;i<=NumberItems()-1;i++){
-		if(this.hit== true && this.items[i]==false){
+		if(this.hit==true && this.items[i]==false){
 			System.out.println("YES!");
 			this.items[i]=this.hit;
-			this.hit=false;
+			if(this.items[i]==true && SpielPanel.Setladen()==true){
+				this.ItemSetHit(false);
+			}
+			
 		}
 		else if(this.hit==true && this.items[i]==true){
 			System.out.println("Already picked up!");
