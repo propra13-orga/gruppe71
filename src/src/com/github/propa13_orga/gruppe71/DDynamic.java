@@ -16,6 +16,7 @@ public class DDynamic {
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
 	private int Lives;
+	public int GLives; 	// Leben für Gegner
 	private int Points;
 	private boolean death;
 	private boolean check;
@@ -24,7 +25,7 @@ public class DDynamic {
 	private boolean hit;
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pPunkte, boolean pisBot,int itemnumber){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pGLeben, int pPunkte, boolean pisBot,int itemnumber){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
@@ -34,11 +35,13 @@ public class DDynamic {
 		this.MoveToYPos = -1;
 		this.moves = false;
 		this.Lives = pLeben; 
+		this.GLives = pGLeben;
 		this.Points = pPunkte;
 		this.isBot = pisBot;
 		this.items=new boolean[itemnumber];
 		this.InitItems();
 		this.hit=false;
+		
 	}
 	    
 	//Bekomme Position des Dynamischen Objekts.
@@ -96,6 +99,12 @@ public class DDynamic {
 			this.MoveToXPos = pXPos;
 			this.MoveToYPos = pYPos;
 		}
+		 for (int i = 0; i < 4; i++){ // Wenn der Gegner an der gleichen Position ist verlieren beide ein Leben
+			 if (this.DynamicObjects[i].CurrentXPos == pXPos && this.DynamicObjects[i].CurrentYPos == pYPos && this.DynamicObjects[i].isBot != this.isBot ) {
+			  this.LoseLife();
+			  this.DynamicObjects[i].LoseLife();
+			  }
+		 }
 		// AKTIONEN JE NACH TYP
 		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 		
@@ -115,7 +124,7 @@ public class DDynamic {
 			}
 			break;
 		case 6: // Objekt ist ein Mensch!
-			this.LoseLife();
+			if (this.isBot == false){this.LoseLife();} // Nur wenn es ein Spieler ist
 			break;
 		
 		case 8:
@@ -123,7 +132,17 @@ public class DDynamic {
 			break;
 				
 		}
-			
+		
+		/*
+		 * switch(this.DDynamic[(pYPos/30)][(pXPos/30)].isBot()){
+		case 11: // Objekt ist ein Gegener
+			this.LoseLife();
+			break;
+		default:
+			System.out.println("Fehler in Schleife zur Gegner Erkenneung");
+				
+		}
+			*/
 		}
 	
 	/**
@@ -228,13 +247,18 @@ public class DDynamic {
 				else 
 					this.SpielPanel.beendeSpiel();// Beende Spiel
 				}
+			}else if (this.isBot == true){
+				this.GLives = 0;
 			}
-					
+			
+			
 		}else if(this.SpielPanel.Modus2Spieler()==2){ //Modus 2 Spieler
 			this.setLives(-1);	// L
 			
 			if(this.getLives()==0 && this.isBot == false){ //Leben einer der Spieler 0?
 				this.SpielPanel.beendeSpiel();
+			}else if (this.isBot == true){
+				this.GLives = 0;
 			}
 		}
 			

@@ -103,14 +103,15 @@ public class DPanel extends JPanel {
 				{
 					//Wenn noch nichts initialisiert wurde, Level Start
 					int Life=4;
+					int LifeGegner = 1;
 					int Points = 0; //Punkte Marke
 					boolean Check=false; //Checkpoint Marke
 					boolean death=false; //Todesmarke
 					
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false,3); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, Points, false,3); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), Life, Points, true,0); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), Life, Points, true,0); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, 0, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, 0, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), LifeGegner, LifeGegner, Points, true,0); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), LifeGegner, LifeGegner, Points, true,0); //initialisiere, damit Objekt neben Eingang
 				}	
 				else
 				{
@@ -126,8 +127,8 @@ public class DPanel extends JPanel {
 					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
 					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
 					
-					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),DynamicObjects[0].getPoints(), false,3);
-				}
+					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),0, DynamicObjects[0].getPoints(), false,3);
+				} 
 
 
 				this.DynamicObjectsLoaded = true;
@@ -191,7 +192,7 @@ public class DPanel extends JPanel {
 				//Schleife, die durch die dynamischen Objekte der Gegner geht
 				for (int i = 2; i < 10; i++) {
 					
-					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
+					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].GLives != 0){ //Wenn Objekt aktiv und GLives vorhanden sind
 						
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
