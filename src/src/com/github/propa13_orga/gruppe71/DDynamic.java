@@ -15,17 +15,17 @@ public class DDynamic {
 	private int MoveToXPos; //Bewegung in X Richtung
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
+	private int Health;
 	private int Lives;
-	public int GLives; 	// Leben fŸr Gegner
+	private int Type;
 	private int Points;
-	private boolean death;
-	private boolean check;
+	private int Money;
 	private boolean isBot;
 	private boolean[] items;
 	private boolean hit;
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pLeben, int pGLeben, int pPunkte, boolean pisBot,int itemnumber){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot,int itemnumber){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
@@ -34,10 +34,17 @@ public class DDynamic {
 		this.MoveToXPos = -1;
 		this.MoveToYPos = -1;
 		this.moves = false;
-		this.Lives = pLeben; 
-		this.GLives = pGLeben;
+		this.Health = pHealth;
 		this.Points = pPunkte;
+		this.Money = 0;
 		this.isBot = pisBot;
+		if(pisBot == true){
+			this.Lives = 0;
+			this.Type = 1;
+		}else{
+			this.Type = 0;
+			this.Lives = 3;
+		}
 		this.items=new boolean[itemnumber];
 		this.InitItems();
 		this.hit=false;
@@ -94,22 +101,25 @@ public class DDynamic {
 	 * @param pYStart Neue Y Position
 	 */
 	public void setMoveToPosition(int pXPos, int pYPos){
-		if( this.StaticObjects[(pYPos/30)][(pXPos/30)].getCollision() == false){ //Keine Kollision also bewege
+		if(this.StaticObjects[(pYPos/30)][(pXPos/30)].getCollision() == false){ //Keine Kollision also bewege
 			this.moves = true; //Objekt bewegt sich jetzt also = 1
 			this.MoveToXPos = pXPos;
 			this.MoveToYPos = pYPos;
 		}
-		 for (int i = 0; i < 4; i++){ // Wenn der Gegner an der gleichen Position ist verlieren beide ein Leben
-			 if (this.DynamicObjects[i].CurrentXPos == pXPos && this.DynamicObjects[i].CurrentYPos == pYPos && this.DynamicObjects[i].isBot != this.isBot ) {
-			  this.LoseLife();
-			  this.DynamicObjects[i].LoseLife();
-			  }
+		
+		 for (int i = 0; i < this.DynamicObjects.length; i++){ // Wenn der Gegner an der gleichen Position ist verlieren beide ein Leben
+			 if(this.DynamicObjects[i] != null){
+				 if(this.DynamicObjects[i].CurrentXPos == pXPos && this.DynamicObjects[i].CurrentYPos == pYPos && this.DynamicObjects[i].isBot != this.isBot ) {
+				 	this.LoseHealth();
+				 	this.DynamicObjects[i].LoseHealth();
+			 	}
+			 }
 		 }
 		// AKTIONEN JE NACH TYP
 		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 		
 		case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
-			if(SpielPanel.Modus2Spieler()==2){ //2 Spieler Modus
+			if(SpielPanel.SpielerModus() == 2){ //2 Spieler Modus
 			this.Points += 1;
 			SpielPanel.Spielstand();
 			}
@@ -124,7 +134,7 @@ public class DDynamic {
 			}
 			break;
 		case 6: // Objekt ist ein Mensch!
-			if (this.isBot == false){this.LoseLife();} // Nur wenn es ein Spieler ist
+			if (this.isBot == false){this.LoseHealth();} // Nur wenn es ein Spieler ist
 			break;
 		
 		case 8:
@@ -136,7 +146,7 @@ public class DDynamic {
 		/*
 		 * switch(this.DDynamic[(pYPos/30)][(pXPos/30)].isBot()){
 		case 11: // Objekt ist ein Gegener
-			this.LoseLife();
+			this.LoseHealth();
 			break;
 		default:
 			System.out.println("Fehler in Schleife zur Gegner Erkenneung");
@@ -170,15 +180,6 @@ public class DDynamic {
 				this.setMoveToPosition(tmpCurrentPosition[0], (tmpCurrentPosition[1]+30));
 		}
 	}
-	//Hilfsfunktionen fuer Animate Moving
-	public void ErhoeheXUm(int add){
-		this.CurrentXPos+=add;
-		
-	}
-	public void ErhoeheYUm(int add){
-		this.CurrentYPos+=add;
-		
-	}
 	
 	/**
 	 * Animiert das Objekt, hiermit wird das dyn. Objekt Stueck fuer Stueck um 2 Pixel bewegt, bis
@@ -188,50 +189,88 @@ public class DDynamic {
 	public void AnimateMoving(){
 		
 		if(this.CurrentXPos < this.MoveToXPos)
-			this.ErhoeheXUm(3); //muss noch ein Stï¿½ck nach rechts
+			this.CurrentXPos += 3; //muss noch ein Stï¿½ck nach rechts
 
 			if(this.CurrentXPos > this.MoveToXPos)
-			this.ErhoeheXUm(-3); //muss noch ein Stï¿½ck nach links
+			this.CurrentXPos -= 3; //muss noch ein Stï¿½ck nach links
 
 			if(this.CurrentYPos < this.MoveToYPos)
-			this.ErhoeheYUm(3); //muss noch ein Stï¿½ck nach unten
+			this.CurrentYPos += 3; //muss noch ein Stï¿½ck nach unten
 
 			if(this.CurrentYPos > this.MoveToYPos)
-			this.ErhoeheYUm(-3); //muss noch ein Stï¿½ck nach oben
+			this.CurrentYPos -= 3; //muss noch ein Stï¿½ck nach oben
 
 			//Wenn wir fertig sind, setzen wir die Variable wieder, dass es sich momentan nicht bewegt
 			if(this.CurrentYPos == this.MoveToYPos && this.CurrentXPos == this.MoveToXPos)
 			this.moves = false; // bewegt sich nicht mehr, moveTo ist IsMoving
 		
 	}
+
+	/**
+	 * Gibt Gesundheit zurueck
+	 * @param NICHTS 
+	 */
+	public int getHealth(){
+		return this.Health;	
+	}
 	
-	public int getLives(){//Setzt Leben
+	/**
+	 * Setzt Gesundheit
+	 * @param pHealth Wieviel Gesundheit? 
+	 */
+	public void setHealth(int pHealth){
+		this.Health += pHealth;
+	}
+
+	/**
+	 * Gibt Leben zurueck
+	 * @param NICHTS 
+	 */
+	public int getLives(){
 		return this.Lives;	
 	}
-	public void setLives(int lp){ //lp=Lifepoints
-		this.Lives += lp;
+	
+	/**
+	 * Setzt Leben
+	 * @param pLives Wieviele Leben? 
+	 */
+	public void setLives(int pLives){
+		this.Lives += pLives;
 	}
 	
+	/**
+	 * Gibt Punkte zurueck
+	 * @param NICHTS 
+	 */
 	public int getPoints(){ //Bekomme Punkte
 		return this.Points;
 	}
-	public void setPoints(int pkt) //Erhoeht Punkte des Spielers bei Erreichen eines Levelabschnitts
+	
+	/**
+	 * Setzt Punkte
+	 * @param pHealth Wieviele Punkte? 
+	 */
+	public void setPoints(int pPoints) //Erhoeht Punkte des Spielers bei Erreichen eines Levelabschnitts
 	{
-		this.Points = pkt;
+		this.Points = pPoints;
 	}
 	
-	/** Methode Leben verlieren; kann in
-	 *  Verknuepfung mit Schadenssystem
-	 *   benutzt werden
+	/** 
+	 * Methode Gesundheit verlieren kann in Verknuepfung mit Schadenssystem benutzt werden
 	 * @param Nichts
 	 */
-	public void LoseLife(){ 
+	public void LoseHealth(){ 
 		int p;
-		if(this.SpielPanel.Modus2Spieler()==1){ // gucke nach Modi
-			this.setLives(-1);// Leben weniger
+		if(this.SpielPanel.SpielerModus() == 1){ // gucke nach Modi
+			this.setHealth(-1);// 1 Gesundheit weniger
 			
-			if(this.getLives()==0 && this.isBot == false){ //wenn Leben 0 ist!
-				this.Death();
+			if(this.getHealth() == 0 && this.getLives() > 0 && this.isBot == false){ 
+				//Gesundheit des Spielers 0?
+				this.Lives--; // Leben weniger
+				this.Health = 4; //Gesundheit wieder voll
+			}
+			
+			if(this.getHealth() == 0 && this.getLives() == 0 && this.isBot == false){ //wenn Leben 0 ist!
 				if(this.SpielPanel.CheckpointExists() == false || (this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == true)){
 				// Wenn kein Checkpoint existiert oder schon mal ein Checkpoint geladen wurde	
 					this.SpielPanel.beendeSpiel(); // Beende Spiel
@@ -247,18 +286,19 @@ public class DDynamic {
 				else 
 					this.SpielPanel.beendeSpiel();// Beende Spiel
 				}
-			}else if (this.isBot == true){
-				this.GLives = 0;
+			}	
+		}else if(this.SpielPanel.SpielerModus() == 2){ //Modus 2 Spieler
+			this.setHealth(-1);	// 1 Gesundheit weniger
+
+			if(this.getHealth() == 0 && this.getLives() > 0 && this.isBot == false){ 
+				//Gesundheit einer der Spieler 0?
+				this.Lives--; // Leben weniger
+				this.Health = 4; //Gesundheit wieder voll
 			}
 			
-			
-		}else if(this.SpielPanel.Modus2Spieler()==2){ //Modus 2 Spieler
-			this.setLives(-1);	// L
-			
-			if(this.getLives()==0 && this.isBot == false){ //Leben einer der Spieler 0?
+			if(this.getHealth() == 0 && this.getLives() == 0 && this.isBot == false){ 
+				//Gesundheit &Leben einer der Spieler 0?
 				this.SpielPanel.beendeSpiel();
-			}else if (this.isBot == true){
-				this.GLives = 0;
 			}
 		}
 			
@@ -275,10 +315,6 @@ public class DDynamic {
 				return "Sie haben sowieso keinen Checkpoint! Pech gehabt :)!";
 			}
 		}
-	
-	public boolean Death(){
-		return this.death=true;
-	}
 	
 	/*
 	 * Guckt wie viele Items gesetzt wurden

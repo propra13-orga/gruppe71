@@ -30,6 +30,7 @@ public class DPanel extends JPanel {
 	private boolean StaticObjectsLoaded; //Statische Objekte geladen?
 	private boolean StaticObjectsPainted; //Statische Objekte gemalt?
 	private boolean DynamicObjectsLoaded; //Dynamische Objekte geladen?
+	private boolean GegnerLoaded; //Gegner DynamicObjects geladen?
 	private boolean DynamicObjectsPainted; //Dynamische Objekte gemalt?
 	private boolean LevelObjectsLoaded; //Level Objekte zwischengespeichert/geladen aus Datei?
 	private int CurrentLevelSection;
@@ -47,12 +48,13 @@ public class DPanel extends JPanel {
 		//Setze alles auf Start-Wert
 		this.SpielFenster = pJFrame;
 		this.StaticObjects = new StaticObject[12][20];
-		this.DynamicObjects = new DDynamic[10];
+		this.DynamicObjects = new DDynamic[50];
 		this.LevelObjects = new int[3][12][20]; 
 		this.CheckpointLoaded = false;
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
 		this.DynamicObjectsLoaded = false;
+		this.GegnerLoaded = false;
 		this.DynamicObjectsPainted = false;
 		this.LevelObjectsLoaded = false;
 		this.CurrentLevelSection = 0;
@@ -77,6 +79,8 @@ public class DPanel extends JPanel {
 		int TmpYObject=-1;
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
+			int[][] tmpGegnerArray = new int[48][3];
+			int tmpAnzahlGegner = 0;
 			//Schleife, die durch die statischen Objekte geht
 			for (int y = 0; y < 12; y++) {
 				for (int x = 0; x < 20; x++) {
@@ -87,6 +91,15 @@ public class DPanel extends JPanel {
 						TmpXStart = x; //Speichert es wo der Eingang ist
 						TmpYStart = y; //in 2 Variablen
 					}
+					
+					if(this.StaticObjects[y][x].getType() == 5){ //und wenn das Objekt ein Gegner ist
+						tmpGegnerArray[tmpAnzahlGegner][0] = x; //Gegner X Pos zwischenspeichern
+						tmpGegnerArray[tmpAnzahlGegner][1] = y; //Gegner Y Pos zwischenspeichern
+						tmpGegnerArray[tmpAnzahlGegner][2] = this.StaticObjects[y][x].getType(); //Gegner Typ zwischenspeichern
+						tmpAnzahlGegner++;
+						
+						this.StaticObjects[y][x].setType(0); //Gegner geladen, also loeschen
+					}				
 						
 					}
 					
@@ -102,16 +115,34 @@ public class DPanel extends JPanel {
 				if(this.DynamicObjects[0] == null && this.DynamicObjects[1] == null)
 				{
 					//Wenn noch nichts initialisiert wurde, Level Start
-					int Life=4;
-					int LifeGegner = 1;
+					int Health=4; //Gesundheit
 					int Points = 0; //Punkte Marke
-					boolean Check=false; //Checkpoint Marke
-					boolean death=false; //Todesmarke
 					
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, 0, Points, false,3); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Life, 0, Points, false,3); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[2] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (2*30), LifeGegner, LifeGegner, Points, true,0); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[3] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (2*30), (3*30), LifeGegner, LifeGegner, Points, true,0); //initialisiere, damit Objekt neben Eingang
+					//Spieler initialisieren
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					
+					//Gegner initialisieren
+					for (int i = 0; i < tmpAnzahlGegner; i++) {
+						if(tmpGegnerArray[i] != null){ //Wenn Gegner existiert
+							
+							//Werte laden aus dem Array
+							int tmpGegnerXPos = tmpGegnerArray[i][0];
+							int tmpGegnerYPos = tmpGegnerArray[i][1];
+							int tmpGegnerType = tmpGegnerArray[i][2];
+							
+							//Gegner Typ bestimmen und initialisieren
+							switch(tmpGegnerType){
+							case 5: //Standard Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
+								break;
+							case 99: //Staerkerer Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
+								break;
+							}
+						}
+					}
+				
 				}	
 				else
 				{
@@ -127,7 +158,7 @@ public class DPanel extends JPanel {
 					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
 					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
 					
-					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getLives(),0, DynamicObjects[0].getPoints(), false,3);
+					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3);
 				} 
 
 
@@ -162,7 +193,7 @@ public class DPanel extends JPanel {
 						
 						
 						
-						switch(this.DynamicObjects[i].getLives()){
+						switch(this.DynamicObjects[i].getHealth()){
 						case 4:
 							this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 							break;
@@ -190,17 +221,18 @@ public class DPanel extends JPanel {
 					
 				}
 				//Schleife, die durch die dynamischen Objekte der Gegner geht
-				for (int i = 2; i < 10; i++) {
+				for (int i = 2; i < this.DynamicObjects.length; i++) {
 					
-					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].GLives != 0){ //Wenn Objekt aktiv und GLives vorhanden sind
+					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() != 0){ //Wenn Objekt aktiv und Health vorhanden sind
 						
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						} else {
+							System.out.println("DO "+i+" soll sich bewegen...");
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
-							int delaycounter = zufallsZahl.nextInt(100);			//Verz�gerung von Zufalls-Bewegung
-							if (delaycounter == 0){								
+							int delaycounter = zufallsZahl.nextInt(100);			//Verzoegerung von Zufalls-Bewegung
+							if(delaycounter == 0){								
 								switch(randomnumber){								// Zufalls-Bewegung
 								case 0: this.DynamicObjects[i].moveTo("right");
 										break;
@@ -374,6 +406,7 @@ public class DPanel extends JPanel {
 		//this.DynamicObjects = new DDynamic[2];
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
+		
 		this.DynamicObjectsLoaded = false;
 		this.DynamicObjectsPainted = false;
 		this.CurrentLevelSection = pSection;
@@ -387,6 +420,11 @@ public class DPanel extends JPanel {
 				// steht, am Ende ist der StaticObject Array gefüllt mit neuen StatiObject Objekten
 				this.StaticObjects[y][x] = new StaticObject(LevelObjects[pSection][y][x]);
 			}
+		}
+		
+		//Schleife, die die Gegner loescht
+		for (int i = 2; i < this.DynamicObjects.length; i++) {
+			this.DynamicObjects[i] = null;
 		}
 	}
 	
@@ -561,7 +599,11 @@ public class DPanel extends JPanel {
 	}
 	
 	
-	public int Modus2Spieler(){
+	/**
+	 * Gibt Anzahl der Spieler zurueck
+	 * @param NICHTS
+	 */
+	public int SpielerModus(){
 		return this.AnzahlSpieler;
 	}
 	
@@ -579,7 +621,7 @@ public class DPanel extends JPanel {
                   "Checkpoint", JOptionPane.YES_NO_CANCEL_OPTION,
                   JOptionPane.WARNING_MESSAGE, null, 
                   new String[]{"Wiederbeleben!", "Ich geb auf!"}, "Ich geb auf");
-			return opt;
+		return opt;
 	}
 	
 	public void RevivePaint(){//Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
@@ -595,7 +637,7 @@ public class DPanel extends JPanel {
 		return this.loaded;
 	}
 
-public boolean Geladen(boolean p){
+	public boolean Geladen(boolean p){
 		return this.loaded=p;
 	}
 	
