@@ -204,11 +204,12 @@ public class DDynamic {
 					this.SpielPanel.beendeSpiel(); //Sonst beende Spiel
 				}
 				break;
-			case 6: // Objekt ist ein Mensch!
-				this.LoseHealth(); // Nur wenn es ein Spieler ist
+				
+			case 6: // Objekt ist eine Falle!
+				this.LoseHealth();
 				break;
 				
-			case 8:
+			case 24: // Money / Geld
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
 				break;
 				

@@ -271,23 +271,37 @@ public class DPanel extends JPanel {
 	private void drawImageAtPos(Graphics pGraphics, int pIndex, int pXPos, int pYPos){ 
 		//Bild Array, enthaelt Bilder von Objekten aus JPEG Dateien, Boden/Mauer etc.
 		Image[] bb = {
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //0
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall.jpg"), //1
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_in.jpg"), //2
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //7
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //8
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //0 Boden
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall.jpg"), //1 Mauer
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_in.jpg"), //2 Eingang
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3 Durchgang
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4 Ausgang
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5 Normaler Gegner
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6 Falle
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //7 Normaler Boss
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //8 End-Boss
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //9
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"),//10
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_1.jpg"),//11
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_2.jpg"),//12
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_3.jpg"),//13
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_4.jpg") //14
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"),//10 Spieler 0-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_1.jpg"),//11 Spieler 1-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_2.jpg"),//12 Spieler 2-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_3.jpg"),//13 Spieler 3-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player_4.jpg"),//14 Spieler 4-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //15
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //16
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //17
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //18
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //19
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //20
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //21 Cheese/Kaese
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //22 HealthGesundheit
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //23 Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //24 Money / Geld
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //25 NPC
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //26 Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //27 Shop
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg")  //28 Zaubertrank
 				};
-		
+	
 		//Zeichne das Bild
 		pGraphics.drawImage(bb[pIndex], pXPos, pYPos, 30, 30, this);
 	}
@@ -362,7 +376,43 @@ public class DPanel extends JPanel {
 		    for (int z = 0; z < 3; z++){ //Level-Abschnitt
 		    	for (int y = 0; y < 12; y++){ //Spalte
 	            	for (int x = 0; x < 20; x++) { //Alle Buchstaben der Spalte durchgehen
-						TmpLevelObjects[z][y][x] = Character.getNumericValue(LevelFileContent[z][y].charAt(x));
+	            		char tmpBuchstabe = LevelFileContent[z][y].charAt(x);
+	            		if(tmpBuchstabe >= '0' && tmpBuchstabe <= '9'){ //Wenn eine Nummer
+	            			TmpLevelObjects[z][y][x] = Character.getNumericValue(tmpBuchstabe);
+	            		}else{
+	            			switch(tmpBuchstabe){
+	            			case 'C': // Cheese/Kaese
+								TmpLevelObjects[z][y][x] = 20;
+								break;
+	            			case 'H': // Health/Gesundheit
+								TmpLevelObjects[z][y][x] = 21;
+								break;
+	            			case 'K': // Knife / Messer
+								TmpLevelObjects[z][y][x] = 22;
+								break;
+	            			case 'L': // Leben
+								TmpLevelObjects[z][y][x] = 23;
+								break;
+	            			case 'M': // Money/Geld
+								TmpLevelObjects[z][y][x] = 24;
+								break;
+	            			case 'N': // NPC
+								TmpLevelObjects[z][y][x] = 25;
+								break;
+	            			case 'R': // Ruestung
+								TmpLevelObjects[z][y][x] = 26;
+								break;
+	            			case 'S': // Shop
+								TmpLevelObjects[z][y][x] = 27;
+								break;
+	            			case 'Z': //Zaubertrank
+								TmpLevelObjects[z][y][x] = 28;
+								break;
+							default:
+								TmpLevelObjects[z][y][x] = 24;
+								break;
+	            			}
+	            		}
 	            	}
 	        	}
 		    }
