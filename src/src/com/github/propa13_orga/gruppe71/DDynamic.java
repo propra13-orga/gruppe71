@@ -15,12 +15,15 @@ public class DDynamic {
 	private int MoveToXPos; //Bewegung in X Richtung
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
-	private int Health;
-	private int Lives;
-	private int Type;
-	private int Points;
-	private int Money;
-	private boolean isBot;
+	
+	private int Health; // Gesundheit
+	private int Lives; // Leben
+	private int Money; // Geld
+	private int Mana; // Mana / Zauberpunkte
+	private int Type; // Typ des Bots(normal, Boss etc.)
+	private boolean isBot; // Ist ein Bot oder Spieler?
+	private int Points; //Punkte
+	
 	private boolean[] items;
 	private boolean hit;
 	
@@ -36,7 +39,8 @@ public class DDynamic {
 		this.moves = false;
 		this.Health = pHealth;
 		this.Points = pPunkte;
-		this.Money = 0;
+		this.Money = 10;
+		this.Mana = 10;
 		this.isBot = pisBot;
 		if(pisBot == true){
 			this.Lives = 0;
@@ -50,33 +54,68 @@ public class DDynamic {
 		this.hit=false;
 		
 	}
-	    
-	//Bekomme Position des Dynamischen Objekts.
+    
+	/**
+	 * Gibt Momentane Position des Objekts zurueck
+	 * @param NICHTS 
+	 */
 	public int[]getCurrentPosition(){
 		  int[] CurrentPosition = new int[2]; //2 Rueckgabewerte: x und y
 		  //Index braucht man nicht, weil man ja schon im Objekt ist
 		  CurrentPosition[0]=this.CurrentXPos;
 		  CurrentPosition[1]=this.CurrentYPos;
 		  return CurrentPosition;
-		 }
+	}
 	
-	//Setzt die Position des DynamicObjects Players
+
+	/**
+	 * Gibt Momentane X-Position des Objekts zurueck
+	 * @param NICHTS 
+	 */
+	public int getCurrentXPosition(){
+		  return this.CurrentXPos;
+	}
+	
+	/**
+	 * Gibt Momentane Y-Position des Objekts zurueck
+	 * @param NICHTS 
+	 */
+	public int getCurrentYPosition(){
+		  return this.CurrentYPos;
+	}
+	
+
+	/**
+	 * Setzt die Momentane Position des Objekts
+	 * @param pXPos neue X Position
+	 * @param pYPos neue Y Position
+	 */
 	public void setCurrentPosition(int pXPos, int pYPos){
 		this.CurrentXPos=pXPos;
 		this.CurrentYPos=pYPos;
 	}
 
-	//Routine
+	/**
+	 * Gibt zurueck, ob das Objekt sich gerade bewegt
+	 * @param NICHTS 
+	 */
 	public boolean IsMoving(){
 		return this.moves;
 	}
 	
-	//Routine
+
+	/**
+	 * Setzt, ob das Objekt sich bewegt
+	 * @param pMoves bewegt es sich?
+	 */
 	public void setMoves(boolean pMoves){
 		this.moves = pMoves;
 	}
 	
-	// Bekomme Wert der Position des dynamischen Objektes
+	/**
+	 * Gibt MoveTo Position zurueck
+	 * @param NICHTS 
+	 */
 	public int[] getMoveToPosition(){
 		int[] PositionMoving=new int[2];
 		PositionMoving[0]=this.MoveToXPos;
@@ -85,12 +124,34 @@ public class DDynamic {
 			
 	}
 	
-	//Gibt StaticObjects aus
+	/**
+	 * Gibt MoveTo X-Position des Objekts zurueck
+	 * @param NICHTS 
+	 */
+	public int getMoveToXPosition(){
+		  return this.MoveToXPos;
+	}
+	
+	/**
+	 * Gibt MoveTo Y-Position des Objekts zurueck
+	 * @param NICHTS 
+	 */
+	public int getMoveToYPosition(){
+		  return this.MoveToYPos;
+	}
+	
+	/**
+	 * Gibt StaticObjects zurueck
+	 * @param NICHTS 
+	 */
 	public StaticObject[][] getStaticObjects(){
 		return this.StaticObjects;
 	}
 	
-	//Setzt StaticObjects
+	/**
+	 * Setzt StaticObjects einem Wert
+	 * @param pStaticObjects Statisches Objekt
+	 */
 	public void setStaticObjects(StaticObject[][] pStaticObjects){
 		this.StaticObjects = pStaticObjects;
 	}
@@ -101,48 +162,58 @@ public class DDynamic {
 	 * @param pYStart Neue Y Position
 	 */
 	public void setMoveToPosition(int pXPos, int pYPos){
-		if(this.StaticObjects[(pYPos/30)][(pXPos/30)].getCollision() == false){ //Keine Kollision also bewege
-			this.moves = true; //Objekt bewegt sich jetzt also = 1
-			this.MoveToXPos = pXPos;
-			this.MoveToYPos = pYPos;
-		}
 		
+		boolean tmpAndererBotAnPos = false; // Collision zwischen Bots
+		
+		// Schaden hinzufügen wenn Gegner und Spieler sich beruehren
 		 for (int i = 0; i < this.DynamicObjects.length; i++){ // Wenn der Gegner an der gleichen Position ist verlieren beide ein Leben
 			 if(this.DynamicObjects[i] != null){
-				 if(this.DynamicObjects[i].CurrentXPos == pXPos && this.DynamicObjects[i].CurrentYPos == pYPos && this.DynamicObjects[i].isBot != this.isBot ) {
-				 	this.LoseHealth();
-				 	this.DynamicObjects[i].LoseHealth();
-			 	}
+				 if(this.DynamicObjects[i].isBot != this.isBot && ((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
+					 //WENN nicht beide Bots sind & beide auf die gleiche Position wollen(Unterscheidung IsMoving)
+					 this.LoseHealth();
+					 this.DynamicObjects[i].LoseHealth();
+				 }else if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
+					 //WENN Beides Bots und gleiche Position
+					 tmpAndererBotAnPos = true; //
+				 }
 			 }
 		 }
-		// AKTIONEN JE NACH TYP
-		switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
-		
-		case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
-			if(SpielPanel.SpielerModus() == 2){ //2 Spieler Modus
-			this.Points += 1;
-			SpielPanel.Spielstand();
-			}
-			this.SpielPanel.loadNextLevelSection();
-			break;
-			
-		case 4: //Ziel erreicht NeuStart des Spiels
-			if(this.SpielPanel.getCurrentLevel() < 2){ //Wenn noch nicht letzter Level
-				this.SpielPanel.loadNextLevel(); //Lade naechsten Level
-			}else{
-				this.SpielPanel.beendeSpiel(); //Sonst beende Spiel
-			}
-			break;
-		case 6: // Objekt ist ein Mensch!
-			if (this.isBot == false){this.LoseHealth();} // Nur wenn es ein Spieler ist
-			break;
-		
-		case 8:
-			this.ItemSetHit(true);
-			break;
-				
+		 
+		 if(this.StaticObjects[(pYPos/30)][(pXPos/30)].getCollision() == false && tmpAndererBotAnPos == false){ //Keine Kollision also bewege
+				this.moves = true; //Objekt bewegt sich jetzt also = 1
+				this.MoveToXPos = pXPos;
+				this.MoveToYPos = pYPos;
 		}
-		
+		 
+		// AKTIONEN JE NACH TYP
+		if(this.isBot == false){
+			switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
+			
+			case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
+				if(SpielPanel.SpielerModus() == 2){ //2 Spieler Modus
+					this.Points += 1;
+					SpielPanel.Spielstand();
+				}
+				this.SpielPanel.loadNextLevelSection();
+				break;
+				
+			case 4: //Ziel erreicht NeuStart des Spiels
+				if(this.SpielPanel.getCurrentLevel() < 2){ //Wenn noch nicht letzter Level
+					this.SpielPanel.loadNextLevel(); //Lade naechsten Level
+				}else{
+					this.SpielPanel.beendeSpiel(); //Sonst beende Spiel
+				}
+				break;
+			case 6: // Objekt ist ein Mensch!
+				this.LoseHealth(); // Nur wenn es ein Spieler ist
+				break;
+				
+			case 8:
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				break;
+				
+			}
+		}
 		/*
 		 * switch(this.DDynamic[(pYPos/30)][(pXPos/30)].isBot()){
 		case 11: // Objekt ist ein Gegener
@@ -159,7 +230,6 @@ public class DDynamic {
 	 * Bewegt ein dynamisches Objekt rauf, runter, rechts oder links
 	 * @param pWhere Wohin es bewegt werden soll
 	 */
-	
 	public void moveTo(String pWhere){
 
 		if(this.moves == false){ //Wird das Objekt momentan schon bewegt?
@@ -316,13 +386,19 @@ public class DDynamic {
 			}
 		}
 	
-	/*
+	/**
 	 * Guckt wie viele Items gesetzt wurden
+	 * @param pBla Blabla 
 	 */
 	public int NumberItems(){
 		return this.items.length;
 	}
-	//Initialisiert Items 
+	
+
+	/**
+	 * Initialisiert Items 
+	 * @param pBla Blabla 
+	 */
 	public boolean[] InitItems(){
 		this.items=new boolean[NumberItems()];
 		for(int i=0;i<=NumberItems()-1;i++){
@@ -331,15 +407,27 @@ public class DDynamic {
 		return this.items;
 	}
 	
+	/**
+	 * Blablablabla
+	 * @param pBla Blabla 
+	 */
 	public boolean ItemSetHit(boolean q){
 		return this.hit=q;
 	}
 	
+	/**
+	 * Blablablabla
+	 * @param pBla Blabla 
+	 */
 	public boolean ItemHit(){
 		return this.hit;
 	}
 		
 	
+	/**
+	 * Blablablabla
+	 * @param pBla Blabla 
+	 */
 	public boolean[] ItemBag(){
 		
 		for(int i=0;i<=NumberItems()-1;i++){

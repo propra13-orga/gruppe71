@@ -179,13 +179,13 @@ public class DPanel extends JPanel {
 						
 						for (int y = 0; y < 12; y++) {
 							for (int x = 0; x < 20; x++) {
-								 if(this.DynamicObjects[0].ItemHit()==true && this.StaticObjects[y][x].getType() == 8){
+								 /*if(this.DynamicObjects[0].ItemHit()==true && this.StaticObjects[y][x].getType() == 8){
 											this.StaticObjects[y][x].setType(0);
 											this.drawImageAtPos(pGraphics, this.StaticObjects[y][x].getType(),(x*30), (y*30));
 											this.Geladen(true);
 											this.DynamicObjects[0].ItemBag();
 											
-									}
+									}*/
 								}
 						
 						//Hier werden die Burger neu gezeichnet bei Leben Verlust.
@@ -223,15 +223,16 @@ public class DPanel extends JPanel {
 				//Schleife, die durch die dynamischen Objekte der Gegner geht
 				for (int i = 2; i < this.DynamicObjects.length; i++) {
 					
-					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() != 0){ //Wenn Objekt aktiv und Health vorhanden sind
-						
-						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
+					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() != 0){ //Wenn Objekt aktiv und Health vorhanden sind	
+						//Und male das Objekt dann an der (neuen) Position
+						this.drawImageAtPos(pGraphics, 5 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
+							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						} else {
-							System.out.println("DO "+i+" soll sich bewegen...");
+							System.out.println("DO "+i+" bewegt sich..");
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
-							int delaycounter = zufallsZahl.nextInt(100);			//Verzoegerung von Zufalls-Bewegung
+							int delaycounter = zufallsZahl.nextInt(50);			//Verzoegerung von Zufalls-Bewegung
 							if(delaycounter == 0){								
 								switch(randomnumber){								// Zufalls-Bewegung
 								case 0: this.DynamicObjects[i].moveTo("right");
@@ -248,11 +249,6 @@ public class DPanel extends JPanel {
 								}
 							}
 						}
-						
-						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
-						
-						//Und male das Objekt dann an der (neuen) Position
-						this.drawImageAtPos(pGraphics, 5 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 					}
 				} 
 			}
@@ -616,6 +612,10 @@ public class DPanel extends JPanel {
 		JOptionPane.showMessageDialog(null, "Spieler 1 hat: " + Integer.toString(this.DynamicObjects[0].getPoints()) + " Punkte!\nSpieler 2 hat: " + Integer.toString(this.DynamicObjects[1].getPoints()) + " Punkte!\n");   
 	}
 	
+	/**
+	 * Blablablabla
+	 * @param pBla Blabla 
+	 */
 	public int Checkpoint(){//Fragt nach Checkpoint Benutzung wenn moeglich.
 		int opt = JOptionPane.showOptionDialog(null, "OH LEIDER GEGESSEN WORDEN!\nCheckpoint:\n"+this.DynamicObjects[0].CheckAussage(),
                   "Checkpoint", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -624,6 +624,10 @@ public class DPanel extends JPanel {
 		return opt;
 	}
 	
+	/**
+	 * Blablablabla
+	 * @param pBla Blabla 
+	 */
 	public void RevivePaint(){//Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
 		if(this.CheckpointLoaded == false){
 			this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
@@ -633,10 +637,18 @@ public class DPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Blablablabla
+	 * @param pBla Blabla 
+	 */
 	public boolean Setladen(){
 		return this.loaded;
 	}
 
+	/**
+	 * Blablablabla
+	 * @param pBla Blabla 
+	 */
 	public boolean Geladen(boolean p){
 		return this.loaded=p;
 	}
