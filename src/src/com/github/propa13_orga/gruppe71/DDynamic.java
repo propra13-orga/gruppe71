@@ -208,54 +208,9 @@ public class DDynamic {
 			case 6: // Objekt ist eine Falle!
 				this.LoseHealth();
 				break;
-
-			case 20: // Kaese
-				System.out.println("Kaese aufgenommen");
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
-				break;
-				
-			case 21: // Healthpack
-				System.out.println("Healthpack aufgenommen");
-				if(this.Health < 4) //Wenn keine Ruestung
-				this.Health = 4; // Gesundheit wieder voll machen
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
-				break;
-				
-			case 22: // Messer
-				System.out.println("Messer aufgenommen");
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
-				break;
-
-			case 23: // Leben
-				System.out.println("Leben aufgenommen");
-				this.Lives++;
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
-				break;
 				
 			case 24: // Money / Geld
-				System.out.println("Geld aufgenommen");
-				this.Money++;
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
-				break;
-				
-			case 25: // NPC
-				System.out.println("NPC beruehrt");
-				break;
-
-			case 26: // Ruestung
-				System.out.println("Ruestung aufgenommen");
-				this.Health = 8; // Ruestung = Doppelte Gesundheit
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
-				break;
-				
-			case 27: // Shop
-				System.out.println("Shop beruehrt");
-				break;
-
-			case 28: // Zaubertrank
-				System.out.println("Zaubertrank aufgenommen");
-				this.Mana += 10;
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
 				break;
 				
 			}
@@ -370,38 +325,6 @@ public class DDynamic {
 	{
 		this.Points = pPoints;
 	}
-
-	/**
-	 * Gibt Money zurueck
-	 * @param NICHTS 
-	 */
-	public int getMoney(){
-		return this.Money;	
-	}
-	
-	/**
-	 * Setzt Money
-	 * @param pMoney Wieviel Geld? 
-	 */
-	public void setMoney(int pMoney){
-		this.Money += pMoney;
-	}	
-
-	/**
-	 * Gibt Mana zurueck
-	 * @param NICHTS 
-	 */
-	public int getMana(){
-		return this.Mana;	
-	}
-	
-	/**
-	 * Setzt Mana
-	 * @param pMana Wieviel Mana? 
-	 */
-	public void setMana(int pMana){
-		this.Mana += pMana;
-	}	
 	
 	/** 
 	 * Methode Gesundheit verlieren kann in Verknuepfung mit Schadenssystem benutzt werden
@@ -466,7 +389,7 @@ public class DDynamic {
 	
 	/**
 	 * Guckt wie viele Items gesetzt wurden
-	 * @param pBla Blabla 
+	 * @param Keine Parameter
 	 */
 	public int NumberItems(){
 		return this.items.length;
@@ -475,7 +398,7 @@ public class DDynamic {
 
 	/**
 	 * Initialisiert Items 
-	 * @param pBla Blabla 
+	 * @param Keine Parameter
 	 */
 	public boolean[] InitItems(){
 		this.items=new boolean[NumberItems()];
@@ -486,7 +409,7 @@ public class DDynamic {
 	}
 	
 	/**
-	 * Blablablabla
+	 * Item Treffer Setzen
 	 * @param pBla Blabla 
 	 */
 	public boolean ItemSetHit(boolean q){
@@ -494,7 +417,7 @@ public class DDynamic {
 	}
 	
 	/**
-	 * Blablablabla
+	 * Item Treffer anzeigen
 	 * @param pBla Blabla 
 	 */
 	public boolean ItemHit(){
@@ -502,30 +425,8 @@ public class DDynamic {
 	}
 		
 	
-	/**
-	 * Blablablabla
-	 * @param pBla Blabla 
-	 */
-	public boolean[] ItemBag(){
-		
-		for(int i=0;i<=NumberItems()-1;i++){
-		if(this.hit==true && this.items[i]==false){
-			System.out.println("YES!");
-			this.items[i]=this.hit;
-			if(this.items[i]==true && SpielPanel.Setladen()==true){
-				this.ItemSetHit(false);
-			}
-			
-		}
-		else if(this.hit==true && this.items[i]==true){
-			System.out.println("Already picked up!");
-			this.hit=false;
-		}
-		}
-		
-		return this.items;
+	
 
 	}
 	
 	
-}

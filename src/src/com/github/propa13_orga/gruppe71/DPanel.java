@@ -177,16 +177,7 @@ public class DPanel extends JPanel {
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						}
 						
-						for (int y = 0; y < 12; y++) {
-							for (int x = 0; x < 20; x++) {
-								 /*if(this.DynamicObjects[0].ItemHit()==true && this.StaticObjects[y][x].getType() == 8){
-											this.StaticObjects[y][x].setType(0);
-											this.drawImageAtPos(pGraphics, this.StaticObjects[y][x].getType(),(x*30), (y*30));
-											this.Geladen(true);
-											this.DynamicObjects[0].ItemBag();
-											
-									}*/
-								}
+						
 						
 						//Hier werden die Burger neu gezeichnet bei Leben Verlust.
 						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
@@ -209,9 +200,6 @@ public class DPanel extends JPanel {
 						case 0:
 							this.drawImageAtPos(pGraphics, 14 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 							break;
-						default:
-							this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-							break;
 						}
 						
 								
@@ -232,6 +220,7 @@ public class DPanel extends JPanel {
 							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						} else {
+							System.out.println("DO "+i+" bewegt sich..");
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
 							int delaycounter = zufallsZahl.nextInt(50);			//Verzoegerung von Zufalls-Bewegung
@@ -262,7 +251,7 @@ public class DPanel extends JPanel {
 		this.repaint();
 	}
 	
-	}
+
 	/**
 	 * Malt ein Bild an der angegebenen Position
 	 * @param pGraphics Java-Graphicsobjekt
@@ -293,15 +282,15 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //17
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //18
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //19
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //20 Cheese/Kaese
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //21 Health/ Gesundheit
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //22 Knife/Messer
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //23 Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //20
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //21 Cheese/Kaese
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //22 HealthGesundheit
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //23 Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //24 Money / Geld
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //25 NPC
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //26 Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //26 Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //27 Shop
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg")  //28 Zaubertrank
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg")  //28 Zaubertrank
 				};
 	
 		//Zeichne das Bild
@@ -665,8 +654,8 @@ public class DPanel extends JPanel {
 	}
 	
 	/**
-	 * Blablablabla
-	 * @param pBla Blabla 
+	 * Beim Sterben und bei Checkpoint == true kommt ein Messagefenster mit JOptionPane
+	 * @param Keine Parameter
 	 */
 	public int Checkpoint(){//Fragt nach Checkpoint Benutzung wenn moeglich.
 		int opt = JOptionPane.showOptionDialog(null, "OH LEIDER GEGESSEN WORDEN!\nCheckpoint:\n"+this.DynamicObjects[0].CheckAussage(),
@@ -677,10 +666,10 @@ public class DPanel extends JPanel {
 	}
 	
 	/**
-	 * Blablablabla
-	 * @param pBla Blabla 
+	 * Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
+	 * @param Keine Parameter
 	 */
-	public void RevivePaint(){//Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
+	public void RevivePaint(){
 		if(this.CheckpointLoaded == false){
 			this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
 			this.DynamicObjects[0] = this.CheckpointObject;
@@ -689,21 +678,7 @@ public class DPanel extends JPanel {
 		}
 	}
 	
-	/**
-	 * Blablablabla
-	 * @param pBla Blabla 
-	 */
-	public boolean Setladen(){
-		return this.loaded;
-	}
 
-	/**
-	 * Blablablabla
-	 * @param pBla Blabla 
-	 */
-	public boolean Geladen(boolean p){
-		return this.loaded=p;
-	}
 	
 }
 
