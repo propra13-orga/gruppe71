@@ -10,11 +10,13 @@ public class DDynamic {
 	private DPanel SpielPanel;
 	private StaticObject[][] StaticObjects; // private int[][] StaticObjects; 
 	private DDynamic[] DynamicObjects; // private int[][] StaticObjects; 
+	private DProjectile[] Projectiles; // private int[][] StaticObjects; 
 	private int CurrentXPos;  //Die derzeitige X Position
 	private int CurrentYPos; //Die derzeitige Y Position
 	private int MoveToXPos; //Bewegung in X Richtung
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
+	private int Direction;
 	
 	private int Health; // Gesundheit
 	private int Lives; // Leben
@@ -28,19 +30,22 @@ public class DDynamic {
 	private boolean hit;
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot,int itemnumber){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot,int itemnumber){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
+		this.Projectiles = pProjectiles;
 		this.CurrentXPos = pCurrentXPos;
 		this.CurrentYPos = pCurrentYPos;
 		this.MoveToXPos = -1;
 		this.MoveToYPos = -1;
 		this.moves = false;
+		this.Direction = 0;
+		
 		this.Health = pHealth;
 		this.Points = pPunkte;
 		this.Money = 10;
-		this.Mana = 10;
+		this.Mana = 50;
 		this.isBot = pisBot;
 		if(pisBot == true){
 			this.Lives = 0;
@@ -101,6 +106,14 @@ public class DDynamic {
 	 */
 	public boolean IsMoving(){
 		return this.moves;
+	}
+	
+	/**
+	* Gibt zurueck, ob das Objekt ein Bot ist
+	* @param NICHTS
+	*/
+	public boolean IsBot(){
+	return this.isBot;
 	}
 	
 
@@ -209,8 +222,53 @@ public class DDynamic {
 				this.LoseHealth();
 				break;
 				
+			case 20: // Kaese
+				System.out.println("Kaese aufgenommen");
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				break;
+
+			case 21: // Healthpack
+				System.out.println("Healthpack aufgenommen");
+				if(this.Health < 4) //Wenn keine Ruestung
+				this.Health = 4; // Gesundheit wieder voll machen
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				break;
+
+			case 22: // Messer
+				System.out.println("Messer aufgenommen");
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				break;
+
+			case 23: // Leben
+				System.out.println("Leben aufgenommen");
+				this.Lives++;
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				break;
+
 			case 24: // Money / Geld
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				System.out.println("Geld aufgenommen");
+				this.Money++;
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				break;
+
+			case 25: // NPC
+				System.out.println("NPC beruehrt");
+				break;
+
+			case 26: // Ruestung
+				System.out.println("Ruestung aufgenommen");
+				this.Health = 8; // Ruestung = Doppelte Gesundheit
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				break;
+
+			case 27: // Shop
+				System.out.println("Shop beruehrt");
+				break;
+
+			case 28: // Zaubertrank
+				System.out.println("Zaubertrank aufgenommen");
+				this.Mana += 10;
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 				
 			}
@@ -238,17 +296,25 @@ public class DDynamic {
 			int[] tmpCurrentPosition = new int[2];
 			tmpCurrentPosition = this.getCurrentPosition(); //die momentaneCurr X, Y Position des dyn. Objektes
 			
-			if(pWhere == "up" && tmpCurrentPosition[1] > 0) //bewege nach oben
+			if(pWhere == "up" && tmpCurrentPosition[1] > 0){ //bewege nach oben
 				this.setMoveToPosition(tmpCurrentPosition[0], (tmpCurrentPosition[1]-30));
+				this.Direction = 0;
+			}
 			
-			if(pWhere == "right" && tmpCurrentPosition[0] < 570) //bewege nach rechts
+			if(pWhere == "right" && tmpCurrentPosition[0] < 570){ //bewege nach rechts
 				this.setMoveToPosition((tmpCurrentPosition[0]+30), tmpCurrentPosition[1]);
-			
-			if(pWhere == "left" && tmpCurrentPosition[0] > 0) //bewege nach links
-				this.setMoveToPosition((tmpCurrentPosition[0]-30), tmpCurrentPosition[1]);
-			
-			if(pWhere == "down" && tmpCurrentPosition[1] < 330) //bewege nach unten
+				this.Direction = 1;
+			}
+
+			if(pWhere == "down" && tmpCurrentPosition[1] < 330){ //bewege nach unten
+				this.Direction = 2;
 				this.setMoveToPosition(tmpCurrentPosition[0], (tmpCurrentPosition[1]+30));
+			}
+			
+			if(pWhere == "left" && tmpCurrentPosition[0] > 0){ //bewege nach links
+				this.setMoveToPosition((tmpCurrentPosition[0]-30), tmpCurrentPosition[1]);
+				this.Direction = 3;
+			}
 		}
 	}
 	
@@ -274,6 +340,32 @@ public class DDynamic {
 			//Wenn wir fertig sind, setzen wir die Variable wieder, dass es sich momentan nicht bewegt
 			if(this.CurrentYPos == this.MoveToYPos && this.CurrentXPos == this.MoveToXPos)
 			this.moves = false; // bewegt sich nicht mehr, moveTo ist IsMoving
+		
+	}
+	
+	/**
+	 * Fuehrt Aktion aus
+	 * @param pType Art der Aktion
+	 */
+	public void Action(int pType){
+		
+		if(pType == 0 && this.Mana > 0){ // Zaubern
+			for(int i = 0; i < this.Projectiles.length; i++){
+				if(this.Projectiles[i] == null){
+					// Wenn kein Projektil an der Steller oder ein inaktives
+					this.Projectiles[i] = new DProjectile(this, SpielPanel, StaticObjects, DynamicObjects, this.CurrentXPos, this.CurrentXPos, 0, this.Direction);
+					i = this.Projectiles.length; //Schleife beenden
+				}else if(this.Projectiles[i].IsEnabled() == false){
+					// Wenn kein Projektil an der Steller oder ein inaktives
+					this.Projectiles[i].setCurrentPosition(this.CurrentXPos, this.CurrentYPos);
+					this.Projectiles[i].setType(0);
+					this.Projectiles[i].setDirection(this.Direction);
+					this.Projectiles[i].setEnabled(true);
+					i = this.Projectiles.length; //Schleife beenden
+				}
+			}
+			this.Mana--;
+		}
 		
 	}
 
@@ -308,6 +400,38 @@ public class DDynamic {
 	public void setLives(int pLives){
 		this.Lives += pLives;
 	}
+	
+	/**
+	* Gibt Money zurueck
+	* @param NICHTS
+	*/
+	public int getMoney(){
+		return this.Money;	
+	}
+
+	/**
+	* Setzt Money
+	* @param pMoney Wieviel Geld?
+	*/
+	public void setMoney(int pMoney){
+		this.Money += pMoney;
+	}	
+
+	/**
+	* Gibt Mana zurueck
+	* @param NICHTS
+	*/
+	public int getMana(){
+		return this.Mana;	
+	}
+
+	/**
+	* Setzt Mana
+	* @param pMana Wieviel Mana?
+	*/
+	public void setMana(int pMana){
+		this.Mana += pMana;
+	}	
 	
 	/**
 	 * Gibt Punkte zurueck

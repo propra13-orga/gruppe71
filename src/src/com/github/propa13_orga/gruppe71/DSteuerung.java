@@ -58,6 +58,10 @@ public class DSteuerung {
 	    		{
 	    			SpielPanel.getDynamicObject(0).moveTo("right"); //Bewege Spieler 1 nach rechts
 	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_M)
+	    		{
+	    			SpielPanel.getDynamicObject(0).Action(0); //Zaubern
+	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_W)
 	    		{
 	    			SpielPanel.getDynamicObject(1).moveTo("up"); //Bewege Spieler 1 hoch

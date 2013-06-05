@@ -24,6 +24,7 @@ public class DPanel extends JPanel {
 	private JFrame SpielFenster;
 	private StaticObject[][] StaticObjects;
 	private DDynamic[] DynamicObjects;
+	private DProjectile[] Projectiles;
 	private int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
 	private DDynamic CheckpointObject;
 	private boolean CheckpointLoaded;
@@ -49,6 +50,7 @@ public class DPanel extends JPanel {
 		this.SpielFenster = pJFrame;
 		this.StaticObjects = new StaticObject[12][20];
 		this.DynamicObjects = new DDynamic[50];
+		this.Projectiles = new DProjectile[40];
 		this.LevelObjects = new int[3][12][20]; 
 		this.CheckpointLoaded = false;
 		this.StaticObjectsLoaded = false;
@@ -119,8 +121,8 @@ public class DPanel extends JPanel {
 					int Points = 0; //Punkte Marke
 					
 					//Spieler initialisieren
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
 					
 					//Gegner initialisieren
 					for (int i = 0; i < tmpAnzahlGegner; i++) {
@@ -134,10 +136,10 @@ public class DPanel extends JPanel {
 							//Gegner Typ bestimmen und initialisieren
 							switch(tmpGegnerType){
 							case 5: //Standard Gegner
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 								break;
 							case 99: //Staerkerer Gegner
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 								break;
 							}
 						}
@@ -158,7 +160,7 @@ public class DPanel extends JPanel {
 					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
 					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
 					
-					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3);
+					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3);
 				} 
 
 
@@ -214,13 +216,12 @@ public class DPanel extends JPanel {
 				//Schleife, die durch die dynamischen Objekte der Gegner geht
 				for (int i = 2; i < this.DynamicObjects.length; i++) {
 					
-					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() != 0){ //Wenn Objekt aktiv und Health vorhanden sind	
+					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() > 0){ //Wenn Objekt aktiv und Health vorhanden sind	
 						//Und male das Objekt dann an der (neuen) Position
 						this.drawImageAtPos(pGraphics, 5 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
 							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						} else {
-							System.out.println("DO "+i+" bewegt sich..");
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
 							int delaycounter = zufallsZahl.nextInt(50);			//Verzoegerung von Zufalls-Bewegung
@@ -240,6 +241,19 @@ public class DPanel extends JPanel {
 								}
 							}
 						}
+					}
+				} 
+				
+				//Schleife, die durch die Projektile geht
+				for (int i = 0; i < this.Projectiles.length; i++) {
+					
+					if(this.Projectiles[i] != null && this.Projectiles[i].IsEnabled() == true){
+						//Wenn Proj aktiv	
+						
+						//Male das Proj an der (neuen) Position
+						this.drawImageAtPos(pGraphics, (30+this.Projectiles[i].getType()) , this.Projectiles[i].getCurrentXPosition(), this.Projectiles[i].getCurrentYPosition());						
+
+						this.Projectiles[i].AnimateMoving(); //Bewege es ein Stückchen
 					}
 				} 
 			}
@@ -282,15 +296,17 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //17
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //18
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //19
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //20
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //21 Cheese/Kaese
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //22 HealthGesundheit
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //23 Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //20 Cheese/Kaese
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //21 Health/ Gesundheit
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //22 Knife/Messer
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //23 Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //24 Money / Geld
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //25 NPC
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //26 Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //26 Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //27 Shop
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg")  //28 Zaubertrank
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //28 Zaubertrank
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"),  //29
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_zauber.png")  //30 [Proj]Zauber
 				};
 	
 		//Zeichne das Bild
