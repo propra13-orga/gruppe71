@@ -276,8 +276,8 @@ public class DDynamic {
 				
 			case 29: // Messer
 				System.out.println("Tomaten Ketchup aufgenommen");
-				this.name[0]="Ketchup";
-				this.items[0]+=1;
+				this.name[1]="Ketchup";
+				this.items[1]+=1;
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 

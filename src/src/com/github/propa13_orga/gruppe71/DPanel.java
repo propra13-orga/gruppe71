@@ -121,8 +121,8 @@ public class DPanel extends JPanel {
 					int Points = 0; //Punkte Marke
 					
 					//Spieler initialisieren
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,3); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6); //initialisiere, damit Objekt neben Eingang
 					
 					//Gegner initialisieren
 					for (int i = 0; i < tmpAnzahlGegner; i++) {
