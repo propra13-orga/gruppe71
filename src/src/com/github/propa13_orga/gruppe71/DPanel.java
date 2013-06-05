@@ -305,7 +305,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //26 Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //28 Zaubertrank
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"),  //29
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Ketchup.jpg"),  //29 Ketchup
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_zauber.png")  //30 [Proj]Zauber
 				};
 	
@@ -414,6 +414,9 @@ public class DPanel extends JPanel {
 								break;
 	            			case 'Z': //Zaubertrank
 								TmpLevelObjects[z][y][x] = 28;
+								break;
+	            			case 'T': //Zaubertrank
+								TmpLevelObjects[z][y][x] = 29;
 								break;
 							default:
 								TmpLevelObjects[z][y][x] = 24;

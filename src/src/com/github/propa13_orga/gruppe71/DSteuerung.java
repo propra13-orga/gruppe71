@@ -83,6 +83,11 @@ public class DSteuerung {
 	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
     				SpielPanel.loadNextLevel();
 	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_I) //TEST KNOPF T
+	    		{
+	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
+    				SpielPanel.getDynamicObject(0).ItemBag();
+	    		}
 	    			else 
 	    			{	
 	    				System.out.println("Keine Lauftaste 1"); // tue nichts	

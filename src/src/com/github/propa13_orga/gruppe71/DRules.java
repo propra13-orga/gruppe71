@@ -13,7 +13,6 @@ public class DRules extends JFrame{
 	
 	
 	public DRules() {
-		String content="Das ist ein Test\n asdasd \n \n \n sadasd asdasd\n";
 		JFrame frame=new JFrame();
 		JPanel panel2=new JPanel();
 		frame.setSize(300, 300);
@@ -21,9 +20,7 @@ public class DRules extends JFrame{
 		frame.setTitle("Dungeon Crawler Rules");
 		frame.setLocation(1000, 200) ;
 		frame.setResizable(false);
-		JTextArea area=new JTextArea(content,5,20);
 		frame.add(panel2);
-		frame.add(area);
 		frame.setVisible(true);
 	}
 

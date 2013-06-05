@@ -26,8 +26,8 @@ public class DDynamic {
 	private boolean isBot; // Ist ein Bot oder Spieler?
 	private int Points; //Punkte
 	
-	private boolean[] items;
-	private boolean hit;
+	private int[] items;
+	private String[] name;
 	
 	
 	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot,int itemnumber){
@@ -54,9 +54,10 @@ public class DDynamic {
 			this.Type = 0;
 			this.Lives = 3;
 		}
-		this.items=new boolean[itemnumber];
+		this.items=new int[itemnumber];
 		this.InitItems();
-		this.hit=false;
+		this.name=new String[itemnumber];
+		this.InitName();
 		
 	}
     
@@ -236,6 +237,8 @@ public class DDynamic {
 
 			case 22: // Messer
 				System.out.println("Messer aufgenommen");
+				this.name[0]="Messer";
+				this.items[0]+=1;
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
@@ -270,6 +273,14 @@ public class DDynamic {
 				this.Mana += 10;
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
+				
+			case 29: // Messer
+				System.out.println("Tomaten Ketchup aufgenommen");
+				this.name[0]="Ketchup";
+				this.items[0]+=1;
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				break;
+
 				
 			}
 		}
@@ -524,31 +535,43 @@ public class DDynamic {
 	 * Initialisiert Items 
 	 * @param Keine Parameter
 	 */
-	public boolean[] InitItems(){
-		this.items=new boolean[NumberItems()];
+
+	
+	/**
+	 * Initialisiert Items (bis jetzt ITEMS =!  7  ! im DPanel init)
+	 * @param Keine Parameter
+	 */
+	
+	public int[] InitItems(){
+		this.items=new int[NumberItems()];
 		for(int i=0;i<=NumberItems()-1;i++){
-			this.items[i]=false;
+			this.items[i]=0;
 		}
 		return this.items;
 	}
 	
 	/**
-	 * Item Treffer Setzen
-	 * @param pBla Blabla 
+	 * Initialisiert Namensliste alles zuerst auf "Leer"
+	 * @param Keine Parameter
 	 */
-	public boolean ItemSetHit(boolean q){
-		return this.hit=q;
+	public String[] InitName(){
+		this.name=new String[NumberItems()];
+		for(int i=0;i<=NumberItems()-1;i++){
+			this.name[i]="Leer";
+		}
+		return this.name;
 	}
 	
 	/**
-	 * Item Treffer anzeigen
-	 * @param pBla Blabla 
+	 * Kann per Taste i im Spiel aufgerufen werden
+	 * @param Keine Parameter
 	 */
-	public boolean ItemHit(){
-		return this.hit;
-	}
+	public void ItemBag(){
 		
-	
+		for(int i=0;i<=NumberItems()-1;i++){
+			System.out.println("Sie haben "+this.items[i]+" "+this.name[i]+" im Inventar liegen!");
+		}
+	}
 	
 
 	}
