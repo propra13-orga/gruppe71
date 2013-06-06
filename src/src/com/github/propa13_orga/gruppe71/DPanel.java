@@ -77,8 +77,8 @@ public class DPanel extends JPanel {
 		// Variablen um zu Speichern, wo der Eingang ist
 		int TmpXStart = -1;
 		int TmpYStart = -1;
-		int TmpXObject=-1;
-		int TmpYObject=-1;
+		int landungX=-1;
+		int landungY=-1;
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
 			int[][] tmpGegnerArray = new int[48][3];
@@ -92,6 +92,10 @@ public class DPanel extends JPanel {
 					if(this.StaticObjects[y][x].getType() == 2){ //und wenn das Objekt ein Eingang ist
 						TmpXStart = x; //Speichert es wo der Eingang ist
 						TmpYStart = y; //in 2 Variablen
+					}
+					if(this.StaticObjects[y][x].getType() == 18){ //Landung
+						landungX = x; //Speichert wo Landung
+						landungY = y; //in 2 Variablen
 					}
 					
 					if(this.StaticObjects[y][x].getType() == 5){ //und wenn das Objekt ein Gegner ist
@@ -180,13 +184,17 @@ public class DPanel extends JPanel {
 						}
 						
 						
+			
 						
-						//Hier werden die Burger neu gezeichnet bei Leben Verlust.
-						int[] TmpDynamicObjectPosition = this.DynamicObjects[i].getCurrentPosition();
-						
-						
-						
+						else if(this.DynamicObjects[i].getSecret()==true){
+							this.DynamicObjects[i].setCurrentPosition((landungX*30),(landungY*30));
+							this.DynamicObjects[i].SetSecret(false);
+						}
+					
+						int[] TmpDynamicObjectPosition=this.DynamicObjects[i].getCurrentPosition();
+							//Hier werden die Burger neu gezeichnet bei Leben Verlust.
 						switch(this.DynamicObjects[i].getHealth()){
+						
 						case 4:
 							this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 							break;
@@ -194,10 +202,10 @@ public class DPanel extends JPanel {
 							this.drawImageAtPos(pGraphics,11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 							break;
 						case 2:
-							this.drawImageAtPos(pGraphics, 12 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+							this.drawImageAtPos(pGraphics,12 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 							break;
 						case 1:
-							this.drawImageAtPos(pGraphics, 13 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+							this.drawImageAtPos(pGraphics,13 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 							break;
 						case 0:
 							this.drawImageAtPos(pGraphics, 14 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
@@ -294,8 +302,8 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //15
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //16
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //17
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //18
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //19
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"), //18 Teleport , Destination
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Secret.png"), //19 Secret
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //20 Cheese/Kaese
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //21 Health/ Gesundheit
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //22 Knife/Messer
@@ -306,7 +314,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //28 Zaubertrank
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png"),  //29 Ketchup
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png")  //30 [Proj]Zauber
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png"),//30 [Proj]Zauber
 				};
 	
 		//Zeichne das Bild
@@ -388,6 +396,12 @@ public class DPanel extends JPanel {
 	            			TmpLevelObjects[z][y][x] = Character.getNumericValue(tmpBuchstabe);
 	            		}else{
 	            			switch(tmpBuchstabe){
+	            			case '!'://Teleport
+	            				TmpLevelObjects[z][y][x] = 18;
+								break;
+	            			case '?': //Secret
+	            				TmpLevelObjects[z][y][x] = 19;
+								break;
 	            			case 'C': // Cheese/Kaese
 								TmpLevelObjects[z][y][x] = 20;
 								break;
@@ -698,6 +712,5 @@ public class DPanel extends JPanel {
 	}
 	
 
-	
 }
 

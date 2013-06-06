@@ -28,7 +28,7 @@ public class DDynamic {
 	
 	private int[] items;
 	private String[] name;
-	
+	private boolean secret;
 	
 	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot,int itemnumber){
 		this.SpielPanel = pPanel;
@@ -58,7 +58,7 @@ public class DDynamic {
 		this.InitItems();
 		this.name=new String[itemnumber];
 		this.InitName();
-		
+		this.secret=false;
 	}
     
 	/**
@@ -222,8 +222,16 @@ public class DDynamic {
 			case 6: // Objekt ist eine Falle!
 				this.LoseHealth();
 				break;
+			
 				
-			case 20: // Kaese
+			
+			case 19://Secret
+				System.out.println("Was passiert jetzt???");
+				this.SetSecret(true);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				break;
+				
+				case 20: // Kaese
 				System.out.println("Kaese aufgenommen");
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
@@ -550,6 +558,13 @@ public class DDynamic {
 		return this.items;
 	}
 	
+	public boolean SetSecret(boolean p){
+		return this.secret=p;	
+	}
+	public boolean getSecret(){
+		return this.secret;
+	}
+	
 	/**
 	 * Initialisiert Namensliste alles zuerst auf "Leer"
 	 * @param Keine Parameter
@@ -567,7 +582,6 @@ public class DDynamic {
 	 * @param Keine Parameter
 	 */
 	public void ItemBag(){
-		
 		for(int i=0;i<=NumberItems()-1;i++){
 			System.out.println("Sie haben "+this.items[i]+" "+this.name[i]+" im Inventar liegen!");
 		}
