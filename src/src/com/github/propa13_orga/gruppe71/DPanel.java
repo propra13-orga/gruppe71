@@ -127,28 +127,6 @@ public class DPanel extends JPanel {
 					//Spieler initialisieren
 					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6); //initialisiere, damit Objekt neben Eingang
 					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6); //initialisiere, damit Objekt neben Eingang
-					
-					//Gegner initialisieren
-					for (int i = 0; i < tmpAnzahlGegner; i++) {
-						if(tmpGegnerArray[i] != null){ //Wenn Gegner existiert
-							
-							//Werte laden aus dem Array
-							int tmpGegnerXPos = tmpGegnerArray[i][0];
-							int tmpGegnerYPos = tmpGegnerArray[i][1];
-							int tmpGegnerType = tmpGegnerArray[i][2];
-							
-							//Gegner Typ bestimmen und initialisieren
-							switch(tmpGegnerType){
-							case 5: //Standard Gegner
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
-								break;
-							case 99: //Staerkerer Gegner
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
-								break;
-							}
-						}
-					}
-				
 				}	
 				else
 				{
@@ -166,7 +144,33 @@ public class DPanel extends JPanel {
 					
 					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3);
 				} 
+				
 
+				//Gegner initialisieren
+				for (int i = 0; i < tmpAnzahlGegner; i++) {
+					if(tmpGegnerArray[i] != null){ //Wenn Gegner existiert
+						
+						//Werte laden aus dem Array
+						int tmpGegnerXPos = tmpGegnerArray[i][0];
+						int tmpGegnerYPos = tmpGegnerArray[i][1];
+						int tmpGegnerType = tmpGegnerArray[i][2];
+						
+						//Gegner Typ bestimmen und initialisieren
+						switch(tmpGegnerType){
+						case 5: //Standard Gegner
+							if(this.DynamicObjects[2+i] == null){
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
+							}else{
+								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
+								this.DynamicObjects[2+i].setHealth(1);
+							}
+							break;
+						case 99: //Staerkerer Gegner
+							this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
+							break;
+						}
+					}
+				}
 
 				this.DynamicObjectsLoaded = true;
 			}
@@ -289,7 +293,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_in.jpg"), //2 Eingang
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3 Durchgang
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4 Ausgang
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player.jpg"), //5 Normaler Gegner
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"), //5 Normaler Gegner
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6 Falle
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //7 Normaler Boss
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //8 End-Boss
