@@ -558,6 +558,22 @@ public class DDynamic {
 		return this.items;
 	}
 	
+	/**
+	 * 	Für DItems
+	 */
+	public int AnzahlItems(int p){
+	 
+		return this.items[p];
+	}
+	/**
+	 * Für DItems
+	 * @param p
+	 * @return
+	 */
+	public String getName(int p){
+		return this.name[p];
+	}
+	
 	public boolean SetSecret(boolean p){
 		return this.secret=p;	
 	}
@@ -570,6 +586,7 @@ public class DDynamic {
 	 * @param Keine Parameter
 	 */
 	public String[] InitName(){
+		
 		this.name=new String[NumberItems()];
 		for(int i=0;i<=NumberItems()-1;i++){
 			this.name[i]="Leer";
@@ -582,6 +599,7 @@ public class DDynamic {
 	 * @param Keine Parameter
 	 */
 	public void ItemBag(){
+		DItems it = new DItems(SpielPanel);
 		for(int i=0;i<=NumberItems()-1;i++){
 			System.out.println("Sie haben "+this.items[i]+" "+this.name[i]+" im Inventar liegen!");
 		}
