@@ -315,7 +315,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //24 Money / Geld
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //25 NPC
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //26 Ruestung
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //27 Shop
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Shop.png"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //28 Zaubertrank
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png"),  //29 Ketchup
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png"),//30 [Proj]Zauber

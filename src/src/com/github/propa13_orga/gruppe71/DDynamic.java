@@ -274,6 +274,8 @@ public class DDynamic {
 
 			case 27: // Shop
 				System.out.println("Shop beruehrt");
+				DShop s=new DShop(SpielPanel);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
 				break;
 
 			case 28: // Zaubertrank
@@ -600,12 +602,10 @@ public class DDynamic {
 	 */
 	public void ItemBag(){
 		DItems it = new DItems(SpielPanel);
-		for(int i=0;i<=NumberItems()-1;i++){
-			System.out.println("Sie haben "+this.items[i]+" "+this.name[i]+" im Inventar liegen!");
 		}
 	}
 	
 
-	}
+	
 	
 	
