@@ -275,7 +275,6 @@ public class DDynamic {
 			case 27: // Shop
 				System.out.println("Shop beruehrt");
 				DShop s=new DShop(SpielPanel);
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
 				break;
 
 			case 28: // Zaubertrank

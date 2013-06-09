@@ -20,10 +20,10 @@ public class DStartMenu extends JFrame {
 	 */
 	public DStartMenu() {
 	//Fenster-Eigenschaften werden gesetzt
-	setSize(600, 400) ;
+	setSize(600,400) ;
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
 	setTitle("Dungeon Crawler Menu");
-	setLocation(350, 150) ;
+	setLocation(350, 150);
 	setResizable(false);
 	setLayout(null) ;
 	
