@@ -7,6 +7,8 @@ import javax.swing.JOptionPane;
 
 
 public class DDynamic {
+	
+	
 	private DPanel SpielPanel;
 	private StaticObject[][] StaticObjects; // private int[][] StaticObjects; 
 	private DDynamic[] DynamicObjects; // private int[][] StaticObjects; 
@@ -17,7 +19,7 @@ public class DDynamic {
 	private int MoveToYPos; //Bewegung in Y Richtung
 	private boolean moves; //Entscheidet ob Bewegt oder nicht
 	private int Direction;
-	
+
 	private int Health; // Gesundheit
 	private int Lives; // Leben
 	private int Money; // Geld
@@ -44,7 +46,7 @@ public class DDynamic {
 		
 		this.Health = pHealth;
 		this.Points = pPunkte;
-		this.Money = 10;
+		this.Money = 0;
 		this.Mana = 50;
 		this.isBot = pisBot;
 		if(pisBot == true){
@@ -59,6 +61,7 @@ public class DDynamic {
 		this.name=new String[itemnumber];
 		this.InitName();
 		this.secret=false;
+		
 	}
     
 	/**
@@ -274,7 +277,8 @@ public class DDynamic {
 
 			case 27: // Shop
 				System.out.println("Shop beruehrt");
-				DShop s=new DShop(SpielPanel);
+				DShop shop=new DShop(SpielPanel);
+				System.out.println(this.getMoney());
 				break;
 
 			case 28: // Zaubertrank
@@ -560,11 +564,18 @@ public class DDynamic {
 	}
 	
 	/**
-	 * 	Für DItems
+	 * 	Für DItems und DShop
 	 */
 	public int AnzahlItems(int p){
 	 
 		return this.items[p];
+	}
+	
+	public int[] setItems(int p){
+		for(int i=0;i<=NumberItems()-1;i++){
+			this.items[i]=p;
+		}
+		return this.items;
 	}
 	/**
 	 * Für DItems
@@ -602,6 +613,8 @@ public class DDynamic {
 	public void ItemBag(){
 		DItems it = new DItems(SpielPanel);
 		}
+	
+	
 	}
 	
 

@@ -24,6 +24,7 @@ public class DPanel extends JPanel {
 	private JFrame SpielFenster;
 	private StaticObject[][] StaticObjects;
 	private DDynamic[] DynamicObjects;
+	
 	private DProjectile[] Projectiles;
 	private int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
 	private DDynamic CheckpointObject;
@@ -48,6 +49,7 @@ public class DPanel extends JPanel {
 
 		//Setze alles auf Start-Wert
 		this.SpielFenster = pJFrame;
+		
 		this.StaticObjects = new StaticObject[12][20];
 		this.DynamicObjects = new DDynamic[50];
 		this.Projectiles = new DProjectile[40];
