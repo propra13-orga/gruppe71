@@ -277,7 +277,7 @@ public class DDynamic {
 
 			case 27: // Shop
 				System.out.println("Shop beruehrt");
-				DShop shop=new DShop(SpielPanel);
+				DShop shop=new DShop(SpielPanel,this.getMoney());
 				System.out.println(this.getMoney());
 				break;
 

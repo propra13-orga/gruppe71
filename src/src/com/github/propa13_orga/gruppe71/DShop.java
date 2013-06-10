@@ -40,7 +40,7 @@ public class DShop implements ActionListener {
 	 * Der Konstruktor der dann beim Aufprall mit dem Shop
 	 * erscheint
 	 */
-	public DShop(DPanel panel){
+	public DShop(DPanel panel,int money){
 		this.SpielPanel=panel;
 		this.frame=new JFrame();
 		this.pan=new JPanel();
@@ -50,7 +50,7 @@ public class DShop implements ActionListener {
 		this.FetchItems(); //Die Items die im Inventar liegen
 		this.ItemGesamt();
 		this.InitItemStorage();
-		this.back=SpielPanel.getDynamicObject(0).getMoney();//Spielgeld
+		this.back=money;//Spielgeld
 		
 		//Welcome
 		
@@ -457,9 +457,13 @@ public class DShop implements ActionListener {
 				this.total+=(-1*this.wert[i]);
 				
 				this.eingabe[i]=this.amount[i].getText();
-				
+				try{
 				this.wert[i]=Integer.parseInt(eingabe[i]);
-				
+				}
+				catch(NumberFormatException exc){
+					pending.setText("Geben Sie eine Zahl ein");
+					break;
+				}
 				this.wert2[i]=(1*this.wert[i]);
 				
 				anzahl[i].setText("Anzahl:"   +wert[i]);
@@ -494,7 +498,13 @@ public class DShop implements ActionListener {
 					
 					this.eingabe[i]=this.amount[i].getText();
 					
-					this.wert[i]=Integer.parseInt(eingabe[i]);
+					try{
+						this.wert[i]=Integer.parseInt(eingabe[i]);
+						}
+						catch(NumberFormatException exc){
+							pending.setText("Geben Sie eine Zahl ein");
+							break;
+						}
 					
 					if(this.items[i]>=wert[i]){
 						
@@ -525,7 +535,6 @@ public class DShop implements ActionListener {
 			for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
 			if(e.getSource()==this.reset){
 				
-				this.wert[i]=Integer.parseInt(eingabe[i]);
 				
 				this.wert[i]=0;
 				
