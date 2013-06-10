@@ -81,6 +81,10 @@ public class DPanel extends JPanel {
 		int TmpYStart = -1;
 		int landungX=-1;
 		int landungY=-1;
+		int geheimX=-1;
+		int geheimY=-1;
+		int openX=-1;
+		int openY=-1;
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
 			int[][] tmpGegnerArray = new int[48][3];
@@ -98,6 +102,11 @@ public class DPanel extends JPanel {
 					if(this.StaticObjects[y][x].getType() == 18){ //Landung
 						landungX = x; //Speichert wo Landung
 						landungY = y; //in 2 Variablen
+					}
+					
+					if(this.StaticObjects[y][x].getType() == 16){ //Geheimgang,Trittstelle
+						openX = x; //Speichert wo Geheimstelle
+						openY= y; //in 2 Variablen
 					}
 					
 					if(this.StaticObjects[y][x].getType() == 5){ //und wenn das Objekt ein Gegner ist
@@ -196,7 +205,19 @@ public class DPanel extends JPanel {
 							this.DynamicObjects[i].setCurrentPosition((landungX*30),(landungY*30));
 							this.DynamicObjects[i].SetSecret(false);
 						}
+						
+				
+						else if(this.DynamicObjects[i].getSecret2()==true ){
+										this.StaticObjects[openY][openX].setType(0);
+										this.StaticObjects[openY][openX].setCollision(false);
+										this.DynamicObjects[i].SetSecret2(false);
+										
+								}
+						 
 					
+							
+				
+						
 						int[] TmpDynamicObjectPosition=this.DynamicObjects[i].getCurrentPosition();
 							//Hier werden die Burger neu gezeichnet bei Leben Verlust.
 						switch(this.DynamicObjects[i].getHealth()){
@@ -279,7 +300,7 @@ public class DPanel extends JPanel {
 		this.repaint();
 	}
 	
-
+	
 	/**
 	 * Malt ein Bild an der angegebenen Position
 	 * @param pGraphics Java-Graphicsobjekt
@@ -295,7 +316,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_in.jpg"), //2 Eingang
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_through.jpg"), //3 Durchgang
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.jpg"), //4 Ausgang
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"), //5 Normaler Gegner
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/hotdog_npc.png"), //5 Normaler Gegner
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap.jpg"), //6 Falle
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //7 Normaler Boss
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/messer.jpg"), //8 End-Boss
@@ -306,8 +327,8 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player04.png"),//13 Spieler 3-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player05.png"),//14 Spieler 4-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //15
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //16
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor.jpg"), //17
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"), //16 Geheimgang
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"), //17 Geheim
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"), //18 Teleport , Destination
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Secret.png"), //19 Secret
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_7.jpg"), //20 Cheese/Kaese
@@ -402,6 +423,12 @@ public class DPanel extends JPanel {
 	            			TmpLevelObjects[z][y][x] = Character.getNumericValue(tmpBuchstabe);
 	            		}else{
 	            			switch(tmpBuchstabe){
+	            			case 'O':
+	            				TmpLevelObjects[z][y][x] = 16;
+	            				break;
+	            			case 'G':
+	            				TmpLevelObjects[z][y][x] = 17;
+	            				break;
 	            			case '!'://Teleport
 	            				TmpLevelObjects[z][y][x] = 18;
 								break;

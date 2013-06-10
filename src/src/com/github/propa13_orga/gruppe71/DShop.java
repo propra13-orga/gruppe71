@@ -96,7 +96,7 @@ public class DShop implements ActionListener {
 		//Gesamtwert
 		transaktion =new JTextField("TOTAL TRANSACTION VALUE:   "+this.total+"$$$");
 		Dimension size6=transaktion.getPreferredSize();
-		transaktion.setBounds(20,360,size6.width,size6.height);
+		transaktion.setBounds(20,360,size6.width+50,size6.height);
 		transaktion.setEditable(false);
 		pan.add(transaktion);
 		
@@ -145,7 +145,7 @@ public class DShop implements ActionListener {
 		
 
 		//calcul total
-		this.calcul.setBounds(520,180,this.c.width,this.c.height);
+		this.calcul.setBounds(580,180,this.c.width,this.c.height);
 		this.calcul.addActionListener(this);
 		this.pan.add(calcul);
 		
@@ -293,12 +293,12 @@ public class DShop implements ActionListener {
 			this.pan.add(hinweise[i]);
 			
 			//Anzahl Gesamt Gegenstönde
-			this.anzahl[i].setBounds(320,120+y,this.a[i].width+10,this.a[i].height+5);// hier justizieren
+			this.anzahl[i].setBounds(320,120+y,this.a[i].width+25,this.a[i].height+5);// hier justizieren
 			anzahl[i].setEditable(false);
 			this.pan.add(anzahl[i]);
 			
 			//Preis Items
-			this.preis[i].setBounds(420,120+y,this.p[i].width+10,this.p[i].height+5);//hier auch mit +10,+5
+			this.preis[i].setBounds(420,120+y,this.p[i].width+50,this.p[i].height+5);//hier auch mit +10,+5
 			preis[i].setEditable(false);
 			this.pan.add(preis[i]);
 			
@@ -461,6 +461,7 @@ public class DShop implements ActionListener {
 				this.wert[i]=Integer.parseInt(eingabe[i]);
 				}
 				catch(NumberFormatException exc){
+					this.total+=(1*this.wert[i]);
 					pending.setText("Geben Sie eine Zahl ein");
 					break;
 				}
@@ -476,7 +477,7 @@ public class DShop implements ActionListener {
 				
 				this.total+=this.wert[i];
 				
-				this.preis[i].setText("Total:   "+this.wert[i]+"$$$");
+				this.preis[i].setText("Total: "+this.wert[i]+" $$$");
 				
 				break;	
 			
@@ -502,6 +503,7 @@ public class DShop implements ActionListener {
 						this.wert[i]=Integer.parseInt(eingabe[i]);
 						}
 						catch(NumberFormatException exc){
+							this.total+=(1*this.wert[i]);
 							pending.setText("Geben Sie eine Zahl ein");
 							break;
 						}
@@ -518,7 +520,7 @@ public class DShop implements ActionListener {
 					
 					this.total+=this.wert[i];
 					
-					preis[i].setText("Total:"     +this.wert[i]+"$$$");
+					preis[i].setText("Total: "+this.wert[i]+" $$$");
 					break;
 					}
 					else this.wert[i]=0;
