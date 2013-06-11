@@ -31,6 +31,7 @@ public class DDynamic {
 	private int[] items;
 	private String[] name;
 	private boolean secret;
+	private boolean secret2;
 	
 	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot, int itemnumber){
 		this.SpielPanel = pPanel;
@@ -61,6 +62,7 @@ public class DDynamic {
 		this.name=new String[itemnumber];
 		this.InitName();
 		this.secret=false;
+		this.secret2=false;
 		
 	}
     
@@ -224,6 +226,20 @@ public class DDynamic {
 				
 			case 6: // Objekt ist eine Falle!
 				this.LoseHealth();
+				break;
+			
+			case 16:
+				if(this.getSecret2()==true){
+					this.SetSecret2(false);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				}
+				break;
+			
+				
+			case 17://Trittstelle
+				System.out.println("Was passiert jetzt???");
+				this.SetSecret2(true);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
 				break;
 			
 				
@@ -585,12 +601,20 @@ public class DDynamic {
 	public String getName(int p){
 		return this.name[p];
 	}
-	
+	//Teleport, Initializer
 	public boolean SetSecret(boolean p){
 		return this.secret=p;	
 	}
 	public boolean getSecret(){
 		return this.secret;
+	}
+	
+	//Geheimtür
+	public boolean SetSecret2(boolean p){
+		return this.secret2=p;	
+	}
+	public boolean getSecret2(){
+		return this.secret2;
 	}
 	
 	/**
