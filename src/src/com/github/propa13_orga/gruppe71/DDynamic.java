@@ -282,7 +282,15 @@ public class DDynamic {
 				break;
 
 			case 25: // NPC
-				System.out.println("NPC beruehrt");
+				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 ){
+					JOptionPane.showMessageDialog(null, "Es war einmal...");
+				}
+				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 ){
+					JOptionPane.showMessageDialog(null, "Es war einmal 1...");
+				}
+				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0 ){
+					JOptionPane.showMessageDialog(null, "Es war einmal 2...");
+				}
 				break;
 
 			case 26: // Ruestung
