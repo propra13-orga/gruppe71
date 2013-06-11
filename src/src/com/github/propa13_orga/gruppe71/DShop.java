@@ -61,7 +61,7 @@ public class DShop implements ActionListener {
 		pan.add(info);
 		
 		//Das Spielgeld
-		result=new JTextField("Vermögen:  "+this.back+" $$$");
+		result=new JTextField("Vermï¿½gen:  "+this.back+" $$$");
 		Dimension size3=result.getPreferredSize();
 		result.setBounds(20,40,size3.width,size3.height);
 		result.setEditable(false);
@@ -112,7 +112,7 @@ public class DShop implements ActionListener {
 		 * 
 		 * 
 		 */
-		this.ShopItems(); //6 Stück gemacht
+		this.ShopItems(); //6 Stï¿½ck gemacht
 		
 		this.InitPreis();
 		
@@ -138,7 +138,7 @@ public class DShop implements ActionListener {
 		//
 		
 		
-		//Purchase Außerhalb der for Shchleife
+		//Purchase Auï¿½erhalb der for Shchleife
 		this.einkauf.setBounds(300,355,this.e.width,this.e.height);
 		this.einkauf.addActionListener(this);
 		this.pan.add(einkauf);
@@ -169,7 +169,7 @@ public class DShop implements ActionListener {
 		pan.setBackground(Color.ORANGE);
 		frame.getContentPane().add(pan);
 		frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		frame.setTitle("Uncle Buck´s Burger Laden");
+		frame.setTitle("Uncle Buckï¿½s Burger Laden");
 		frame.setLocation(300,100);
 		frame.setSize(800,500);
 		frame.setResizable(false);
@@ -194,7 +194,7 @@ public class DShop implements ActionListener {
 	}
 	
 	/**
-	 * Die Dimension wird benötigt um die prefekte Höhe,Breite des Labels,Buttons
+	 * Die Dimension wird benï¿½tigt um die prefekte Hï¿½he,Breite des Labels,Buttons
 	 * festzulegen
 	 */
 	public void InitDimension(){
@@ -250,12 +250,12 @@ public class DShop implements ActionListener {
 	public String[] Bild(){
 		this.bild=new String[SpielPanel.getDynamicObject(0).NumberItems()];
 		
-		bild[0]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
-		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";
-		bild[2]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
-		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";
+		bild[0]="src/src/com/github/propa13_orga/gruppe71/bb_messer.jpg";
+		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup.png";
+		bild[2]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png";
+		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup.png";
 		bild[4]="src/src/com/github/propa13_orga/gruppe71/bb_trank.png";
-		bild[5]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
+		bild[5]="src/src/com/github/propa13_orga/gruppe71/bb_messer.jpg";
 		
 	
 		return bild;
@@ -292,7 +292,7 @@ public class DShop implements ActionListener {
 			this.hinweise[i].setBounds(500,250+z,260,120);
 			this.pan.add(hinweise[i]);
 			
-			//Anzahl Gesamt Gegenstönde
+			//Anzahl Gesamt Gegenstï¿½nde
 			this.anzahl[i].setBounds(320,120+y,this.a[i].width+25,this.a[i].height+5);// hier justizieren
 			anzahl[i].setEditable(false);
 			this.pan.add(anzahl[i]);
@@ -316,7 +316,7 @@ public class DShop implements ActionListener {
 	
 	
 	/**
-	 * Anzahl der Gegenstände zum Kauf oder Verkauf werden hier aufgelistet
+	 * Anzahl der Gegenstï¿½nde zum Kauf oder Verkauf werden hier aufgelistet
 	 * 
 	 */
 	public void Amount(){
@@ -377,7 +377,7 @@ public class DShop implements ActionListener {
 		this.einkauf=new JButton("PURCHASE");
 		this.reset=new JButton("Reset All");
 		this.calcul=new JButton("Calculate Total");
-		this.play=new JButton("Zurück zum Spiel");
+		this.play=new JButton("Zurï¿½ck zum Spiel");
 	}
 	
 
@@ -385,12 +385,12 @@ public class DShop implements ActionListener {
 	
 		
 		/**
-		 * ActionListener hört auf Button
+		 * ActionListener hï¿½rt auf Button
 		 * 
 		 */
 		public void actionPerformed(ActionEvent e) {
 			
-			//Zurück zum Spiel
+			//Zurï¿½ck zum Spiel
 			if(e.getSource()==this.play){
 				SpielPanel.getDynamicObject(0).setMoney(this.back);
 				for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
@@ -422,7 +422,7 @@ public class DShop implements ActionListener {
 						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+this.items[i]+"Stk.!!!");
 					}
 					inventar.setText("Items-Gesamt:     "+ this.ItemGesamt()+"Stk.");
-					pending.setText("Sie häufen Geld an!");
+					pending.setText("Sie hï¿½ufen Geld an!");
 				}
 
 				else if(e.getSource()==this.einkauf){
@@ -566,7 +566,7 @@ public class DShop implements ActionListener {
 			
 			
 
-		//Preisübersicht bei PriceList hier Init
+		//Preisï¿½bersicht bei PriceList hier Init
 		public void InitPreis(){
 			this.money=new int[SpielPanel.getDynamicObject(0).NumberItems()];
 			
