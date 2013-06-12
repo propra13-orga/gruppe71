@@ -48,7 +48,7 @@ public class DDynamic {
 		
 		this.Health = pHealth;
 		this.Points = pPunkte;
-		this.Money = 0;
+		this.Money = 100;
 		this.Mana = 50;
 		this.isBot = pisBot;
 		if(pisBot == true){
@@ -306,7 +306,7 @@ public class DDynamic {
 
 			case 27: // Shop
 				System.out.println("Shop beruehrt");
-				DShop shop=new DShop(SpielPanel,this.getMoney());
+				this.Shop();
 				System.out.println(this.getMoney());
 				break;
 
@@ -651,6 +651,12 @@ public class DDynamic {
 		return this.items[p];
 	}
 	
+	//Addiere die neuen Items vom DShop
+	public int SetItems(int i,int p){
+		this.items[i]=p;
+		return this.items[i];
+	}
+	
 	public int[] setItems(int p){
 		for(int i=0;i<=NumberItems()-1;i++){
 			this.items[i]=p;
@@ -703,7 +709,9 @@ public class DDynamic {
 		DItems it = new DItems(SpielPanel);
 		}
 	
-	
+	public void Shop(){
+		DShop shop=new DShop(SpielPanel);
+	}
 	}
 	
 

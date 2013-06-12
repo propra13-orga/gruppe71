@@ -40,17 +40,17 @@ public class DShop implements ActionListener {
 	 * Der Konstruktor der dann beim Aufprall mit dem Shop
 	 * erscheint
 	 */
-	public DShop(DPanel panel,int money){
+	public DShop(DPanel panel){
 		this.SpielPanel=panel;
 		this.frame=new JFrame();
 		this.pan=new JPanel();
 		pan.setLayout(null);
 		this.setTotal(0);
-		this.items=new int[SpielPanel.getDynamicObject(0).NumberItems()];
-		this.FetchItems(); //Die Items die im Inventar liegen
+		
+		
 		this.ItemGesamt();
 		this.InitItemStorage();
-		this.back=money;//Spielgeld
+		
 		
 		//Welcome
 		
@@ -61,7 +61,7 @@ public class DShop implements ActionListener {
 		pan.add(info);
 		
 		//Das Spielgeld
-		result=new JTextField("Vermoegen:  "+this.back+" $$$");
+		result=new JTextField("Vermoegen:  "+SpielPanel.getDynamicObject(0).getMoney()+" $$$");
 		Dimension size3=result.getPreferredSize();
 		result.setBounds(20,40,size3.width,size3.height);
 		result.setEditable(false);
@@ -231,7 +231,7 @@ public class DShop implements ActionListener {
 		this.hinweise=new JLabel[SpielPanel.getDynamicObject(0).NumberItems()];
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
 			this.label[i]= new JLabel(this.Name(i),this.pics[i],JLabel.RIGHT);
-			this.hinweise[i]= new JLabel(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+this.items[i]+"Stk.!!!",this.pic,JLabel.RIGHT);
+			this.hinweise[i]= new JLabel(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+SpielPanel.getDynamicObject(0).AnzahlItems(i)+"Stk.!!!",this.pic,JLabel.RIGHT);
 			}
 	
 	}
@@ -271,7 +271,7 @@ public class DShop implements ActionListener {
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
 			
 			//Label mit Bild
-			this.label[i].setBounds(20,120+y,this.d[i].width,this.d[i].height);
+			this.label[i].setBounds(10,120+y,this.d[i].width,this.d[i].height);
 			this.pan.add(label[i]);
 			
 			//Textfield mit Wert
@@ -392,22 +392,19 @@ public class DShop implements ActionListener {
 			
 			//Zurueck zum Spiel
 			if(e.getSource()==this.play){
-				SpielPanel.getDynamicObject(0).setMoney(this.back);
-				for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
-				SpielPanel.getDynamicObject(0).setItems(this.wert2[i]);
-				}
 				frame.dispose();
 			}
 			
 			//Einkauf Purchase Button
 			if(e.getSource()==this.einkauf){
 				System.out.println(getTotal());
-				if(this.back>=(-this.total) && this.total<0){
-					this.back+=(this.total);
-					result.setText("TOTAL:  "+this.back+"$$$");
+				if(SpielPanel.getDynamicObject(0).getMoney()>=(-this.total) && this.total<0){
+					SpielPanel.getDynamicObject(0).setMoney(this.total);
+					result.setText("TOTAL:  "+SpielPanel.getDynamicObject(0).getMoney()+"$$$");
+					System.out.println(SpielPanel.getDynamicObject(0).getMoney());
 					for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
-						this.items[i]+=this.wert2[i];
-						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+this.items[i]+"Stk.!!!");
+						SpielPanel.getDynamicObject(0).SetItems(i,wert2[i]);
+						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+SpielPanel.getDynamicObject(0).AnzahlItems(i)+"Stk.!!!");
 						
 					}
 					inventar.setText("Items-Gesamt:     "+ this.ItemGesamt()+"Stk.");
@@ -415,18 +412,18 @@ public class DShop implements ActionListener {
 					
 				}
 				else if(this.total>0){
-					this.back+=this.getTotal();
-					result.setText("TOTAL:  "+this.back+"$$$");
+					SpielPanel.getDynamicObject(0).setMoney(this.total);
+					result.setText("TOTAL:  "+SpielPanel.getDynamicObject(0).getMoney()+"$$$");
 					for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
-						this.items[i]+=this.wert2[i];
-						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+this.items[i]+"Stk.!!!");
+						SpielPanel.getDynamicObject(0).SetItems(i,wert2[i]);
+						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+SpielPanel.getDynamicObject(0).AnzahlItems(i)+"Stk.!!!");
 					}
 					inventar.setText("Items-Gesamt:     "+ this.ItemGesamt()+"Stk.");
 					pending.setText("Sie haeufen Geld an!");
 				}
 
 				else if(e.getSource()==this.einkauf){
-					if(this.back<(-1*this.total) && this.total<0){
+					if(SpielPanel.getDynamicObject(0).getMoney()<(-1*this.total) && this.total<0){
 						pending.setText("Zu wenig Geld!");
 					}
 				
@@ -508,7 +505,7 @@ public class DShop implements ActionListener {
 							break;
 						}
 					
-					if(this.items[i]>=wert[i]){
+					if(SpielPanel.getDynamicObject(0).AnzahlItems(i)>=wert[i]){
 						
 					anzahl[i].setText("Anzahl:"   +wert[i]);
 					
@@ -626,16 +623,6 @@ public class DShop implements ActionListener {
 		public String Name(int p){
 			return this.namen[p];
 		}
-		/**
-		 * Anzahl Items passiert irgendwas
-		 * @param Nichts
-		 */
-		public void FetchItems(){
-			for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
-				this.items[i]=SpielPanel.getDynamicObject(0).AnzahlItems(i);
-			}
-		}
-	
 
 	/**
 	 * Zwischenspeicherung
@@ -656,7 +643,7 @@ public class DShop implements ActionListener {
 	public int ItemGesamt(){
 		this.gesamt=0;
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
-			this.gesamt+=this.items[i];
+			this.gesamt+=SpielPanel.getDynamicObject(0).AnzahlItems(i);
 		}
 		return this.gesamt;
 	}

@@ -28,6 +28,7 @@ public class DItems  {
 	public JFrame frame;
 	public Dimension[] l;
 	public JPanel pan;
+	public JTextField money;
 	
 	public DItems(DPanel panel) {
 	this.SpielPanel=panel;
@@ -45,6 +46,10 @@ public class DItems  {
 	info.setEditable(false);
 	pan.add(info);
 	
+
+	
+	
+	
 	this.Bild();
 	
 	this.InitPic();
@@ -54,8 +59,7 @@ public class DItems  {
 	this.InitDimension();
 	
 	this.AddToPan();
-	
-     
+
 	
 
 	//Eigenschaften Frame
@@ -70,8 +74,8 @@ public class DItems  {
 	}
 	
 	/**
-	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
-	 * @param pParam Parameterbeschr.
+	 * Label Initialisierung
+	 * 
 	 */
 	public void InitLabel(){
 		
@@ -86,8 +90,8 @@ public class DItems  {
 	}
 	
 	/**
-	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
-	 * @param pParam Parameterbeschr.
+	 * Dimension der Labels etc. zur Ordnung auf dem Panel
+	 * 
 	 */
 	public void InitDimension(){
 		this.l=new Dimension[SpielPanel.getDynamicObject(0).NumberItems()];
@@ -97,8 +101,8 @@ public class DItems  {
 	}
 	
 	/**
-	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
-	 * @param pParam Parameterbeschr.
+	 * Alles wird nun dem Panel zugefügt , Dimension etc.
+	 *
 	 */
 	public void AddToPan(){
 		int y=0;
@@ -114,11 +118,17 @@ public class DItems  {
 			   z+=70;
 			}
 		
+		this.money= new JTextField("Dein Vermögen: "+this.SpielPanel.getDynamicObject(0).getMoney()+" $$$");
+		Dimension size2=money.getPreferredSize();
+		money.setBounds(20,340,size2.width, size2.height);
+		money.setEditable(false);
+		pan.add(money);
+		
 	}
 	
 	/**
-	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
-	 * @param pParam Parameterbeschr.
+	 * Die Bilder für die Items 6 Stk. kommen hier
+	 * 
 	 */
 	public void InitPic(){
 		this.pics=new ImageIcon[SpielPanel.getDynamicObject(0).NumberItems()];
@@ -129,22 +139,22 @@ public class DItems  {
 	}
 	
 	/**
-	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
-	 * @param pParam Parameterbeschr.
+	 * String der Bilder
+	 *
 	 */
 	public String[] Bild(){
 		this.bild=new String[SpielPanel.getDynamicObject(0).NumberItems()];
 		
-		bild[0]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
+		bild[0]="src/src/com/github/propa13_orga/gruppe71/bb_pMesser.png";
 		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_pKaese.png";
-		bild[2]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
+		bild[2]="src/src/com/github/propa13_orga/gruppe71/messer.png";
 		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";
 		bild[4]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";
-		bild[5]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
+		bild[5]="src/src/com/github/propa13_orga/gruppe71/messer.png";
 		
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
 			if(SpielPanel.getDynamicObject(0).getName(i)=="Leer"){
-				bild[i]="src/src/com/github/propa13_orga/gruppe71/Leer.png";	
+				bild[i]="src/src/com/github/propa13_orga/gruppe71/bb_leer.png";	
 			}
 		
 	}
