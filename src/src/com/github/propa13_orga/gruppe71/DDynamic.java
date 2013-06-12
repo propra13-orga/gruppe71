@@ -29,6 +29,7 @@ public class DDynamic {
 	private int Points; //Punkte
 	
 	private int[] items;
+	private int ActiveItem;
 	private String[] name;
 	private boolean secret;
 	private boolean secret2;
@@ -61,6 +62,7 @@ public class DDynamic {
 		this.InitItems();
 		this.name=new String[itemnumber];
 		this.InitName();
+		this.ActiveItem = -1;
 		this.secret=false;
 		this.secret2=false;
 		
@@ -250,33 +252,36 @@ public class DDynamic {
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
 				break;
 				
-				case 20: // Kaese
+
+			case 20: // Kaese
 				System.out.println("Kaese aufgenommen");
+				this.name[1]="Kaese";
+				this.items[1]+=1;
+				if(this.ActiveItem == -1)
+				this.ActiveItem = this.StaticObjects[(pYPos/30)][(pXPos/30)].getType(); //Aktives Item merken 
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
 			case 21: // Healthpack
-				System.out.println("Healthpack aufgenommen");
 				if(this.Health < 4) //Wenn keine Ruestung
 				this.Health = 4; // Gesundheit wieder voll machen
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
 			case 22: // Messer
-				System.out.println("Messer aufgenommen");
 				this.name[0]="Messer";
 				this.items[0]+=1;
+				if(this.ActiveItem == -1)
+				this.ActiveItem = this.StaticObjects[(pYPos/30)][(pXPos/30)].getType(); //Aktives Item merken 
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
 			case 23: // Leben
-				System.out.println("Leben aufgenommen");
 				this.Lives++;
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
 			case 24: // Money / Geld
-				System.out.println("Geld aufgenommen");
 				this.Money++;
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
@@ -308,13 +313,6 @@ public class DDynamic {
 			case 28: // Zaubertrank
 				System.out.println("Zaubertrank aufgenommen");
 				this.Mana += 10;
-				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
-				break;
-				
-			case 29: // Messer
-				System.out.println("Tomaten Ketchup aufgenommen");
-				this.name[1]="Ketchup";
-				this.items[1]+=1;
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
@@ -397,24 +395,67 @@ public class DDynamic {
 	 */
 	public void Action(int pType){
 		
-		if(pType == 0 && this.Mana > 0){ // Zaubern
+		if((pType == 0 && this.Mana > 0) || (pType == 1 && this.ActiveItem > -1)){
+			
+			int tmpType = pType; // Setzt = 0 oder 1
+			
+			if(tmpType == 1){
+				if(this.ActiveItem != 20){ // Wenn kein Kaese
+					tmpType = 2; //Setze = 2 -> Messer
+				}else{ //Wenn Kaese
+					if(this.items[1] == 1){
+						this.name[1] = "Leer";
+						this.items[1] = 0;
+						
+						if(this.items[0] > 0) //Wenn Messer
+							this.ActiveItem = 22; //Setze Messer als Waffe
+						else
+							this.ActiveItem = -1; //Sonst Keine Waffe mehr
+						
+					}else{
+						this.name[1] = "Kaese";
+						this.items[1]--;
+					}
+				}
+			}else{
+				this.Mana--;
+			}
+			
 			for(int i = 0; i < this.Projectiles.length; i++){
 				if(this.Projectiles[i] == null){
 					// Wenn kein Projektil an der Steller oder ein inaktives
-					this.Projectiles[i] = new DProjectile(this, SpielPanel, StaticObjects, DynamicObjects, this.CurrentXPos, this.CurrentXPos, 0, this.Direction);
+					this.Projectiles[i] = new DProjectile(this, SpielPanel, StaticObjects, DynamicObjects, this.CurrentXPos, this.CurrentXPos, tmpType, this.Direction);
 					i = this.Projectiles.length; //Schleife beenden
 				}else if(this.Projectiles[i].IsEnabled() == false){
 					// Wenn kein Projektil an der Steller oder ein inaktives
 					this.Projectiles[i].setCurrentPosition(this.CurrentXPos, this.CurrentYPos);
-					this.Projectiles[i].setType(0);
 					this.Projectiles[i].setDirection(this.Direction);
-					this.Projectiles[i].setEnabled(true);
+					this.Projectiles[i].setType(tmpType);
+					
 					i = this.Projectiles.length; //Schleife beenden
 				}
 			}
-			this.Mana--;
 		}
 		
+	}
+	
+	/**
+	 * Wechselt Waffe, wenn vorhanden
+	 * @param pType Art der Aktion
+	 */
+	public void changeWeapon(){
+		if(this.items[0] > 0 && this.ActiveItem == 20){
+			this.ActiveItem = 22;
+		}else if(this.items[1] > 0 && this.ActiveItem == 22){
+			this.ActiveItem = 20;
+		}else{
+			if(this.items[0] > 0)
+				this.ActiveItem = 22;
+			else if(this.items[1] > 0)
+				this.ActiveItem = 20;
+			else
+				this.ActiveItem = -1;
+		}
 	}
 
 	/**
@@ -498,6 +539,21 @@ public class DDynamic {
 		this.Points = pPoints;
 	}
 	
+	/**
+	* Gibt Aktives Item zurueck
+	* @param NICHTS
+	*/
+	public int getActiveItem(){
+		return this.ActiveItem;	
+	}
+
+	/**
+	* Setzt Aktives Item
+	* @param pActiveItem Aktives Item?
+	*/
+	public void setActiveItem(int pActiveItem){
+		this.ActiveItem += pActiveItem;
+	}	
 	/** 
 	 * Methode Gesundheit verlieren kann in Verknuepfung mit Schadenssystem benutzt werden
 	 * @param Nichts
@@ -588,7 +644,7 @@ public class DDynamic {
 	}
 	
 	/**
-	 * 	Für DItems und DShop
+	 * 	Fuer DItems und DShop
 	 */
 	public int AnzahlItems(int p){
 	 
@@ -601,8 +657,9 @@ public class DDynamic {
 		}
 		return this.items;
 	}
+	
 	/**
-	 * Für DItems
+	 * Fuer DItems
 	 * @param p
 	 * @return
 	 */
@@ -617,7 +674,7 @@ public class DDynamic {
 		return this.secret;
 	}
 	
-	//Geheimtür
+	//Geheimtuer
 	public boolean SetSecret2(boolean p){
 		return this.secret2=p;	
 	}

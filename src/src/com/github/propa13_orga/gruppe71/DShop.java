@@ -61,7 +61,7 @@ public class DShop implements ActionListener {
 		pan.add(info);
 		
 		//Das Spielgeld
-		result=new JTextField("Verm�gen:  "+this.back+" $$$");
+		result=new JTextField("Vermoegen:  "+this.back+" $$$");
 		Dimension size3=result.getPreferredSize();
 		result.setBounds(20,40,size3.width,size3.height);
 		result.setEditable(false);
@@ -138,7 +138,7 @@ public class DShop implements ActionListener {
 		//
 		
 		
-		//Purchase Au�erhalb der for Shchleife
+		//Purchase Ausserhalb der for Shchleife
 		this.einkauf.setBounds(300,355,this.e.width,this.e.height);
 		this.einkauf.addActionListener(this);
 		this.pan.add(einkauf);
@@ -169,7 +169,7 @@ public class DShop implements ActionListener {
 		pan.setBackground(Color.ORANGE);
 		frame.getContentPane().add(pan);
 		frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		frame.setTitle("Uncle Buck�s Burger Laden");
+		frame.setTitle("Uncle Buck's Burger Laden");
 		frame.setLocation(300,100);
 		frame.setSize(800,500);
 		frame.setResizable(false);
@@ -194,7 +194,7 @@ public class DShop implements ActionListener {
 	}
 	
 	/**
-	 * Die Dimension wird ben�tigt um die prefekte H�he,Breite des Labels,Buttons
+	 * Die Dimension wird benoetigt um die prefekte Hoehe,Breite des Labels,Buttons
 	 * festzulegen
 	 */
 	public void InitDimension(){
@@ -316,7 +316,7 @@ public class DShop implements ActionListener {
 	
 	
 	/**
-	 * Anzahl der Gegenst�nde zum Kauf oder Verkauf werden hier aufgelistet
+	 * Anzahl der Gegenstaende zum Kauf oder Verkauf werden hier aufgelistet
 	 * 
 	 */
 	public void Amount(){
@@ -377,7 +377,7 @@ public class DShop implements ActionListener {
 		this.einkauf=new JButton("PURCHASE");
 		this.reset=new JButton("Reset All");
 		this.calcul=new JButton("Calculate Total");
-		this.play=new JButton("Zur�ck zum Spiel");
+		this.play=new JButton("Zurueck zum Spiel");
 	}
 	
 
@@ -385,12 +385,12 @@ public class DShop implements ActionListener {
 	
 		
 		/**
-		 * ActionListener h�rt auf Button
+		 * ActionListener hoert auf Button
 		 * 
 		 */
 		public void actionPerformed(ActionEvent e) {
 			
-			//Zur�ck zum Spiel
+			//Zurueck zum Spiel
 			if(e.getSource()==this.play){
 				SpielPanel.getDynamicObject(0).setMoney(this.back);
 				for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
@@ -422,7 +422,7 @@ public class DShop implements ActionListener {
 						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+this.items[i]+"Stk.!!!");
 					}
 					inventar.setText("Items-Gesamt:     "+ this.ItemGesamt()+"Stk.");
-					pending.setText("Sie h�ufen Geld an!");
+					pending.setText("Sie haeufen Geld an!");
 				}
 
 				else if(e.getSource()==this.einkauf){
@@ -557,16 +557,24 @@ public class DShop implements ActionListener {
 			
 }
 		
-			public int setTotal(int p){
-				this.total+=p;
-				return this.total;
+
+		/**
+		 * Setze Gesamtbetrag
+		 * @param Nichts
+		 */
+		public int setTotal(int p){
+			this.total+=p;
+			return this.total;
 				
-			}
+		}
 		
 			
 			
 
-		//Preis�bersicht bei PriceList hier Init
+		/**
+		 * Preisuebersicht bei Pricelist hier Init
+		 * @param Nichts
+		 */
 		public void InitPreis(){
 			this.money=new int[SpielPanel.getDynamicObject(0).NumberItems()];
 			
@@ -574,10 +582,18 @@ public class DShop implements ActionListener {
 			this.PriceList();
 		}
 		
-		//Preisliste $$$
+		/**
+		 * Preisliste $$$
+		 * @param Nichts
+		 */
 		public int getTotal(){
 			return this.total;
 		}
+		
+		/**
+		 * Zufallsfunktion?
+		 * @param Nichts
+		 */
 		public void PriceList(){
 				this.money[0]=100;
 				this.money[1]=20;
@@ -587,10 +603,14 @@ public class DShop implements ActionListener {
 				this.money[5]=50;
 		}
 		
+		/**
+		 * Setze Namen im Menue
+		 * @param Nichts
+		 */
 		public String[] ShopItems(){
 			this.namen=new String[SpielPanel.getDynamicObject(0).NumberItems()];
-			this.namen[0]="SM";
-			this.namen[1]="Heinz";
+			this.namen[0]="Messer";
+			this.namen[1]="Kaese";
 			this.namen[2]="Dijon";
 			this.namen[3]="HP";
 			this.namen[4]="ZT A";
@@ -598,16 +618,29 @@ public class DShop implements ActionListener {
 			
 			return this.namen;
 		}
-		
-	public String Name(int p){
-		return this.namen[p];
-	}
-	public void FetchItems(){
-		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
-			this.items[i]=SpielPanel.getDynamicObject(0).AnzahlItems(i);
+	
+		/**
+		 * Hilfsfunktion
+		 * @param p Feldid
+		 */
+		public String Name(int p){
+			return this.namen[p];
 		}
-	}
-	//Zwischenspeicherung
+		/**
+		 * Anzahl Items passiert irgendwas
+		 * @param Nichts
+		 */
+		public void FetchItems(){
+			for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
+				this.items[i]=SpielPanel.getDynamicObject(0).AnzahlItems(i);
+			}
+		}
+	
+
+	/**
+	 * Zwischenspeicherung
+	 * @param Nichts
+	 */
 	public int[] InitItemStorage(){
 		this.wert2=new int[SpielPanel.getDynamicObject(0).NumberItems()];
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
@@ -616,6 +649,10 @@ public class DShop implements ActionListener {
 		return this.wert2;
 	}
 	
+	/**
+	 * Gesamtbetrag wird berechnet
+	 * @param Nichts
+	 */
 	public int ItemGesamt(){
 		this.gesamt=0;
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){

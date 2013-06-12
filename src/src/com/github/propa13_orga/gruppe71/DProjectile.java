@@ -20,6 +20,8 @@ public class DProjectile {
 	private int Speed; // Geschwindigkeit
 	private int Type; // Typ des Projektils
 	private boolean Enabled; // Objekt ist aktiv
+	private int MaxRange; // Max Schussweite eines Proj
+	private int CurrentRange; // Momentanzurueckgelegte Schussweite eines Proj
 	
 	public DProjectile(DDynamic pShooter, DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pType, int pDirection){
 		this.SpielPanel = pPanel;
@@ -32,17 +34,41 @@ public class DProjectile {
 		this.Direction = pDirection;
 		
 		this.Type = pType;
-		this.Enabled = true;
 		
-		switch(pType){
+		this.init();
+	}
+	
+	/**
+	 * Initalisiert die Standardwerte des Objekts
+	 * @param NICHTS 
+	 */
+	public void init(){
+		this.Enabled = true;
+		this.CurrentRange = 0;
+		
+		switch(this.Type){
 		case 0: //Zauber
 			this.Damage = 1;
 			this.Speed = 2;
+			this.MaxRange = 9999;
+			break;
+
+		case 1: //Kaese
+			this.Damage = 2;
+			this.Speed = 1;
+			this.MaxRange = 9999;
+			break;
+
+		case 2: //Messer
+			this.Damage = 2;
+			this.Speed = 4;
+			this.MaxRange = 7;
 			break;
 			
 		default:
 			this.Damage = 1;
 			this.Speed = 2;
+			this.MaxRange = 1;
 			break;
 		}
 	}
@@ -101,6 +127,7 @@ public class DProjectile {
 	*/
 	public void setType(int pType){
 	this.Type = pType;
+	this.init();
 	}
 	
 	/**
@@ -119,6 +146,22 @@ public class DProjectile {
 	this.Direction = pDirection;
 	}
 
+	/**
+	* Gibt Momentane Weite zurueck
+	* @param NICHTS
+	*/
+	public int getCurrentRange(){
+	return this.CurrentRange;
+	}
+
+	/**
+	* Setzt Momentane Weite
+	* @param pCurrentRange Wie weit bereits?
+	*/
+	public void setCurrentRange(int pCurrentRange){
+	this.Direction = pCurrentRange;
+	}
+	
 	/**
 	* Gibt zurueck ob aktiv oder nicht
 	* @param NICHTS
@@ -141,6 +184,8 @@ public class DProjectile {
 	 * @param NICHTS
 	 */
 	public void AnimateMoving(){
+		if(this.MaxRange > this.CurrentRange){
+		
 		if(this.Direction == 0){ // Oben
 			if(this.CurrentYPos > 0){
 				this.CurrentYPos -= this.Speed; //Ein Stueck nach oben
@@ -205,6 +250,12 @@ public class DProjectile {
 		}else{
 			this.Enabled = false;
 		}
+		
+		}else{
+			this.Enabled = false;
+		}
+		
+		this.CurrentRange++;
 		
 	}
 	}

@@ -68,6 +68,11 @@ public class DItems  {
 	frame.setResizable(false);
 	frame.setVisible(true);
 	}
+	
+	/**
+	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
+	 * @param pParam Parameterbeschr.
+	 */
 	public void InitLabel(){
 		
 		this.label=new JLabel[SpielPanel.getDynamicObject(0).NumberItems()];
@@ -80,6 +85,10 @@ public class DItems  {
 		}
 	}
 	
+	/**
+	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
+	 * @param pParam Parameterbeschr.
+	 */
 	public void InitDimension(){
 		this.l=new Dimension[SpielPanel.getDynamicObject(0).NumberItems()];
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
@@ -87,6 +96,10 @@ public class DItems  {
 		}
 	}
 	
+	/**
+	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
+	 * @param pParam Parameterbeschr.
+	 */
 	public void AddToPan(){
 		int y=0;
 		int z=0;
@@ -103,6 +116,10 @@ public class DItems  {
 		
 	}
 	
+	/**
+	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
+	 * @param pParam Parameterbeschr.
+	 */
 	public void InitPic(){
 		this.pics=new ImageIcon[SpielPanel.getDynamicObject(0).NumberItems()];
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
@@ -111,11 +128,15 @@ public class DItems  {
 		}
 	}
 	
+	/**
+	 * Kommentare sind schoen, dann weiss man sogar was passiert, blablabla :)
+	 * @param pParam Parameterbeschr.
+	 */
 	public String[] Bild(){
 		this.bild=new String[SpielPanel.getDynamicObject(0).NumberItems()];
 		
 		bild[0]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
-		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";
+		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_pKaese.png";
 		bild[2]="src/src/com/github/propa13_orga/gruppe71/messer.jpg";
 		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";
 		bild[4]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";

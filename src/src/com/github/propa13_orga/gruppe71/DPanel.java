@@ -1,11 +1,14 @@
 package src.com.github.propa13_orga.gruppe71;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,7 +55,7 @@ public class DPanel extends JPanel {
 		
 		this.StaticObjects = new StaticObject[12][20];
 		this.DynamicObjects = new DDynamic[50];
-		this.Projectiles = new DProjectile[40];
+		this.Projectiles = new DProjectile[100];
 		this.LevelObjects = new int[3][12][20]; 
 		this.CheckpointLoaded = false;
 		this.StaticObjectsLoaded = false;
@@ -297,6 +300,8 @@ public class DPanel extends JPanel {
 		
 		this.DynamicObjectsPainted = true;
 
+		this.drawHUD(pGraphics); //Infoleiste neu malen
+		
 		//Jetzt kann alles was wir gerade gemalt haben neu gezeichnet werden
 		this.repaint();
 	}
@@ -332,7 +337,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"), //17 Geheim
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"), //18 Teleport , Destination
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pBeamer.png"), //19 Secret
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKäse.png"), //20 Cheese/Kaese
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKaese.png"), //20 Cheese/Kaese
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pTrank.png"), //21 Health/ Gesundheit
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pMesser.png"), //22 Knife/Messer
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pLive.png"), //23 Leben
@@ -342,7 +347,9 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_shop.png"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pTrank.png"), //28 Zaubertrank
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKetchup.png"),  //29 Ketchup
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_proj_käse.png"),//30 [Proj]Zauber
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup.png"),//30 [Proj]Zauber
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_kaese.png"),//31 [Proj]Kaese
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_messer.png")//32 [Proj]Messer
 				};
 	
 		//Zeichne das Bild
@@ -462,9 +469,6 @@ public class DPanel extends JPanel {
 								break;
 	            			case 'Z': //Zaubertrank
 								TmpLevelObjects[z][y][x] = 28;
-								break;
-	            			case 'T': //Zaubertrank
-								TmpLevelObjects[z][y][x] = 29;
 								break;
 							default:
 								TmpLevelObjects[z][y][x] = 24;
@@ -742,6 +746,23 @@ public class DPanel extends JPanel {
 			this.DynamicObjects[0] = this.CheckpointObject;
 			this.CheckpointLoaded = true;
 			this.setCheckpointObject(null);
+		}
+	}
+	
+	public void drawHUD(Graphics pGraphics){
+		for(int i = 0; i < 2; i++){
+			
+			int Drawingheight = (370+(i*35)); //Ab dieser H√∂he wird gerade auf einer Linie gemalt
+			
+			//Spieler Name Label
+			JLabel Spieler_Label = new JLabel("Player "+(i+1)+":", JLabel.LEFT);
+		    Spieler_Label.setLocation(20, Drawingheight);
+			this.add(Spieler_Label);
+			
+			
+
+			//drawImageAtPos(pGraphics, 20, , Drawingheight); 
+			
 		}
 	}
 	

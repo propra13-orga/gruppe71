@@ -2,6 +2,8 @@ package src.com.github.propa13_orga.gruppe71;
 
 import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.awt.event.KeyAdapter;
 
 public class DSteuerung {
@@ -15,18 +17,28 @@ public class DSteuerung {
 	 */
 	public DSteuerung(int pAnzahlSpieler){
 		
+		
 		this.SpielFenster = new JFrame();
 		
 		//Fenster-Eigenschaften werden gesetzt
-		this.SpielFenster.setSize(610, 390);
+		this.SpielFenster.setSize(610, 480);
 		this.SpielFenster.setLocation(350, 150) ;
 		this.SpielFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.SpielFenster.setTitle("DungeonCrawler");
 		this.SpielFenster.setResizable(false);
+		this.SpielFenster.setLayout(null);
 		
 		//Panel zum Fenster hinzugefuegt, hier wird das SpielFenster gemalt
-		final DPanel SpielPanel = new DPanel(SpielFenster, pAnzahlSpieler);
+		final DPanel SpielPanel = new DPanel(this.SpielFenster, pAnzahlSpieler);
+		SpielPanel.setBounds(0, 0, 610, 360);
+		SpielPanel.setLayout(null);
 		this.SpielFenster.setContentPane(SpielPanel);
+		
+		final HUDPanel InfoLeiste = new HUDPanel(this.SpielFenster, SpielPanel);
+		InfoLeiste.setBounds(0, 360, 610, 120);
+		InfoLeiste.setLayout(null);
+		this.SpielFenster.add(InfoLeiste);
+		
 		
 		//Gebe dem Panel Focus, so dass es Tasteneingaben erkennt
 		SpielPanel.setFocusable( true );
@@ -61,6 +73,14 @@ public class DSteuerung {
 	    		else if(e.getKeyCode()==KeyEvent.VK_M)
 	    		{
 	    			SpielPanel.getDynamicObject(0).Action(0); //Zaubern
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_N)
+	    		{
+	    			SpielPanel.getDynamicObject(0).Action(1); //Waffe benutzen
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_B)
+	    		{
+	    			SpielPanel.getDynamicObject(0).changeWeapon(); //Waffe wechseln
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_W)
 	    		{
