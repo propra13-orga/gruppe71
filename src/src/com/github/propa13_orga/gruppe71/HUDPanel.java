@@ -108,7 +108,7 @@ public class HUDPanel extends JPanel {
 			//Waffen
 			this.Spieler_Weapon[i] = new JLabel("Weapon:"); // Waffenanzeige
 			this.Spieler_Weapon[i].setFont(new Font("Arial", Font.BOLD, 18));
-			this.Spieler_Weapon[i].setBounds(395, 0+(i*40), 100, 60);
+			this.Spieler_Weapon[i].setBounds(420, 0+(i*40), 100, 60);
 			this.add(this.Spieler_Weapon[i]);
 			
 			//WeaponIcon
@@ -116,14 +116,14 @@ public class HUDPanel extends JPanel {
 			Image Image_Weapon_Scaled = Image_Weapon.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);//Skaliert auf 30x30
 			ImageIcon Weapon_ImageIcon = new ImageIcon(Image_Weapon_Scaled);
 			this.Spieler_Weapon_Icon[i] = new JLabel(Weapon_ImageIcon);
-			this.Spieler_Weapon_Icon[i].setBounds(490, 15+(i*40), 30, 30);
+			this.Spieler_Weapon_Icon[i].setBounds(500, 15+(i*40), 30, 30);
 			this.add(this.Spieler_Weapon_Icon[i]);//Icon hinzugefuegt
 			
 
 			//Waffen Zaehler
 			this.Spieler_Weapon_Amount[i] = new JLabel("0"); // Waffenanzeige
 			this.Spieler_Weapon_Amount[i].setFont(new Font("Arial", Font.BOLD, 18));
-			this.Spieler_Weapon_Amount[i].setBounds(540, 0+(i*40), 100, 60);
+			this.Spieler_Weapon_Amount[i].setBounds(550, 0+(i*40), 100, 60);
 			this.add(this.Spieler_Weapon_Amount[i]);
 		}			
 	}

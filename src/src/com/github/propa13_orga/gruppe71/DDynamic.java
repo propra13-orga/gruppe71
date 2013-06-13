@@ -667,7 +667,7 @@ public class DDynamic {
 	
 	//Addiere die neuen Items vom DShop
 	public int SetItems(int i,int p){
-		this.items[i]=p;
+		this.items[i]+=p;
 		return this.items[i];
 	}
 	

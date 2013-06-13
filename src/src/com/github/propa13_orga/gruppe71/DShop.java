@@ -251,9 +251,9 @@ public class DShop implements ActionListener {
 		this.bild=new String[SpielPanel.getDynamicObject(0).NumberItems()];
 		
 		bild[0]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png"; // Messer
-		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup.png";// Ketchup
+		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_kaese.png";// Ketchup
 		bild[2]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png"; // Dijon?? Messer
-		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_live.png"; //Health
+		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_live.png"; //Health /Armor
 		bild[4]="src/src/com/github/propa13_orga/gruppe71/bb_trank.png"; // Trank 1
 		bild[5]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png";// Trank 2
 		
@@ -271,7 +271,7 @@ public class DShop implements ActionListener {
 		for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
 			
 			//Label mit Bild
-			this.label[i].setBounds(10,120+y,this.d[i].width,this.d[i].height);
+			this.label[i].setBounds(5,120+y,this.d[i].width,this.d[i].height);
 			this.pan.add(label[i]);
 			
 			//Textfield mit Wert
@@ -405,10 +405,13 @@ public class DShop implements ActionListener {
 					for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
 						SpielPanel.getDynamicObject(0).SetItems(i,wert2[i]);
 						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+SpielPanel.getDynamicObject(0).AnzahlItems(i)+"Stk.!!!");
-						
+						this.wert[i]=0;    // Hier wir alles auf 0 gesetzt nach dem Einkauf / Verkauf , damit man nicht einfach an Geld rankommt
+						this.wert2[i]=0;
+						this.total=0;
 					}
-					inventar.setText("Items-Gesamt:     "+ this.ItemGesamt()+"Stk.");
+					inventar.setText("Items-Gesamt"+ this.ItemGesamt()+"Stk.");
 					pending.setText("Transaktion erfolgreich");
+					
 					
 				}
 				else if(this.total>0){
@@ -417,9 +420,13 @@ public class DShop implements ActionListener {
 					for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
 						SpielPanel.getDynamicObject(0).SetItems(i,wert2[i]);
 						this.hinweise[i].setText(this.Name(i)+"   "+"Preis:  "+ this.money[i]+". Im Inventar:"+SpielPanel.getDynamicObject(0).AnzahlItems(i)+"Stk.!!!");
+						this.wert[i]=0;
+						this.wert2[i]=0;
+						this.total=0;
 					}
 					inventar.setText("Items-Gesamt:     "+ this.ItemGesamt()+"Stk.");
 					pending.setText("Sie haeufen Geld an!");
+					
 				}
 
 				else if(e.getSource()==this.einkauf){
@@ -427,12 +434,7 @@ public class DShop implements ActionListener {
 						pending.setText("Zu wenig Geld!");
 					}
 				
-				/*else if(e.getSource()==this.einkauf){
-					for(int i=0;i<SpielPanel.getDynamicObject(0).NumberItems();i++){
-						if(){
-							pending.setText("Zu wenig Geld!");
-						}
-					}*/
+				
 
 				}
 		}
@@ -592,12 +594,12 @@ public class DShop implements ActionListener {
 		 * @param Nichts
 		 */
 		public void PriceList(){
-				this.money[0]=100;
-				this.money[1]=20;
-				this.money[2]=77;
-				this.money[3]=19;
-			    this.money[4]=25;
-				this.money[5]=50;
+				this.money[0]=150;
+				this.money[1]=30;
+				this.money[2]=25;
+				this.money[3]=750;
+			    this.money[4]=40;
+				this.money[5]=40;
 		}
 		
 		/**
