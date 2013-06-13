@@ -146,7 +146,7 @@ public class HUDPanel extends JPanel {
 			
 			//WeaponIcon
 			if(this.DynamicObjects[i].getActiveItem() == 20){
-				Image_Weapon = Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKaese.png");
+				Image_Weapon = Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKŠse.png");
 				this.Spieler_Weapon_Amount[i].setText(Integer.toString(this.DynamicObjects[i].AnzahlItems(1))); // Lebensanzeige
 			}else if(this.DynamicObjects[i].getActiveItem() == 22){
 				Image_Weapon = Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pMesser.png");

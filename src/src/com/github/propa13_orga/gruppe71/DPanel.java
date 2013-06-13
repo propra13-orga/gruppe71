@@ -240,32 +240,47 @@ public class DPanel extends JPanel {
 						
 						int[] TmpDynamicObjectPosition=this.DynamicObjects[i].getCurrentPosition();
 							//Hier werden die Burger neu gezeichnet bei Leben Verlust.
-						switch(this.DynamicObjects[i].getHealth()){
+						if(i == 0) {
+								switch(this.DynamicObjects[i].getHealth()){
+									case 4:
+										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 3:
+										this.drawImageAtPos(pGraphics,11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 2:
+										this.drawImageAtPos(pGraphics,12 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 1:
+										this.drawImageAtPos(pGraphics,13 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 0:
+										this.drawImageAtPos(pGraphics, 14 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+								}
+							}
+							else if(i == 1) {
+								switch(this.DynamicObjects[i].getHealth()){
+									case 4:
+										this.drawImageAtPos(pGraphics,33 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 3:
+										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 2:
+										this.drawImageAtPos(pGraphics,35 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 1:
+										this.drawImageAtPos(pGraphics,36 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 0:
+										this.drawImageAtPos(pGraphics, 37 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
 						
-						case 4:
-							this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-							break;
-						case 3:
-							this.drawImageAtPos(pGraphics,11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-							break;
-						case 2:
-							this.drawImageAtPos(pGraphics,12 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-							break;
-						case 1:
-							this.drawImageAtPos(pGraphics,13 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-							break;
-						case 0:
-							this.drawImageAtPos(pGraphics, 14 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-							break;
+								}
 						}
-						
-								
-								
-							
-				
-					}
 				}
-				
+				}	
 					
 				}
 				//Schleife, die durch die dynamischen Objekte der Gegner geht
@@ -273,7 +288,7 @@ public class DPanel extends JPanel {
 					
 					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() > 0){ //Wenn Objekt aktiv und Health vorhanden sind	
 						//Und male das Objekt dann an der (neuen) Position
-						switch(this.DynamicObjects[i].getType()){								// Zufalls-Bewegung
+						switch(this.DynamicObjects[i].getType()){						// Wählt Bild nach Type aus		
 						case 1: this.drawImageAtPos(pGraphics, 5 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
 								break;
 						case 2: this.drawImageAtPos(pGraphics, 7 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
@@ -281,7 +296,7 @@ public class DPanel extends JPanel {
 						case 3: this.drawImageAtPos(pGraphics, 8 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
 								break;
 						}
-							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
+							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden? Zufalls-Bewegung
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein St√ºckchen
 							} else {
 							Random zufallsZahl = new Random();						// ZufallsZahl
@@ -348,7 +363,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.png"), //4 Ausgang
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_enemy.png"), //5 Normaler Gegner
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap01.png"), //6 Falle
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_stop.png"), //7 Normaler Boss
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_strong_enemy.png"), //7 Starker Boss
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy.png"), //8 End-Boss
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"), //9
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"),//10 Spieler 0-Leben
@@ -367,13 +382,18 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pLive.png"), //23 Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pMoney.png"), //24 Money / Geld
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pHotdog_npc.png"), //25 NPC
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pTrank.png"), //26 Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armorä.png"), //26 Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_shop.png"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pTrank.png"), //28 Zaubertrank
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKetchup.png"),  //29 Ketchup
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup.png"),//30 [Proj]Zauber
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_kaese.png"),//31 [Proj]Kaese
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_messer.png")//32 [Proj]Messer
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_messer.png"),//32 [Proj]Messer
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//33 2.Spieler 0-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player02.png"),//34 2.Spieler 1-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player03.png"),//35 2.Spieler 2-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//36 2.Spieler 3-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player05.png"),//37 2.Spieler 4-Leben
 				};
 	
 		//Zeichne das Bild
@@ -455,10 +475,10 @@ public class DPanel extends JPanel {
 	            			TmpLevelObjects[z][y][x] = Character.getNumericValue(tmpBuchstabe);
 	            		}else{
 	            			switch(tmpBuchstabe){
-	            			case 'O':
+	            			case 'O'://Geheimgang
 	            				TmpLevelObjects[z][y][x] = 16;
 	            				break;
-	            			case 'G':
+	            			case 'G': //17 Geheim
 	            				TmpLevelObjects[z][y][x] = 17;
 	            				break;
 	            			case '!'://Teleport
