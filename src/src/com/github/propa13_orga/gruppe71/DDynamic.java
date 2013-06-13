@@ -1,4 +1,4 @@
-package src.com.github.propa13_orga.gruppe71;
+					package src.com.github.propa13_orga.gruppe71;
 
 import java.awt.Graphics;
 
@@ -24,7 +24,7 @@ public class DDynamic {
 	private int Lives; // Leben
 	private int Money; // Geld
 	private int Mana; // Mana / Zauberpunkte
-	private int Type; // Typ des Bots(normal, Boss etc.)
+	private  int Type; // Typ des Bots(normal, Boss etc.)
 	private boolean isBot; // Ist ein Bot oder Spieler?
 	private int Points; //Punkte
 	
@@ -52,8 +52,8 @@ public class DDynamic {
 		this.Mana = 50;
 		this.isBot = pisBot;
 		if(pisBot == true){
-			this.Lives = 0;
 			this.Type = 1;
+			this.Lives = 0;
 		}else{
 			this.Type = 0;
 			this.Lives = 3;
@@ -124,7 +124,21 @@ public class DDynamic {
 	return this.isBot;
 	}
 	
+	/**
+	* Gibt Type des Bots ist
+	* @param NICHTS
+	*/
+	public int getType() {
+		return this.Type;
+	}
 
+	/**
+	* Setzt Type des Bots
+	* @param pType neuer Type des Bots
+	*/
+	public void setType(int pType){
+		this.Type = pType;
+	}
 	/**
 	 * Setzt, ob das Objekt sich bewegt
 	 * @param pMoves bewegt es sich?
