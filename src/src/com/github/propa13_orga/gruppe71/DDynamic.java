@@ -302,7 +302,7 @@ public class DDynamic {
 
 			case 25: // NPC
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 ){
-					JOptionPane.showMessageDialog(null, "Es war einmal...");
+					JOptionPane.showMessageDialog(null, " Hallo BURGER NR. 1, \n versuch so schnell wie möglich an das \n Ziel zu gelangen ohne dabei von Ungezif-\nfer gefressen zu werden. Auf dem Weg ver-\n streute Items könnten dir dabei nützlich sein. \n Sammel genug Geld um dich im Shop auszurüsten.");
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 ){
 					JOptionPane.showMessageDialog(null, "Es war einmal 1...");
