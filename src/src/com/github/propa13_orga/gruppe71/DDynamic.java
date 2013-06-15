@@ -302,7 +302,7 @@ public class DDynamic {
 
 			case 25: // NPC
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 ){
-					JOptionPane.showMessageDialog(null, " Hallo BURGER NR. 1, \n versuch so schnell wie mšglich an das \n Ziel zu gelangen ohne dabei von Ungezif-\nfer gefressen zu werden. Auf dem Weg ver-\n streute Items kšnnten dir dabei nŸtzlich sein. \n Sammel genug Geld um dich im Shop auszurŸsten.");
+					JOptionPane.showMessageDialog(null, " Hallo BURGER NR. 1, \n versuch so schnell wie mï¿½glich an das \n Ziel zu gelangen ohne dabei von Ungezif-\nfer gefressen zu werden. Auf dem Weg ver-\n streute Items kï¿½nnten dir dabei nï¿½tzlich sein. \n Sammel genug Geld um dich im Shop auszurï¿½sten.");
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 ){
 					JOptionPane.showMessageDialog(null, "Es war einmal 1...");
@@ -409,30 +409,34 @@ public class DDynamic {
 	 */
 	public void Action(int pType){
 		
-		if((pType == 0 && this.Mana > 0) || (pType == 1 && this.ActiveItem > -1)){
+		System.out.println("Action "+pType);
+		
+		if((pType == 0 && this.Mana > 0) || (pType == 1 && this.ActiveItem > -1) || pType > 2){
 			
 			int tmpType = pType; // Setzt = 0 oder 1
 			
-			if(tmpType == 1){
-				if(this.ActiveItem != 20){ // Wenn kein Kaese
-					tmpType = 2; //Setze = 2 -> Messer
-				}else{ //Wenn Kaese
-					if(this.items[1] == 1){
-						this.name[1] = "Leer";
-						this.items[1] = 0;
-						
-						if(this.items[0] > 0) //Wenn Messer
-							this.ActiveItem = 22; //Setze Messer als Waffe
-						else
-							this.ActiveItem = -1; //Sonst Keine Waffe mehr
-						
-					}else{
-						this.name[1] = "Kaese";
-						this.items[1]--;
+			if(tmpType < 3){
+				if(tmpType == 1){
+					if(this.ActiveItem != 20){ // Wenn kein Kaese
+						tmpType = 2; //Setze = 2 -> Messer
+					}else{ //Wenn Kaese
+						if(this.items[1] == 1){
+							this.name[1] = "Leer";
+							this.items[1] = 0;
+							
+							if(this.items[0] > 0) //Wenn Messer
+								this.ActiveItem = 22; //Setze Messer als Waffe
+							else
+								this.ActiveItem = -1; //Sonst Keine Waffe mehr
+							
+						}else{
+							this.name[1] = "Kaese";
+							this.items[1]--;
+						}
 					}
+				}else{
+					this.Mana--;
 				}
-			}else{
-				this.Mana--;
 			}
 			
 			for(int i = 0; i < this.Projectiles.length; i++){

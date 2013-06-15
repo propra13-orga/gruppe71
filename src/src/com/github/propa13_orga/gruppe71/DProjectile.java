@@ -62,7 +62,20 @@ public class DProjectile {
 		case 2: //Messer
 			this.Damage = 2;
 			this.Speed = 4;
-			this.MaxRange = 7;
+			this.MaxRange = 9;
+			break;
+			
+
+		case 3: //Spinnweben
+			this.Damage = 2;
+			this.Speed = 2;
+			this.MaxRange = 9999;
+			break;
+			
+		case 4: //Spinnweben? (Proj fuer 3. Boss)
+			this.Damage = 2;
+			this.Speed = 2;
+			this.MaxRange = 9999;
 			break;
 			
 		default:
@@ -224,7 +237,9 @@ public class DProjectile {
 		// Position bereinigen, so dass sie restlos durch 30 teilbar ist
 		int cleanXPos = this.CurrentXPos - (this.CurrentXPos % 30);
 		int cleanYPos = this.CurrentYPos - (this.CurrentYPos % 30);
-
+		
+		System.out.println("this.StaticObjects["+(cleanYPos/30)+"]["+(cleanXPos/30)+"].getCollision()");
+		
 		if(this.StaticObjects[(cleanYPos/30)][(cleanXPos/30)].getCollision() == false){ // Keine Kollision also weiter
 			
 			// Schaden hinzufügen wenn ein DynamicObject beruehrt wird

@@ -53,7 +53,7 @@ public class DPanel extends JPanel {
 		//Setze alles auf Start-Wert
 		this.SpielFenster = pJFrame;
 		
-		this.StaticObjects = new StaticObject[12][20];
+		this.StaticObjects = new StaticObject[14][24];
 		this.DynamicObjects = new DDynamic[50];
 		this.Projectiles = new DProjectile[100];
 		this.LevelObjects = new int[3][12][20]; 
@@ -113,7 +113,7 @@ public class DPanel extends JPanel {
 					}
 					
 					
-					if(this.StaticObjects[y][x].getType() == 5 || this.StaticObjects[y][x].getType() == 7 || this.StaticObjects[y][x].getType() == 8 ){ //und wenn das Objekt ein Gegner ist
+					if(this.StaticObjects[y][x].getType() == 5 || this.StaticObjects[y][x].getType() == 7 || this.StaticObjects[y][x].getType() == 8  || this.StaticObjects[y][x].getType() == 9 ){ //und wenn das Objekt ein Gegner ist
 						tmpGegnerArray[tmpAnzahlGegner][0] = x; //Gegner X Pos zwischenspeichern
 						tmpGegnerArray[tmpAnzahlGegner][1] = y; //Gegner Y Pos zwischenspeichern
 						tmpGegnerArray[tmpAnzahlGegner][2] = this.StaticObjects[y][x].getType(); //Gegner Typ zwischenspeichern
@@ -181,7 +181,7 @@ public class DPanel extends JPanel {
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));	
 							}
 							break;
-						case 7: //Starker Gegner
+						case 7: //Starker Gegner (1. Boss)
 							if(this.DynamicObjects[2+i] == null){
 								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 								this.DynamicObjects[2+i].setType(2); //Setzt Type 2 = Starker Gegner
@@ -190,11 +190,20 @@ public class DPanel extends JPanel {
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));	
 							}
 							break;
-						case 8: //Boss Gegner
+						case 8: //Starker Boss Spinne (2.Boss)
 							if(this.DynamicObjects[2+i] == null){
 								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 								this.DynamicObjects[2+i].setType(3); //Setzt Type 3 = Boss Gegner
 								this.DynamicObjects[2+i].setHealth(4);
+							}else{
+								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
+							}
+							break;
+						case 9: //End Boss Spinne2? (3.Boss)
+							if(this.DynamicObjects[2+i] == null){
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
+								this.DynamicObjects[2+i].setType(4); //Setzt Type 4 = EndBoss Gegner
+								this.DynamicObjects[2+i].setHealth(8);
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
 							}
@@ -262,19 +271,19 @@ public class DPanel extends JPanel {
 							else if(i == 1) {
 								switch(this.DynamicObjects[i].getHealth()){
 									case 4:
-										this.drawImageAtPos(pGraphics,33 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										break;
-									case 3:
-										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										break;
-									case 2:
 										this.drawImageAtPos(pGraphics,35 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
-									case 1:
+									case 3:
 										this.drawImageAtPos(pGraphics,36 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
+									case 2:
+										this.drawImageAtPos(pGraphics,37 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
+									case 1:
+										this.drawImageAtPos(pGraphics,38 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										break;
 									case 0:
-										this.drawImageAtPos(pGraphics, 37 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics, 39 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 						
 								}
@@ -288,13 +297,15 @@ public class DPanel extends JPanel {
 					
 					if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() > 0){ //Wenn Objekt aktiv und Health vorhanden sind	
 						//Und male das Objekt dann an der (neuen) Position
-						switch(this.DynamicObjects[i].getType()){						// Wählt Bild nach Type aus		
+						switch(this.DynamicObjects[i].getType()){						// WÔøΩhlt Bild nach Type aus		
 						case 1: this.drawImageAtPos(pGraphics, 5 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
 								break;
 						case 2: this.drawImageAtPos(pGraphics, 7 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
 								break;
 						case 3: this.drawImageAtPos(pGraphics, 8 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
-								break;
+							break;
+						case 4: this.drawImageAtPos(pGraphics, 9 , this.DynamicObjects[i].getCurrentXPosition(), this.DynamicObjects[i].getCurrentYPosition());
+							break;
 						}
 							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden? Zufalls-Bewegung
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein St√ºckchen
@@ -302,6 +313,7 @@ public class DPanel extends JPanel {
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
 							int delaycounter = zufallsZahl.nextInt(50);			//Verzoegerung von Zufalls-Bewegung
+							
 							if(delaycounter == 0){								
 								switch(randomnumber){								// Zufalls-Bewegung
 								case 0: this.DynamicObjects[i].moveTo("right");
@@ -315,6 +327,15 @@ public class DPanel extends JPanel {
 								default: System.out.println("Fehler bei den Zufallszahlen");
 										break;
 							
+								}
+								
+								if(this.DynamicObjects[i].getType() > 2){ //Wenn Starker Boss(3) oder Endboss(4)
+
+									int randomshot = zufallsZahl.nextInt(3);
+									
+									if(randomshot == 0){
+										this.DynamicObjects[i].Action(this.DynamicObjects[i].getType());
+									}
 								}
 							}
 						}
@@ -363,9 +384,9 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_out.png"), //4 Ausgang
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_enemy.png"), //5 Normaler Gegner
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_trap01.png"), //6 Falle
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_strong_enemy.png"), //7 Starker Boss
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy.png"), //8 End-Boss
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"), //9
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_strong_enemy.png"), //7 Starker Gegner(1.Boss)
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy.png"), //8 Starker Boss Spinne(2.Boss)
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy.png"), //9 End Boss(3.Boss)
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"),//10 Spieler 0-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player02.png"),//11 Spieler 1-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player03.png"),//12 Spieler 2-Leben
@@ -382,18 +403,20 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pLive.png"), //23 Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pMoney.png"), //24 Money / Geld
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pHotdog_npc.png"), //25 NPC
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armorä.png"), //26 Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor.png"), //26 Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_shop.png"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pTrank.png"), //28 Zaubertrank
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKetchup.png"),  //29 Ketchup
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_ketchup.png"),//30 [Proj]Zauber
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_kaese.png"),//31 [Proj]Kaese
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_kaese.png"),//31 [Proj]Kaese
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_messer.png"),//32 [Proj]Messer
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//33 2.Spieler 0-Leben
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player02.png"),//34 2.Spieler 1-Leben
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player03.png"),//35 2.Spieler 2-Leben
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//36 2.Spieler 3-Leben
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player05.png"),//37 2.Spieler 4-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_spiderweb.png"),//33 [Proj]Spinnweben(2.Boss)
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_spiderweb.png"),//34 [Proj]Etwas anderes(3.Boss)
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//35 2.Spieler 0-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player02.png"),//36 2.Spieler 1-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player03.png"),//37 2.Spieler 2-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//38 2.Spieler 3-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player05.png")//39 2.Spieler 4-Leben
 				};
 	
 		//Zeichne das Bild
@@ -430,7 +453,7 @@ public class DPanel extends JPanel {
 	public void loadLevelFromFile(String pFilename){
 		
 		//Setze alle Variablen auf Startwert
-		this.StaticObjects = new StaticObject[12][20];
+		this.StaticObjects = new StaticObject[14][24];
 		//this.DynamicObjects = new DDynamic[2];
 		this.LevelObjects = new int[3][12][20]; 
 		this.StaticObjectsLoaded = false;
@@ -554,7 +577,7 @@ public class DPanel extends JPanel {
 	 */
 	public void loadLevelIntoStaticObjects(int pSection){
 		// Setze alles zurueck auf Startwert, damit es neu gezeichnet wird
-		this.StaticObjects = new StaticObject[12][20];
+		this.StaticObjects = new StaticObject[14][24];
 		//this.DynamicObjects = new DDynamic[2];
 		this.StaticObjectsLoaded = false;
 		this.StaticObjectsPainted = false;
