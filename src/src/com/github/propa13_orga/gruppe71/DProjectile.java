@@ -43,6 +43,12 @@ public class DProjectile {
 	 * @param NICHTS 
 	 */
 	public void init(){
+		this.StaticObjects = null;
+		this.StaticObjects = new StaticObject[14][24];
+		this.StaticObjects = this.SpielPanel.getStaticObjects();
+		this.DynamicObjects = null;
+		this.DynamicObjects = new DDynamic[50];
+		this.DynamicObjects = this.SpielPanel.getDynamicObjects();
 		this.Enabled = true;
 		this.CurrentRange = 0;
 		
@@ -55,7 +61,7 @@ public class DProjectile {
 
 		case 1: //Kaese
 			this.Damage = 2;
-			this.Speed = 1;
+			this.Speed = 3;
 			this.MaxRange = 9999;
 			break;
 
@@ -172,7 +178,23 @@ public class DProjectile {
 	* @param pCurrentRange Wie weit bereits?
 	*/
 	public void setCurrentRange(int pCurrentRange){
-	this.Direction = pCurrentRange;
+	this.CurrentRange = pCurrentRange;
+	}
+	
+	/**
+	* Gibt Max Weite zurueck
+	* @param NICHTS
+	*/
+	public int getMaxRange(){
+	return this.MaxRange;
+	}
+
+	/**
+	* Setzt Max Weite
+	* @param pMaxRange Wie weit maximal?
+	*/
+	public void setMaxRange(int pMaxRange){
+	this.MaxRange = pMaxRange;
 	}
 	
 	/**
@@ -238,7 +260,8 @@ public class DProjectile {
 		int cleanXPos = this.CurrentXPos - (this.CurrentXPos % 30);
 		int cleanYPos = this.CurrentYPos - (this.CurrentYPos % 30);
 		
-		System.out.println("this.StaticObjects["+(cleanYPos/30)+"]["+(cleanXPos/30)+"].getCollision()");
+		/*if(this.SpielPanel.getDebugMode() == true)
+			System.out.println("this.StaticObjects["+(cleanYPos/30)+"]["+(cleanXPos/30)+"].getCollision()");*/
 		
 		if(this.StaticObjects[(cleanYPos/30)][(cleanXPos/30)].getCollision() == false){ // Keine Kollision also weiter
 			
@@ -255,7 +278,9 @@ public class DProjectile {
 								 this.DynamicObjects[i].LoseHealth(); 
 							 }
 						 }
-						 System.out.println("DO "+i+" getroffen!("+this.DynamicObjects[i].getHealth()+")");
+
+						if(this.SpielPanel.getDebugMode() == true)
+							System.out.println("DO "+i+" getroffen!("+this.DynamicObjects[i].getHealth()+")");
 
 						this.Enabled = false;
 						i = this.DynamicObjects.length; //Beende Schleife
@@ -263,10 +288,16 @@ public class DProjectile {
 				 }
 			}
 		}else{
+
+			if(this.SpielPanel.getDebugMode() == true)
+				System.out.println("Proj Collision: Pos X: "+this.getCurrentXPosition()+" Y: "+this.getCurrentYPosition()+ " Dir: "+this.getDirection()+" T: "+this.getType()+" CR: "+this.getCurrentRange()+" MR: "+this.getMaxRange());
 			this.Enabled = false;
 		}
 		
-		}else{
+		}else{	
+
+			if(this.SpielPanel.getDebugMode() == true)
+				System.out.println("Proj Range Exceeded: Pos X: "+this.getCurrentXPosition()+" Y: "+this.getCurrentYPosition()+ " Dir: "+this.getDirection()+" T: "+this.getType()+" CR: "+this.getCurrentRange()+" MR: "+this.getMaxRange());
 			this.Enabled = false;
 		}
 		

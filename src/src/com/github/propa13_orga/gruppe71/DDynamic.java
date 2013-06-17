@@ -1,6 +1,7 @@
 					package src.com.github.propa13_orga.gruppe71;
 
 import java.awt.Graphics;
+import java.util.Random;
 
 import javax.swing.JOptionPane;
 
@@ -270,7 +271,7 @@ public class DDynamic {
 			case 20: // Kaese
 				System.out.println("Kaese aufgenommen");
 				this.name[1]="Kaese";
-				this.items[1]+=1;
+				this.items[1]+=5;
 				if(this.ActiveItem == -1)
 				this.ActiveItem = this.StaticObjects[(pYPos/30)][(pXPos/30)].getType(); //Aktives Item merken 
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
@@ -296,13 +297,14 @@ public class DDynamic {
 				break;
 
 			case 24: // Money / Geld
-				this.Money++;
+				Random zufallsZahl = new Random();				
+				this.Money += (zufallsZahl.nextInt(4)+1); //Zahl zwischen 1 und 5
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
 			case 25: // NPC
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 ){
-					JOptionPane.showMessageDialog(null, " Hallo BURGER NR. 1, \n versuch so schnell wie m�glich an das \n Ziel zu gelangen ohne dabei von Ungezif-\nfer gefressen zu werden. Auf dem Weg ver-\n streute Items k�nnten dir dabei n�tzlich sein. \n Sammel genug Geld um dich im Shop auszur�sten.");
+					JOptionPane.showMessageDialog(null, " Hallo BURGER NR. 1, \n versuch so schnell wie moeglich an das \n Ziel zu gelangen ohne dabei von Ungezif-\nfer gefressen zu werden. Auf dem Weg ver-\n streute Items koennten dir dabei nuetzlich sein. \n Sammel genug Geld um dich im Shop auszuruesten.");
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 ){
 					JOptionPane.showMessageDialog(null, "Es war einmal 1...");
@@ -409,7 +411,6 @@ public class DDynamic {
 	 */
 	public void Action(int pType){
 		
-		System.out.println("Action "+pType);
 		
 		if((pType == 0 && this.Mana > 0) || (pType == 1 && this.ActiveItem > -1) || pType > 2){
 			
@@ -443,6 +444,10 @@ public class DDynamic {
 				if(this.Projectiles[i] == null){
 					// Wenn kein Projektil an der Steller oder ein inaktives
 					this.Projectiles[i] = new DProjectile(this, SpielPanel, StaticObjects, DynamicObjects, this.CurrentXPos, this.CurrentXPos, tmpType, this.Direction);
+					this.Projectiles[i].setCurrentPosition(this.CurrentXPos, this.CurrentYPos);
+					this.Projectiles[i].setDirection(this.Direction);
+					this.Projectiles[i].setType(tmpType);
+					System.out.println("Neues Proj: Pos X: "+this.Projectiles[i].getCurrentXPosition()+" Y: "+this.Projectiles[i].getCurrentYPosition()+ " Dir: "+this.Projectiles[i].getDirection()+" T: "+this.Projectiles[i].getType()+" CR: "+this.Projectiles[i].getCurrentRange()+" MR: "+this.Projectiles[i].getMaxRange());
 					i = this.Projectiles.length; //Schleife beenden
 				}else if(this.Projectiles[i].IsEnabled() == false){
 					// Wenn kein Projektil an der Steller oder ein inaktives
@@ -450,6 +455,7 @@ public class DDynamic {
 					this.Projectiles[i].setDirection(this.Direction);
 					this.Projectiles[i].setType(tmpType);
 					
+					System.out.println("Neues Proj: Pos X: "+this.Projectiles[i].getCurrentXPosition()+" Y: "+this.Projectiles[i].getCurrentYPosition()+ " Dir: "+this.Projectiles[i].getDirection()+" T: "+this.Projectiles[i].getType()+" CR: "+this.Projectiles[i].getCurrentRange()+" MR: "+this.Projectiles[i].getMaxRange());
 					i = this.Projectiles.length; //Schleife beenden
 				}
 			}
@@ -578,6 +584,10 @@ public class DDynamic {
 	 */
 	public void LoseHealth(){ 
 		int p;
+		
+		if(this.SpielPanel.getDebugMode() == true)
+			System.out.println("Verliere Leben Typ: "+ this.getType());
+		
 		if(this.SpielPanel.SpielerModus() == 1){ // gucke nach Modi
 			this.setHealth(-1);// 1 Gesundheit weniger
 			
