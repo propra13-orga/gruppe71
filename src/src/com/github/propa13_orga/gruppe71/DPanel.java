@@ -367,7 +367,9 @@ public class DPanel extends JPanel {
 							}
 						}
 					}
-					
+					else if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() == 0 && this.DynamicObjects[i].getType() == 4){
+							this.beendeSpiel();
+							} //Beende das Spiel wenn letzter Endgegner stirbt */
 				} 
 				
 				//Schleife, die durch die Projektile geht
