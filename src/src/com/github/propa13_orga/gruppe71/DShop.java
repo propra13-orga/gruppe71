@@ -252,10 +252,10 @@ public class DShop implements ActionListener {
 		
 		bild[0]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png"; // Messer
 		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_kaese.png";// Ketchup
-		bild[2]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png"; // Dijon?? Messer
+		bild[2]="src/src/com/github/propa13_orga/gruppe71/bb_pBeamer.png"; // Dijon?? Messer
 		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_live.png"; //Health /Armor
 		bild[4]="src/src/com/github/propa13_orga/gruppe71/bb_trank.png"; // Trank 1
-		bild[5]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png";// Trank 2
+		bild[5]="src/src/com/github/propa13_orga/gruppe71/bb_trank.png";// Trank 2
 		
 	
 		return bild;
