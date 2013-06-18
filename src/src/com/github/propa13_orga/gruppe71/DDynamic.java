@@ -53,7 +53,6 @@ public class DDynamic {
 		this.Mana = 50;
 		this.isBot = pisBot;
 		if(pisBot == true){
-			this.Type = 1;
 			this.Lives = 0;
 		}else{
 			this.Type = 0;
@@ -203,11 +202,12 @@ public class DDynamic {
 		
 		// Schaden hinzufügen wenn Gegner und Spieler sich beruehren
 		 for (int i = 0; i < this.DynamicObjects.length; i++){ // Wenn der Gegner an der gleichen Position ist verlieren beide ein Leben
-			 if(this.DynamicObjects[i] != null){
+			 if(this.DynamicObjects[i] != null && (this.DynamicObjects[i].getHealth() > 0 && this.getHealth() > 0)){ //Wenn existieren und beide Gesundheit haben
 				 if(this.DynamicObjects[i].isBot != this.isBot && ((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
 					 //WENN nicht beide Bots sind & beide auf die gleiche Position wollen(Unterscheidung IsMoving)
 					 this.LoseHealth();
 					 this.DynamicObjects[i].LoseHealth();
+					 System.out.println("SCHADEN: "+this.getType()+" -> "+this.DynamicObjects[i].getType());
 				 }else if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
 					 //WENN Beides Bots und gleiche Position
 					 tmpAndererBotAnPos = true; //
@@ -222,7 +222,7 @@ public class DDynamic {
 		}
 		 
 		// AKTIONEN JE NACH TYP
-		if(this.isBot == false){
+		if(this.isBot == false && this.getType() < 1){
 			switch(this.StaticObjects[(pYPos/30)][(pXPos/30)].getType()){
 			
 			case 3: //lade neues Level -neuer Level Abschnitt und bekomme Punkte
@@ -447,15 +447,16 @@ public class DDynamic {
 					this.Projectiles[i].setCurrentPosition(this.CurrentXPos, this.CurrentYPos);
 					this.Projectiles[i].setDirection(this.Direction);
 					this.Projectiles[i].setType(tmpType);
-					System.out.println("Neues Proj: Pos X: "+this.Projectiles[i].getCurrentXPosition()+" Y: "+this.Projectiles[i].getCurrentYPosition()+ " Dir: "+this.Projectiles[i].getDirection()+" T: "+this.Projectiles[i].getType()+" CR: "+this.Projectiles[i].getCurrentRange()+" MR: "+this.Projectiles[i].getMaxRange());
+					System.out.println("Neues Proj(von "+this.getType()+"): Pos X: "+this.Projectiles[i].getCurrentXPosition()+" Y: "+this.Projectiles[i].getCurrentYPosition()+ " Dir: "+this.Projectiles[i].getDirection()+" T: "+this.Projectiles[i].getType()+" CR: "+this.Projectiles[i].getCurrentRange()+" MR: "+this.Projectiles[i].getMaxRange());
 					i = this.Projectiles.length; //Schleife beenden
 				}else if(this.Projectiles[i].IsEnabled() == false){
 					// Wenn kein Projektil an der Steller oder ein inaktives
 					this.Projectiles[i].setCurrentPosition(this.CurrentXPos, this.CurrentYPos);
 					this.Projectiles[i].setDirection(this.Direction);
 					this.Projectiles[i].setType(tmpType);
+					this.Projectiles[i].setShooter(this);
 					
-					System.out.println("Neues Proj: Pos X: "+this.Projectiles[i].getCurrentXPosition()+" Y: "+this.Projectiles[i].getCurrentYPosition()+ " Dir: "+this.Projectiles[i].getDirection()+" T: "+this.Projectiles[i].getType()+" CR: "+this.Projectiles[i].getCurrentRange()+" MR: "+this.Projectiles[i].getMaxRange());
+					System.out.println("Neues Proj(von "+this.getType()+"): Pos X: "+this.Projectiles[i].getCurrentXPosition()+" Y: "+this.Projectiles[i].getCurrentYPosition()+ " Dir: "+this.Projectiles[i].getDirection()+" T: "+this.Projectiles[i].getType()+" CR: "+this.Projectiles[i].getCurrentRange()+" MR: "+this.Projectiles[i].getMaxRange());
 					i = this.Projectiles.length; //Schleife beenden
 				}
 			}

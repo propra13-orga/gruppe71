@@ -198,6 +198,22 @@ public class DProjectile {
 	}
 	
 	/**
+	* Gibt Schuetzen zurueck
+	* @param NICHTS
+	*/
+	public DDynamic getShooter(){
+		return this.Shooter;
+	}
+
+	/**
+	* Setzt Schuetzen
+	* @param pShooter Wer ist Schuetze?
+	*/
+	public void setShooter(DDynamic pShooter){
+		this.Shooter = pShooter;
+	}
+	
+	/**
 	* Gibt zurueck ob aktiv oder nicht
 	* @param NICHTS
 	*/
@@ -280,7 +296,7 @@ public class DProjectile {
 						 }
 
 						if(this.SpielPanel.getDebugMode() == true)
-							System.out.println("DO "+i+" getroffen!("+this.DynamicObjects[i].getHealth()+")");
+							System.out.println("DO "+i+" getroffen! von "+this.Shooter.getType());
 
 						this.Enabled = false;
 						i = this.DynamicObjects.length; //Beende Schleife

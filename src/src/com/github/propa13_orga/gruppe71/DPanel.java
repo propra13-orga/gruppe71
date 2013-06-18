@@ -627,10 +627,15 @@ public class DPanel extends JPanel {
 				this.StaticObjects[y][x] = new StaticObject(LevelObjects[pSection][y][x]);
 			}
 		}
-		
+
 		//Schleife, die die Gegner loescht
 		for (int i = 2; i < this.DynamicObjects.length; i++) {
 			this.DynamicObjects[i] = null;
+		}
+
+		//Schleife, die die Projektile loescht
+		for (int i = 0; i < this.Projectiles.length; i++) {
+			this.Projectiles[i] = null;
 		}
 	}
 	

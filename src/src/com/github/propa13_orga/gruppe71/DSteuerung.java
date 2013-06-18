@@ -42,8 +42,6 @@ public class DSteuerung {
 		
 		//Gebe dem Panel Focus, so dass es Tasteneingaben erkennt
 		SpielPanel.setFocusable( true );
-		
-		//final DDynamic[] Spieler = SpielPanel.getDynamicObjects();
 	    
 		//Setze Listener damit die gedrueckte Taste erkannt werden kann
 	    SpielPanel.addKeyListener(new KeyAdapter(){
