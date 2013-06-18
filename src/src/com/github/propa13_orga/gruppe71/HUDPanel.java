@@ -37,6 +37,9 @@ public class HUDPanel extends JPanel {
 	private JLabel[] Spieler_Weapon;
 	private JLabel[] Spieler_Weapon_Icon;
 	private JLabel[] Spieler_Weapon_Amount;
+	private JLabel[] tasten;
+	private String[] keys;
+	private Dimension[] h;
 	
 	/**
 	 * Initialisiert die Klassenattribute
@@ -56,6 +59,12 @@ public class HUDPanel extends JPanel {
 		this.Spieler_Weapon = new JLabel[2];
 		this.Spieler_Weapon_Icon = new JLabel[2];
 		this.Spieler_Weapon_Amount = new JLabel[2];			
+		
+		this.InitTasten();
+		this.InitKeys();
+		this.InitDimension();
+		this.AddToPan();
+		
 
 		for(int i = 0; i < this.SpielPanel.SpielerModus(); i++){
 			// Spieler Name hinzugefuegt
@@ -125,7 +134,11 @@ public class HUDPanel extends JPanel {
 			this.Spieler_Weapon_Amount[i].setFont(new Font("Arial", Font.BOLD, 18));
 			this.Spieler_Weapon_Amount[i].setBounds(550, 0+(i*40), 100, 60);
 			this.add(this.Spieler_Weapon_Amount[i]);
-		}			
+			
+			
+			
+		}		
+		
 	}
 	
 	/**
@@ -165,8 +178,53 @@ public class HUDPanel extends JPanel {
 		//Jetzt kann alles was wir gerade gemalt haben neu gezeichnet werden
 		this.repaint();
 	}
+	/**
+	 * 
+	 */
+	public String[] InitTasten(){
+		this.keys=new String[4];
+		
+		this.keys[0]="Info:";
+		this.keys[1]="Shoot: N";
+		this.keys[2]="Change: B";
+		this.keys[3]="Magic: M";
+		
+		return this.keys;
 	
+	}
+	/**
+	 * Tastenbelegungen Waffen etc.
+	 */
+	public void InitKeys(){
+		this.tasten=new JLabel[4];
+		for(int i=0;i<this.tasten.length;i++){
+		//Tasten
+		this.tasten[i] = new JLabel(this.keys[i]); // Waffenanzeige
+		this.tasten[i].setFont(new Font("Arial", Font.BOLD, 14));
+		}
+		
+	}
+	public void AddToPan(){
+		int y=0;
+	for(int i=0;i<this.keys.length;i++){
+	this.tasten[i].setBounds(y+100,40,h[i].width+40, h[i].height+30);
+	this.add(this.tasten[i]);
+	y+=100;
 	
+	}
+	}
+	public void InitDimension(){
+
+		this.h=new Dimension[keys.length];
+		
+		
+		for(int i=0;i<this.keys.length;i++){ //Mit Array
+		
+			this.h[i]= this.tasten[i].getPreferredSize();
+			
+			}
+	
+	}
 	
 }
 
