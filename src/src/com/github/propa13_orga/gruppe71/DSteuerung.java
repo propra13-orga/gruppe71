@@ -84,26 +84,26 @@ public class DSteuerung {
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_W)
 	    		{
-	    			SpielPanel.getDynamicObject(1).moveTo("up"); //Bewege Spieler 1 hoch
+	    			SpielPanel.getDynamicObject(1).moveTo("up"); //Bewege Spieler 2 hoch
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_S)
 	    		{
-	    			SpielPanel.getDynamicObject(1).moveTo("down"); //Bewege Spieler 1 runter	
+	    			SpielPanel.getDynamicObject(1).moveTo("down"); //Bewege Spieler 2 runter	
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_A)
 	    		{
-	    			SpielPanel.getDynamicObject(1).moveTo("left"); //Bewege Spieler 1 nach links
+	    			SpielPanel.getDynamicObject(1).moveTo("left"); //Bewege Spieler 2 nach links
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_D)
 	    		{
-	    			SpielPanel.getDynamicObject(1).moveTo("right"); //Bewege Spieler 1 nach rechts
+	    			SpielPanel.getDynamicObject(1).moveTo("right"); //Bewege Spieler 2 nach rechts
 	    		}
 	    		else if(e.getKeyCode()==KeyEvent.VK_T) //TEST KNOPF T
 	    		{
 	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
     				SpielPanel.loadNextLevel();
 	    		}
-	    		else if(e.getKeyCode()==KeyEvent.VK_I) //TEST KNOPF T
+	    		else if(e.getKeyCode()==KeyEvent.VK_I) //TEST KNOPF I
 	    		{
 	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
     				SpielPanel.getDynamicObject(0).ItemBag();
