@@ -12,6 +12,7 @@ public class DStartMenu extends JFrame {
 	
 	JButton bStart;
 	JButton bExit;
+	JButton bNetzwerk;
 	JButton bMulti;
 	JButton bRules;
 	
@@ -46,9 +47,16 @@ public class DStartMenu extends JFrame {
 	bMulti.addActionListener(new TestListenerMulti());
 	add(bMulti);
 	
+
+	//Netzwerk-Knopf
+	bNetzwerk = new JButton("Netzwerk") ;
+	bNetzwerk.setBounds(400,50, 100, 100) ;
+	bNetzwerk.addActionListener(new TestListenerNetzwerk());
+	add(bNetzwerk);
+
 	//Exit-Knopf
 	bExit = new JButton("EXIT") ;
-	bExit.setBounds(400, 50, 100, 100) ;
+	bExit.setBounds(400,200, 100, 100) ;
 	bExit.addActionListener(new TestListenerExit());
 	add(bExit);
 	
@@ -68,7 +76,8 @@ public class DStartMenu extends JFrame {
 			
 		}
 	}
-private class TestListenerMulti implements ActionListener { //Multi
+	
+	private class TestListenerMulti implements ActionListener { //Multi
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -88,7 +97,7 @@ private class TestListenerMulti implements ActionListener { //Multi
 			
 		}
 	}
-	
+
 	//Schliesst Menu
 	private class TestListenerExit implements ActionListener {
 		
@@ -96,6 +105,17 @@ private class TestListenerMulti implements ActionListener { //Multi
 		public void actionPerformed(ActionEvent e) {
 			System.exit(0);          //Schliesst komplettes Programm
 			
+		}
+	}
+	
+
+	//Netzwerk
+	private class TestListenerNetzwerk implements ActionListener {
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose(); // schliesst Menu
+			NLobby Lobby = new NLobby();	
 		}
 	}
 	

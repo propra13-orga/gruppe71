@@ -24,25 +24,25 @@ import javax.swing.JFrame;
 public class DPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private JFrame SpielFenster;
-	private StaticObject[][] StaticObjects;
-	private DDynamic[] DynamicObjects;
+	protected JFrame SpielFenster;
+	protected StaticObject[][] StaticObjects;
+	protected DDynamic[] DynamicObjects;
 	
-	private DProjectile[] Projectiles;
-	private int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
-	private DDynamic CheckpointObject;
-	private boolean CheckpointLoaded;
-	private boolean StaticObjectsLoaded; //Statische Objekte geladen?
-	private boolean StaticObjectsPainted; //Statische Objekte gemalt?
-	private boolean DynamicObjectsLoaded; //Dynamische Objekte geladen?
-	private boolean GegnerLoaded; //Gegner DynamicObjects geladen?
-	private boolean DynamicObjectsPainted; //Dynamische Objekte gemalt?
-	private boolean LevelObjectsLoaded; //Level Objekte zwischengespeichert/geladen aus Datei?
-	private int CurrentLevelSection;
-	private int CurrentLevel;
-	private int AnzahlSpieler;
-	private boolean loaded;
-	private boolean DebugMode;
+	protected DProjectile[] Projectiles;
+	protected int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
+	protected DDynamic CheckpointObject;
+	protected boolean CheckpointLoaded;
+	protected boolean StaticObjectsLoaded; //Statische Objekte geladen?
+	protected boolean StaticObjectsPainted; //Statische Objekte gemalt?
+	protected boolean DynamicObjectsLoaded; //Dynamische Objekte geladen?
+	protected boolean GegnerLoaded; //Gegner DynamicObjects geladen?
+	protected boolean DynamicObjectsPainted; //Dynamische Objekte gemalt?
+	protected boolean LevelObjectsLoaded; //Level Objekte zwischengespeichert/geladen aus Datei?
+	protected int CurrentLevelSection;
+	protected int CurrentLevel;
+	protected int AnzahlSpieler;
+	protected boolean loaded;
+	protected boolean DebugMode;
 	
 	/**
 	 * Initialisiert die Klassenattribute
@@ -369,7 +369,7 @@ public class DPanel extends JPanel {
 					}
 					else if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() == 0 && this.DynamicObjects[i].getType() == 4){
 							this.beendeSpiel();
-							} //Beende das Spiel wenn letzter Endgegner stirbt */
+					} //Beende das Spiel wenn letzter Endgegner stirbt */
 				} 
 				
 				//Schleife, die durch die Projektile geht
@@ -405,7 +405,7 @@ public class DPanel extends JPanel {
 	 * @param pXPos X Position
 	 * @param pYPos Y Position
 	 */
-	private void drawImageAtPos(Graphics pGraphics, int pIndex, int pXPos, int pYPos){ 
+	protected void drawImageAtPos(Graphics pGraphics, int pIndex, int pXPos, int pYPos){ 
 		//Bild Array, enthaelt Bilder von Objekten aus JPEG Dateien, Boden/Mauer etc.
 		Image[] bb = {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"), //0 Boden
