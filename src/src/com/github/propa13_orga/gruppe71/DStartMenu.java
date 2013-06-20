@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 public class DStartMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	
+	protected DSound  sound,title;
 	JButton bStart;
 	JButton bExit;
 	JButton bNetzwerk;
@@ -20,6 +20,10 @@ public class DStartMenu extends JFrame {
 	 * Oeffnet das Startmenu des Spiels
 	 */
 	public DStartMenu() {
+	    //Hintergrundmusik
+		
+		title=new DSound("src/com/github/propa13_orga/gruppe71/TitleMusic.wav");
+		title.Title();
 	//Fenster-Eigenschaften werden gesetzt
 	setSize(600,400) ;
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE) ;
@@ -71,6 +75,9 @@ public class DStartMenu extends JFrame {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			sound=new DSound("src/com/github/propa13_orga/gruppe71/Luck.wav");// Get Ready !
+			sound.SetVolume(0);
+			sound.Abspielen();
 			dispose(); // schliesst Menu
 			DSteuerung fSpiel = new DSteuerung(1);
 			
@@ -118,5 +125,6 @@ public class DStartMenu extends JFrame {
 			NLobby Lobby = new NLobby();	
 		}
 	}
+	
 	
 	}

@@ -8,8 +8,7 @@ import javax.swing.JOptionPane;
 
 
 public class DDynamic {
-	
-	
+	protected DSound sound;
 	protected DPanel SpielPanel;
 	protected StaticObject[][] StaticObjects; // private int[][] StaticObjects; 
 	protected DDynamic[] DynamicObjects; // private int[][] StaticObjects; 
@@ -31,7 +30,7 @@ public class DDynamic {
 	
 	protected int[] items;
 	protected int ActiveItem;
-	protected String[] name;
+	protected String[] name,datei;
 	protected boolean secret;
 	protected boolean secret2;
 	
@@ -65,6 +64,10 @@ public class DDynamic {
 		this.ActiveItem = -1;
 		this.secret=false;
 		this.secret2=false;
+		this.SoundDateien();
+		
+
+		
 		
 	}
     
@@ -205,8 +208,12 @@ public class DDynamic {
 			 if(this.DynamicObjects[i] != null && (this.DynamicObjects[i].getHealth() > 0 && this.getHealth() > 0)){ //Wenn existieren und beide Gesundheit haben
 				 if(this.DynamicObjects[i].isBot != this.isBot && ((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
 					 //WENN nicht beide Bots sind & beide auf die gleiche Position wollen(Unterscheidung IsMoving)
+					 sound=new DSound(datei[0]); //Schmatzen
+					 sound.SetVolume(5);//
+					 sound.Abspielen();
+					 //Ende
 					 this.LoseHealth();
-					 this.DynamicObjects[i].LoseHealth();
+					 this.DynamicObjects[i].LoseHealth(); 
 					 System.out.println("SCHADEN: "+this.getType()+" -> "+this.DynamicObjects[i].getType());
 				 }else if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
 					 //WENN Beides Bots und gleiche Position
@@ -254,7 +261,9 @@ public class DDynamic {
 			
 				
 			case 17://Trittstelle
-				System.out.println("Was passiert jetzt???");
+				sound=new DSound(datei[4]); //Trittstelle
+				 sound.SetVolume(-10);//
+				 sound.Abspielen();
 				this.SetSecret2(true);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
 				break;
@@ -262,6 +271,9 @@ public class DDynamic {
 				
 			
 			case 19://Secret
+				 sound=new DSound(datei[3]); //Teleport
+				 sound.SetVolume(-10);//
+				 sound.Abspielen();
 				System.out.println("Was passiert jetzt???");
 				this.SetSecret(true);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
@@ -272,6 +284,9 @@ public class DDynamic {
 				System.out.println("Kaese aufgenommen");
 				this.name[1]="Kaese";
 				this.items[1]+=5;
+				sound=new DSound(datei[1]); //Item aufsammeln
+				sound.SetVolume(5);//
+				sound.Abspielen();
 				if(this.ActiveItem == -1)
 				this.ActiveItem = this.StaticObjects[(pYPos/30)][(pXPos/30)].getType(); //Aktives Item merken 
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
@@ -286,6 +301,9 @@ public class DDynamic {
 			case 22: // Messer
 				this.name[0]="Messer";
 				this.items[0]+=1;
+				 sound=new DSound(datei[1]); //Item aufsammeln
+				 sound.SetVolume(5);//
+				 sound.Abspielen();
 				if(this.ActiveItem == -1)
 				this.ActiveItem = this.StaticObjects[(pYPos/30)][(pXPos/30)].getType(); //Aktives Item merken 
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
@@ -297,6 +315,9 @@ public class DDynamic {
 				break;
 
 			case 24: // Money / Geld
+				 sound=new DSound(datei[2]); //Geld aufsammeln
+				 sound.SetVolume(5);//
+				 sound.Abspielen();
 				Random zufallsZahl = new Random();				
 				this.Money += (zufallsZahl.nextInt(4)+1); //Zahl zwischen 1 und 5
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
@@ -740,9 +761,27 @@ public class DDynamic {
 	public void Shop(){
 		DShop shop=new DShop(SpielPanel);
 	}
+	
+	/**
+	 * Alle SoundDateien für DDynamic
+	 * @return
+	 */
+	public String[] SoundDateien(){
+		datei=new String[99];
+		
+		datei[0]="src/com/github/propa13_orga/gruppe71/Schmatz.wav"; //Kauen
+		datei[1]="src/com/github/propa13_orga/gruppe71/Collect.wav"; //Item aufsammeln
+		datei[2]="src/com/github/propa13_orga/gruppe71/Geld.wav"; //Geld
+		datei[3]="src/com/github/propa13_orga/gruppe71/Teleport.wav"; //Teleport
+		datei[4]="src/com/github/propa13_orga/gruppe71/Tuer.wav";//Tuer
+		
+		
+		return this.datei;
+		
 	}
 	
-
 	
+
+}	
 	
 	
