@@ -20,6 +20,7 @@ public class DDynamic {
 	protected boolean moves; //Entscheidet ob Bewegt oder nicht
 	protected int Direction;
 
+	protected int counter; //Für mehrere Sounds
 	protected int Health; // Gesundheit
 	protected int Lives; // Leben
 	protected int Money; // Geld
@@ -57,6 +58,8 @@ public class DDynamic {
 			this.Type = 0;
 			this.Lives = 3;
 		}
+		
+		this.counter=2;
 		this.items=new int[itemnumber];
 		this.InitItems();
 		this.name=new String[itemnumber];
@@ -209,7 +212,7 @@ public class DDynamic {
 				 if(this.DynamicObjects[i].isBot != this.isBot && ((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
 					 //WENN nicht beide Bots sind & beide auf die gleiche Position wollen(Unterscheidung IsMoving)
 					 sound=new DSound(datei[0]); //Schmatzen
-					 sound.SetVolume(5);//
+					 sound.SetVolume(-10);//
 					 sound.Abspielen();
 					 //Ende
 					 this.LoseHealth();
@@ -262,7 +265,7 @@ public class DDynamic {
 				
 			case 17://Trittstelle
 				sound=new DSound(datei[4]); //Trittstelle
-				 sound.SetVolume(-10);//
+				 sound.SetVolume(-5);//
 				 sound.Abspielen();
 				this.SetSecret2(true);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
@@ -272,7 +275,7 @@ public class DDynamic {
 			
 			case 19://Secret
 				 sound=new DSound(datei[3]); //Teleport
-				 sound.SetVolume(-10);//
+				 sound.SetVolume(-5);//
 				 sound.Abspielen();
 				System.out.println("Was passiert jetzt???");
 				this.SetSecret(true);
@@ -285,7 +288,7 @@ public class DDynamic {
 				this.name[1]="Kaese";
 				this.items[1]+=5;
 				sound=new DSound(datei[1]); //Item aufsammeln
-				sound.SetVolume(5);//
+				sound.SetVolume(0);//
 				sound.Abspielen();
 				if(this.ActiveItem == -1)
 				this.ActiveItem = this.StaticObjects[(pYPos/30)][(pXPos/30)].getType(); //Aktives Item merken 
@@ -302,7 +305,7 @@ public class DDynamic {
 				this.name[0]="Messer";
 				this.items[0]+=1;
 				 sound=new DSound(datei[1]); //Item aufsammeln
-				 sound.SetVolume(5);//
+				 sound.SetVolume(0);//
 				 sound.Abspielen();
 				if(this.ActiveItem == -1)
 				this.ActiveItem = this.StaticObjects[(pYPos/30)][(pXPos/30)].getType(); //Aktives Item merken 
@@ -316,7 +319,7 @@ public class DDynamic {
 
 			case 24: // Money / Geld
 				 sound=new DSound(datei[2]); //Geld aufsammeln
-				 sound.SetVolume(5);//
+				 sound.SetVolume(0);//
 				 sound.Abspielen();
 				Random zufallsZahl = new Random();				
 				this.Money += (zufallsZahl.nextInt(4)+1); //Zahl zwischen 1 und 5
@@ -436,7 +439,7 @@ public class DDynamic {
 		if((pType == 0 && this.Mana > 0) || (pType == 1 && this.ActiveItem > -1) || pType > 2){
 			
 			int tmpType = pType; // Setzt = 0 oder 1
-			
+			this.WeaponSound(pType);
 			if(tmpType < 3){
 				if(tmpType == 1){
 					if(this.ActiveItem != 20){ // Wenn kein Kaese
@@ -774,14 +777,52 @@ public class DDynamic {
 		datei[2]="src/com/github/propa13_orga/gruppe71/Geld.wav"; //Geld
 		datei[3]="src/com/github/propa13_orga/gruppe71/Teleport.wav"; //Teleport
 		datei[4]="src/com/github/propa13_orga/gruppe71/Tuer.wav";//Tuer
-		
-		
+		datei[5]="src/com/github/propa13_orga/gruppe71/Magie_1.wav";//Magie 1
+		datei[6]="src/com/github/propa13_orga/gruppe71/Magie_2.wav";//Magie_2
+		datei[7]="src/com/github/propa13_orga/gruppe71/Slash.wav";//Messer
+		datei[8]="src/com/github/propa13_orga/gruppe71/KaeseBazooka.wav";//Messer
 		return this.datei;
 		
 	}
+	/**
+	 * Sound wird hier abgespielt -> Waffensound!
+	 * @param p ist der Typ der Projektile
+	 */
+	public void WeaponSound(int p){
+		
+	switch(p){
+	case 0:
+		if((this.counter%2)==0){//Magie_1
+		 sound=new DSound(datei[5]);
+		 sound.SetVolume(-10);
+		 sound.Abspielen();
+		 this.setCounter(1);
+		 break;
+		}
+		else if((this.counter%2)==1){
+		sound=new DSound(datei[6]);//Magie_2
+		 sound.SetVolume(-10);
+		 sound.Abspielen();
+		 this.setCounter(1);
+		break;
+		}
+	case 2:
+		sound=new DSound(datei[7]); //Messer
+		 sound.SetVolume(-10);
+		 sound.Abspielen();
+		 break;
+	case 1:
+		sound=new DSound(datei[8]); //Kaese
+		 sound.SetVolume(-10);
+		 sound.Abspielen();
+		 break;
+		
+	}
 	
-	
-
+	}
+	public int setCounter(int p){
+		this.counter+=p;
+		return this.counter;
 }	
-	
+}
 	

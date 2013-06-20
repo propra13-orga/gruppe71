@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 
 public class DProjectile {
+	
 	private DPanel SpielPanel;
 	private StaticObject[][] StaticObjects;
 	private DDynamic[] DynamicObjects;
@@ -43,6 +44,7 @@ public class DProjectile {
 	 * @param NICHTS 
 	 */
 	public void init(){
+		
 		this.StaticObjects = null;
 		this.StaticObjects = new StaticObject[14][24];
 		this.StaticObjects = this.SpielPanel.getStaticObjects();
@@ -54,6 +56,7 @@ public class DProjectile {
 		
 		switch(this.Type){
 		case 0: //Zauber
+			
 			this.Damage = 1;
 			this.Speed = 2;
 			this.MaxRange = 9999;

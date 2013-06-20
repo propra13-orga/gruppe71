@@ -23,6 +23,7 @@ public class DStartMenu extends JFrame {
 	    //Hintergrundmusik
 		
 		title=new DSound("src/com/github/propa13_orga/gruppe71/TitleMusic.wav");
+		title.SetVolume(-20);
 		title.Title();
 	//Fenster-Eigenschaften werden gesetzt
 	setSize(600,400) ;
@@ -76,7 +77,7 @@ public class DStartMenu extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			sound=new DSound("src/com/github/propa13_orga/gruppe71/Luck.wav");// Get Ready !
-			sound.SetVolume(0);
+			sound.SetVolume(-10);
 			sound.Abspielen();
 			dispose(); // schliesst Menu
 			DSteuerung fSpiel = new DSteuerung(1);
