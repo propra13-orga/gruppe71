@@ -23,12 +23,12 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
-public class HUDPanel extends JPanel {
+public class NHUDPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private JFrame SpielFenster;
-	private DPanel SpielPanel;
-	private DDynamic[] DynamicObjects;
+	private NPanel SpielPanel;
+	private NDynamic[] DynamicObjects;
 
 	private JLabel[] Spieler_Name;
 	private JLabel[] Spieler_Lives;
@@ -44,7 +44,7 @@ public class HUDPanel extends JPanel {
 	/**
 	 * Initialisiert die Klassenattribute
 	 */
-	public HUDPanel(JFrame pJFrame, DPanel pSpielPanel){
+	public NHUDPanel(JFrame pJFrame, NPanel pSpielPanel){
 		//Konstruktor
 		super();
 

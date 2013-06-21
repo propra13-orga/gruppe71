@@ -21,7 +21,7 @@ public class DSteuerung {
 		this.SpielFenster = new JFrame();
 		
 		//Fenster-Eigenschaften werden gesetzt
-		this.SpielFenster.setSize(610, 480);
+		this.SpielFenster.setSize(610, 520);
 		this.SpielFenster.setLocation(350, 150) ;
 		this.SpielFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.SpielFenster.setTitle("DungeonCrawler");
@@ -35,7 +35,7 @@ public class DSteuerung {
 		this.SpielFenster.setContentPane(SpielPanel);
 		
 		final HUDPanel InfoLeiste = new HUDPanel(this.SpielFenster, SpielPanel);
-		InfoLeiste.setBounds(0, 360, 610, 120);
+		InfoLeiste.setBounds(0, 360, 610, 160);
 		InfoLeiste.setLayout(null);
 		this.SpielFenster.add(InfoLeiste);
 		

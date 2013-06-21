@@ -123,7 +123,7 @@ public class DStartMenu extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			dispose(); // schliesst Menu
-			NLobby Lobby = new NLobby();	
+			NSteuerung NetzwerkSteuerung = new NSteuerung();	
 		}
 	}
 	
