@@ -435,11 +435,11 @@ public class DDynamic {
 	 */
 	public void Action(int pType){
 		
-		
+		System.out.println(pType);
 		if((pType == 0 && this.Mana > 0) || (pType == 1 && this.ActiveItem > -1) || pType > 2){
 			
 			int tmpType = pType; // Setzt = 0 oder 1
-			this.WeaponSound(pType);
+		
 			if(tmpType < 3){
 				if(tmpType == 1){
 					if(this.ActiveItem != 20){ // Wenn kein Kaese
@@ -463,7 +463,7 @@ public class DDynamic {
 					this.Mana--;
 				}
 			}
-			
+			this.WeaponSound(tmpType);
 			for(int i = 0; i < this.Projectiles.length; i++){
 				if(this.Projectiles[i] == null){
 					// Wenn kein Projektil an der Steller oder ein inaktives
