@@ -51,7 +51,7 @@ public class DLevelPanel extends JPanel {
 		this.LevelObjectsLoaded = false;
 		this.CurrentLevelSection = 0;
 		this.CurrentLevel = 0;
-		this.loadLevel(0); //Laed 1. Level
+		this.loadLevel(3); //Laed 1. Level
 		
 		this.DebugMode = true; //Debug-Mode? Um Bugs zu finden beim Programmieren
 	}
@@ -79,45 +79,11 @@ public class DLevelPanel extends JPanel {
 		int belohnungY=-1;
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
-			int[][] tmpGegnerArray = new int[48][3];
-			int tmpAnzahlGegner = 0;
 			//Schleife, die durch die statischen Objekte geht
 			for (int y = 0; y < 12; y++) {
 				for (int x = 0; x < 20; x++) {
 					//Dann jedes an der richtigen Stelle malt
-					this.drawImageAtPos(pGraphics, this.StaticObjects[y][x].getType(), (x*30), (y*30));
-					
-					if(this.StaticObjects[y][x].getType() == 2){ //und wenn das Objekt ein Eingang ist
-						TmpXStart = x; //Speichert es wo der Eingang ist
-						TmpYStart = y; //in 2 Variablen
-					}
-					if(this.StaticObjects[y][x].getType() == 18){ //Landung
-						landungX = x; //Speichert wo Landung
-						landungY = y; //in 2 Variablen
-					}
-					
-					if(this.StaticObjects[y][x].getType() == 16){ //Geheimgang,Trittstelle
-						openX = x; //Speichert wo Geheimstelle
-						openY= y; //in 2 Variablen
-					}
-					if(this.StaticObjects[y][x].getType() == 40){ //Geheimgang,Trittstelle
-						questX = x; //Speichert wo Geheimstelle
-						questY= y; //in 2 Variablen
-					}
-					if(this.StaticObjects[y][x].getType() == 42){ //Treasure
-						belohnungX = x; //Speichert wo Geheimstelle
-						belohnungY= y; //in 2 Variablen
-					}
-					
-					if(this.StaticObjects[y][x].getType() == 5 || this.StaticObjects[y][x].getType() == 7 || this.StaticObjects[y][x].getType() == 8  || this.StaticObjects[y][x].getType() == 9 ){ //und wenn das Objekt ein Gegner ist
-						tmpGegnerArray[tmpAnzahlGegner][0] = x; //Gegner X Pos zwischenspeichern
-						tmpGegnerArray[tmpAnzahlGegner][1] = y; //Gegner Y Pos zwischenspeichern
-						tmpGegnerArray[tmpAnzahlGegner][2] = this.StaticObjects[y][x].getType(); //Gegner Typ zwischenspeichern
-						tmpAnzahlGegner++;
-						
-						this.StaticObjects[y][x].setType(0); //Gegner geladen, also loeschen
-					}				
-						
+					this.drawImageAtPos(pGraphics, this.StaticObjects[y][x].getType(), (x*30), (y*30));	
 					}
 			}
 		}
@@ -346,6 +312,372 @@ public class DLevelPanel extends JPanel {
 		
 	}
 	
+
+	/**
+	 * Konvertiert Typen zu Buchstaben
+	 * @param pLetter Eingabe
+	 */
+	public int DigittoLetter(int pDigit){
+		char TmpLetter = '0';
+		
+		switch(pDigit){
+		case 0://Boden
+			TmpLetter = '0';
+			break;
+		case 1://Wand
+			TmpLetter = '1';
+			break;
+		case 2://Eingang
+			TmpLetter = '2';
+			break;
+		case 3://Durchgang
+			TmpLetter = '3';
+			break;
+		case 4://Ausgang
+			TmpLetter = '4';
+			break;
+		case 5://Gegner(Schabe)
+			TmpLetter = '5';
+			break;
+		case 6://Gegner(Falle)
+			TmpLetter = '6';
+			break;
+		case 7://Gegner(Super-Schabe)
+			TmpLetter = '7';
+			break;
+		case 8://Boss(Spinne)
+			TmpLetter = '8';
+			break;
+		case 9://Boss(SpinnenKrebs)
+			TmpLetter = '9';
+			break;
+		case 16://Geheimgang
+			TmpLetter = 'O';
+			break;
+		case 17: //17 Geheim
+			TmpLetter = 'G';
+			break;
+		case 18://Teleport
+			TmpLetter = '!';
+			break;
+		case 42://Belohnung
+			TmpLetter = 'B';
+			break;
+		case 19: //Secret
+			TmpLetter = '?';
+			break;
+		case 20: // Cheese/Kaese
+			TmpLetter = 'C';
+			break;
+		case 21: // Health/Gesundheit
+			TmpLetter = 'H';
+			break;
+		case 22: // Knife / Messer
+			TmpLetter = 'K';
+			break;
+		case 23: // Leben
+			TmpLetter = 'L';
+			break;
+		case 24: // Money/Geld
+			TmpLetter = 'M';
+			break;
+		case 25: // NPC
+			TmpLetter = 'N';
+			break;
+		case 40: // NPC
+			TmpLetter = 'Q';
+			break;
+		case 41: // Truhe,Treasure
+			TmpLetter = 'T';
+			break;
+		case 26: // Ruestung
+			TmpLetter = 'R';
+			break;
+		case 27: // Shop
+			TmpLetter = 'S';
+			break;
+		case 28: //Zaubertrank
+			TmpLetter = 'Z';
+			break;
+		}
+		
+		return TmpLetter;
+	}
+	
+	/**
+	 * Konvertiert Typen zu Namen
+	 * @param pLetter Eingabe
+	 */
+	public String DigittoName(int pDigit){
+		String TmpText = "Boden";
+		
+		switch(pDigit){
+		case 0://Boden
+			TmpText = "Boden";
+			break;
+		case 1://Wand
+			TmpText = "Wand";
+			break;
+		case 2://Eingang
+			TmpText = "Eingang";
+			break;
+		case 3://Durchgang
+			TmpText = "Durchgang";
+			break;
+		case 4://Ausgang
+			TmpText = "Ausgang";
+			break;
+		case 5://Gegner(Schabe)
+			TmpText = "Gegner(Schabe)";
+			break;
+		case 6://Gegner(Falle)
+			TmpText = "Gegner(Falle)";
+			break;
+		case 7://Gegner(Super-Schabe)
+			TmpText = "Gegner(Super-Schabe)";
+			break;
+		case 8://Boss(Spinne)
+			TmpText = "Boss(Spinne)";
+			break;
+		case 9://Boss(SpinnenKrebs)
+			TmpText = "Boss(SpinnenKrebs)";
+			break;
+		case 16://Geheimgang
+			TmpText = "Geheimgang";
+			break;
+		case 17: //17 Geheim
+			TmpText = "Geheim";
+			break;
+		case 18://Teleport
+			TmpText = "Teleport";
+			break;
+		case 42://Belohnung
+			TmpText = "Belohnung";
+			break;
+		case 19: //Secret
+			TmpText = "Secret";
+			break;
+		case 20: // Cheese/Kaese
+			TmpText = "Kaese";
+			break;
+		case 21: // Health/Gesundheit
+			TmpText = "Healthpack";
+			break;
+		case 22: // Knife / Messer
+			TmpText = "Messer";
+			break;
+		case 23: // Leben
+			TmpText = "Leben";
+			break;
+		case 24: // Money/Geld
+			TmpText = "Geld";
+			break;
+		case 25: // NPC
+			TmpText = "NPC";
+			break;
+		case 40: // NPC
+			TmpText = "NPC";
+			break;
+		case 41: // Truhe,Treasure
+			TmpText = "Truhe";
+			break;
+		case 26: // Ruestung
+			TmpText = "Ruestung";
+			break;
+		case 27: // Shop
+			TmpText = "Shop";
+			break;
+		case 28: //Zaubertrank
+			TmpText = "Zaubertrank";
+			break;
+		}
+		
+		return TmpText;
+	}
+	
+	
+	/**
+	 * Konvertiert Buchstaben zu Typen
+	 * @param pLetter Eingabe
+	 */
+	public int LettertoDigit(char pLetter){
+		int TmpDigit = 0;
+		
+		switch(pLetter){
+		case '0'://Boden
+			TmpDigit = 0;
+			break;
+		case '1'://Wand
+			TmpDigit = 1;
+			break;
+		case '2'://Eingang
+			TmpDigit = 2;
+			break;
+		case '3'://Durchgang
+			TmpDigit = 3;
+			break;
+		case '4'://Ausgang
+			TmpDigit = 4;
+			break;
+		case '5'://Gegner(Schabe)
+			TmpDigit = 5;
+			break;
+		case '6'://Gegner(Falle)
+			TmpDigit = 6;
+			break;
+		case '7'://Gegner(Super-Schabe)
+			TmpDigit = 7;
+			break;
+		case '8'://Boss(Spinne)
+			TmpDigit = 8;
+			break;
+		case '9'://Boss(SpinnenKrebs)
+			TmpDigit = 9;
+			break;
+		case 'O'://Geheimgang
+			TmpDigit = 16;
+			break;
+		case 'G': //17 Geheim
+			TmpDigit = 17;
+			break;
+		case '!'://Teleport
+			TmpDigit = 18;
+			break;
+		case 'B'://Belohnung
+			TmpDigit = 42;
+			break;
+		case '?': //Secret
+			TmpDigit = 19;
+			break;
+		case 'C': // Cheese/Kaese
+			TmpDigit = 20;
+			break;
+		case 'H': // Health/Gesundheit
+			TmpDigit = 21;
+			break;
+		case 'K': // Knife / Messer
+			TmpDigit = 22;
+			break;
+		case 'L': // Leben
+			TmpDigit = 23;
+			break;
+		case 'M': // Money/Geld
+			TmpDigit = 24;
+			break;
+		case 'N': // NPC
+			TmpDigit = 25;
+			break;
+		case 'Q': // NPC
+			TmpDigit = 40;
+			break;
+		case 'T': // Truhe,Treasure
+			TmpDigit = 41;
+			break;
+		case 'R': // Ruestung
+			TmpDigit = 26;
+			break;
+		case 'S': // Shop
+			TmpDigit = 27;
+			break;
+		case 'Z': //Zaubertrank
+			TmpDigit = 28;
+			break;
+		}
+		
+		return TmpDigit;
+	}
+	
+	/**
+	 * Konvertiert Typen zu Buchstaben
+	 * @param pLetter Eingabe
+	 */
+	public int nextType(int pCurrentType){
+		int TmpNextType = 0;
+		
+		switch(pCurrentType){
+		case 0://Boden
+			TmpNextType = 1;
+			break;
+		case 1://Wand
+			TmpNextType = 2;
+			break;
+		case 2://Eingang
+			TmpNextType = 3;
+			break;
+		case 3://Durchgang
+			TmpNextType = 4;
+			break;
+		case 4://Ausgang
+			TmpNextType = 5;
+			break;
+		case 5://Gegner(Schabe)
+			TmpNextType = 6;
+			break;
+		case 6://Gegner(Falle)
+			TmpNextType = 7;
+			break;
+		case 7://Gegner(Super-Schabe)
+			TmpNextType = 8;
+			break;
+		case 8://Boss(Spinne)
+			TmpNextType = 9;
+			break;
+		case 9://Boss(SpinnenKrebs)
+			TmpNextType = 10;
+			break;
+		case 16://Geheimgang
+			TmpNextType = 17;
+			break;
+		case 17: //17 Geheim
+			TmpNextType = 18;
+			break;
+		case 18://Teleport
+			TmpNextType = 19;
+			break;
+		case 19: //Secret
+			TmpNextType = 20;
+			break;
+		case 20: // Cheese/Kaese
+			TmpNextType = 21;
+			break;
+		case 21: // Health/Gesundheit
+			TmpNextType = 22;
+			break;
+		case 22: // Knife / Messer
+			TmpNextType = 23;
+			break;
+		case 23: // Leben
+			TmpNextType = 24;
+			break;
+		case 24: // Money/Geld
+			TmpNextType = 25;
+			break;
+		case 25: // NPC
+			TmpNextType = 26;
+			break;
+		case 26: // Ruestung
+			TmpNextType = 27;
+			break;
+		case 27: // Shop
+			TmpNextType = 28;
+			break;
+		case 28: //Zaubertrank
+			TmpNextType = 40;
+			break;
+		case 40: // NPC
+			TmpNextType = 41;
+			break;
+		case 41: // Truhe,Treasure
+			TmpNextType = 42;
+			break;
+		case 42://Belohnung
+			TmpNextType = 0;
+			break;
+		}
+		
+		return TmpNextType;
+	}
+	
 	/**
 	 * Liest eine Datei aus und laed sie als Level
 	 * @param pSection Zu ladender Levelabschnitt
@@ -381,7 +713,15 @@ public class DLevelPanel extends JPanel {
 		this.loadLevelIntoStaticObjects((this.CurrentLevelSection+1));
 		}
 	}
-		
+	
+	/**
+	 * Gibt eines der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.) zurueck
+	 * @param pIndex Index
+	 */
+	public StaticObject getStaticObject(int pIndexX, int pIndexY){
+		return this.StaticObjects[pIndexY][pIndexX];
+	}
+	
 	/**
 	 * Gibt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.) zurueck
 	 * @param NICHTS
