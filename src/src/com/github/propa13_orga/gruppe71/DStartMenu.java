@@ -11,6 +11,7 @@ public class DStartMenu extends JFrame {
 	
 	protected DSound  sound,title;
 	JButton bStart;
+	JButton bLevelEditor;
 	JButton bExit;
 	JButton bNetzwerk;
 	JButton bMulti;
@@ -32,12 +33,19 @@ public class DStartMenu extends JFrame {
 	setLocation(350, 150);
 	setResizable(false);
 	setLayout(null) ;
-	
+
 	//Single Modi -Knopf
 	bStart = new JButton("Single") ;
 	bStart.setBounds(50, 50, 100, 100) ;
 	bStart.addActionListener(new TestListenerStart());
 	add(bStart) ;
+	
+
+	//LevelEditor -Knopf
+	bLevelEditor = new JButton("Level-Editor") ;
+	bLevelEditor.setBounds(50, 200, 100, 100) ;
+	bLevelEditor.addActionListener(new TestListenerLevelEditor());
+	add(bLevelEditor) ;
 	
 	//Regel - Knopf
 	bRules=new JButton("Rules");
@@ -81,6 +89,16 @@ public class DStartMenu extends JFrame {
 			sound.Abspielen();
 			dispose(); // schliesst Menu
 			DSteuerung fSpiel = new DSteuerung(1);
+			
+		}
+	}
+
+	private class TestListenerLevelEditor implements ActionListener { //Multi
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose(); // schliesst Menu
+			DLevelEditor LevelEditor = new DLevelEditor();
 			
 		}
 	}
