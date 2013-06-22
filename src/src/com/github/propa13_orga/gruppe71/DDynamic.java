@@ -29,6 +29,12 @@ public class DDynamic {
 	protected boolean isBot; // Ist ein Bot oder Spieler?
 	protected int Points; //Punkte
 	
+	protected int[] quest; // Quest für JOPTIONPANE
+	protected int[] qenabled;//für SpielPanel Environment ändern
+	protected boolean[] qreceived;//wenn schon bekommen Quest
+	protected boolean[] qalready;
+	protected int ehre;
+	
 	protected int[] items;
 	protected int ActiveItem;
 	protected String[] name,datei;
@@ -68,6 +74,12 @@ public class DDynamic {
 		this.secret=false;
 		this.secret2=false;
 		this.SoundDateien();
+		
+		//Quest Inits
+		this.quest=new int[3];
+		this.QuestReceived();
+		this.QuestAlready();
+		this.qenabled=new int[3];
 		
 
 		
@@ -245,7 +257,11 @@ public class DDynamic {
 				
 			case 4: //Ziel erreicht NeuStart des Spiels
 				if(this.SpielPanel.getCurrentLevel() < 2){ //Wenn noch nicht letzter Level
+					sound=new DSound(datei[10]); //Item aufsammeln
+					sound.SetVolume(-10);//
+					sound.Abspielen();
 					this.SpielPanel.loadNextLevel(); //Lade naechsten Level
+					
 				}else{
 					this.SpielPanel.beendeSpiel(); //Sonst beende Spiel
 				}
@@ -327,8 +343,12 @@ public class DDynamic {
 				break;
 
 			case 25: // NPC
-				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 ){
-					JOptionPane.showMessageDialog(null, " Hallo BURGER NR. 1, \n versuch so schnell wie moeglich an das \n Ziel zu gelangen ohne dabei von Ungezif-\nfer gefressen zu werden. Auf dem Weg ver-\n streute Items koennten dir dabei nuetzlich sein. \n Sammel genug Geld um dich im Shop auszuruesten.");
+				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[0]==false){//Quest 1
+				   this.quest[0]=JOptionPane.showOptionDialog(null, "Hört mich an EDLER BURGER!",
+			                  "Quest 1", JOptionPane.YES_NO_CANCEL_OPTION,
+			                  JOptionPane.WARNING_MESSAGE, null, 
+			                  new String[]{"Schießt los heißer Hund!", "ICH AUF EINE NIEDERE SPEISE HÖREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HÖREN?????!");
+				   this.Quest1(quest[0]);
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 ){
 					JOptionPane.showMessageDialog(null, "Es war einmal 1...");
@@ -780,7 +800,9 @@ public class DDynamic {
 		datei[5]="src/com/github/propa13_orga/gruppe71/Magie_1.wav";//Magie 1
 		datei[6]="src/com/github/propa13_orga/gruppe71/Magie_2.wav";//Magie_2
 		datei[7]="src/com/github/propa13_orga/gruppe71/Slash.wav";//Messer
-		datei[8]="src/com/github/propa13_orga/gruppe71/KaeseBazooka.wav";//Messer
+		datei[8]="src/com/github/propa13_orga/gruppe71/KaeseBazooka.wav";//Kaese
+		datei[9]="src/com/github/propa13_orga/gruppe71/GoodBye.wav";//Bye
+		datei[10]="src/com/github/propa13_orga/gruppe71/NextLevel.wav";//Nächster Level
 		return this.datei;
 		
 	}
@@ -824,5 +846,57 @@ public class DDynamic {
 		this.counter+=p;
 		return this.counter;
 }	
+	
+	public void Quest1(int p){
+		if(p==JOptionPane.YES_OPTION){
+		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOßEN SOLLEN DIR IMMER HOLD SEIN..." +
+		 		"\nDIE KÄFER SIND WIEDER IM ANMARSCH! WENN IHR --5-- von IHNEN TÖTEN KÖNNTET, WÜRDET IHR \nDEN HEISSEN HUNDEN CLAN FÜR IMMER IN ERRINNERUNG BLEIBEN\n" +
+		 		"BITTE BEEILT EUCH!\n(flüstern: Natürlich gibt es auch eine große Belohnung...)",
+                 "Quest 1 ANGENOMMEN", JOptionPane.OK_OPTION,
+                 JOptionPane.INFORMATION_MESSAGE, null, 
+                 new String[]{"Ich tue was ich kann!"}, "Ich tue was ich kann!");
+		 if(this.qalready[0]==false){
+		 this.qreceived[0]=true;
+		 }
+		 this.qalready[0]=true;
+		}
+		else if(p!=JOptionPane.YES_OPTION){
+			 JOptionPane.showMessageDialog(null, "VERFLUCHET SEID IHR!!!");
+			 this.qreceived[0]=true;
+			 this.qalready[0]=true;
+		 }
+		}
+	
+	public boolean[] QuestReceived(){
+		this.qreceived=new boolean[3];
+		for(int i=0; i<this.qreceived.length;i++){
+			this.qreceived[i]=false;
+		}
+		return this.qreceived;
+	}
+	
+	//Checkt ob schon der NPC berührt wurde
+	public boolean[] QuestAlready(){
+		this.qalready=new boolean[3];
+		for(int i=0; i<this.qalready.length;i++){
+			this.qalready[i]=false;
+		}
+		return this.qalready;
+	}
+	
+	//Quest im SpielPanel Boden
+	public boolean getQuest(int p){
+		return this.qreceived[p];
+	}
+	
+	//Quest im SpielPanel Boden
+		public boolean setQuest(boolean p,int x){
+			return this.qreceived[x]=p;
+		}
+	//Wie viele Quests?
+	public int QuestLength(){
+		return this.qreceived.length;
+	}
+	
 }
 	

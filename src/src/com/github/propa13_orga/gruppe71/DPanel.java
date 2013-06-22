@@ -27,7 +27,7 @@ public class DPanel extends JPanel {
 	protected JFrame SpielFenster;
 	protected StaticObject[][] StaticObjects;
 	protected DDynamic[] DynamicObjects;
-	
+	protected DSound sound;
 	protected DProjectile[] Projectiles;
 	protected int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
 	protected DDynamic CheckpointObject;
@@ -91,6 +91,8 @@ public class DPanel extends JPanel {
 		int geheimY=-1;
 		int openX=-1;
 		int openY=-1;
+		int questX=-1;
+		int questY=-1;
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
 			int[][] tmpGegnerArray = new int[48][3];
@@ -113,6 +115,10 @@ public class DPanel extends JPanel {
 					if(this.StaticObjects[y][x].getType() == 16){ //Geheimgang,Trittstelle
 						openX = x; //Speichert wo Geheimstelle
 						openY= y; //in 2 Variablen
+					}
+					if(this.StaticObjects[y][x].getType() == 40){ //Geheimgang,Trittstelle
+						questX = x; //Speichert wo Geheimstelle
+						questY= y; //in 2 Variablen
 					}
 					
 					
@@ -245,8 +251,18 @@ public class DPanel extends JPanel {
 										this.DynamicObjects[i].SetSecret2(false);
 										
 								}
-						 
-					
+						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
+							if(this.DynamicObjects[i].getQuest(z)==true ){
+								sound=new DSound("src/com/github/propa13_orga/gruppe71/GoodBye.wav");// Good Bye !
+								sound.SetVolume(-10);
+								sound.Abspielen();
+							this.StaticObjects[questY][questX].setType(0);
+							this.StaticObjects[questY][questX].setCollision(false);
+							this.DynamicObjects[i].setQuest(false,z);
+							break;
+							
+					}
+						}	
 							
 				
 						
@@ -447,7 +463,8 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//36 2.Spieler 3-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player02.png"),//37 2.Spieler 2-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player03.png"),//38 2.Spieler 1-Leben
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png")//39 2.Spieler 0-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//39 2.Spieler 0-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//40 QUEST
 				};
 	
 		//Zeichne das Bild
@@ -558,6 +575,9 @@ public class DPanel extends JPanel {
 								break;
 	            			case 'N': // NPC
 								TmpLevelObjects[z][y][x] = 25;
+								break;
+	            			case 'Q': // NPC
+								TmpLevelObjects[z][y][x] = 40;
 								break;
 	            			case 'R': // Ruestung
 								TmpLevelObjects[z][y][x] = 26;
