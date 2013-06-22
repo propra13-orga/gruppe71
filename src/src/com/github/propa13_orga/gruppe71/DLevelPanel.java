@@ -11,10 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.nio.channels.FileChannel;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -51,7 +56,7 @@ public class DLevelPanel extends JPanel {
 		this.LevelObjectsLoaded = false;
 		this.CurrentLevelSection = 0;
 		this.CurrentLevel = 0;
-		this.loadLevel(3); //Laed 1. Level
+		this.loadLevel(0); //Laed 1. Level
 		
 		this.DebugMode = true; //Debug-Mode? Um Bugs zu finden beim Programmieren
 	}
@@ -162,23 +167,167 @@ public class DLevelPanel extends JPanel {
 	 * @param Nummer des Levels
 	 */
 	public void loadLevel(int pLevel){	
+		if(this.levelExists(pLevel) == true){
 		//Lade eine Level Datei in den Zwischenspeicher
 		this.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(pLevel)+".txt");
 		this.CurrentLevel = pLevel;
 		
 		//Lade den 1. Abschnitt(0) des Levels nach Statische Objekte
 		this.loadLevelIntoStaticObjects(0);	
+		}
+	}
+	
+	
+	/**
+	 * Speichert Level Nummer....
+	 * @param Nummer des Levels
+	 */
+	public void saveLevel(int pLevel){	
+		if(this.levelExists(pLevel) == true){
+		//Lade eine Level Datei in den Zwischenspeicher
+		this.saveLevelToFile("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(pLevel)+".txt");
+		}
 	}
 
+	
+
+	/**
+	 * Neuen Level erstellen
+	 * @param NICHTS
+	 */
+	public void createNewLevel(){
+		File Level0File = new File("src/src/com/github/propa13_orga/gruppe71/level0.txt"); //Dateiname der LevelDatei
+		File LevelNewFile = new File("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(this.anzahlLevel())+".txt"); //Dateiname der LevelDatei
+		FileChannel Level0 = null;
+		FileChannel LevelNew = null;
+		
+		try {
+
+		
+		    	Level0 = new FileInputStream(Level0File).getChannel();
+		    	LevelNew = new FileOutputStream(LevelNewFile).getChannel();
+		    	LevelNew.transferFrom(Level0, 0, Level0.size());
+
+		    	Level0.close();
+		    	LevelNew.close();
+		    	
+	    } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		    
+	}
+	
+	/**
+	 * Level eins nach Links verschieben
+	 * @param NICHTS
+	 */
+	public void moveLevelLeft(){
+		
+
+		if(this.CurrentLevel > 0){
+			File PreviousLevelFile = new File("src/src/com/github/propa13_orga/gruppe71/level"+(this.CurrentLevel-1)+".txt"); 
+			File TmpLevelFile = new File("src/src/com/github/propa13_orga/gruppe71/leveltmp.txt");
+			
+			PreviousLevelFile.renameTo(TmpLevelFile);
+			
+			File CurrentLevelFile = new File("src/src/com/github/propa13_orga/gruppe71/level"+this.CurrentLevel+".txt");
+			File PreviousLevelFile2 = new File("src/src/com/github/propa13_orga/gruppe71/level"+(this.CurrentLevel-1)+".txt"); 
+			
+			
+			CurrentLevelFile.renameTo(PreviousLevelFile2);
+			
+			File TmpLevelFile2 = new File("src/src/com/github/propa13_orga/gruppe71/leveltmp.txt");
+			File CurrentLevelFile2 = new File("src/src/com/github/propa13_orga/gruppe71/level"+this.CurrentLevel+".txt");
+			
+			TmpLevelFile2.renameTo(CurrentLevelFile2);
+			
+			File TmpLevelFile3 = new File("src/src/com/github/propa13_orga/gruppe71/leveltmp.txt");
+			TmpLevelFile.delete();
+			
+			this.loadLevel((this.CurrentLevel-1));
+		}
+	}
+	
+	/**
+	 * Level eins nach Rechts verschieben
+	 * @param NICHTS
+	 */
+	public void moveLevelRight(){
+		
+
+		if(this.CurrentLevel < (this.anzahlLevel()-1)){
+			File PreviousLevelFile = new File("src/src/com/github/propa13_orga/gruppe71/level"+(this.CurrentLevel+1)+".txt"); 
+			File TmpLevelFile = new File("src/src/com/github/propa13_orga/gruppe71/leveltmp.txt");
+			
+			PreviousLevelFile.renameTo(TmpLevelFile);
+			
+			File CurrentLevelFile = new File("src/src/com/github/propa13_orga/gruppe71/level"+this.CurrentLevel+".txt");
+			File PreviousLevelFile2 = new File("src/src/com/github/propa13_orga/gruppe71/level"+(this.CurrentLevel+1)+".txt"); 
+			
+			
+			CurrentLevelFile.renameTo(PreviousLevelFile2);
+			
+			File TmpLevelFile2 = new File("src/src/com/github/propa13_orga/gruppe71/leveltmp.txt");
+			File CurrentLevelFile2 = new File("src/src/com/github/propa13_orga/gruppe71/level"+this.CurrentLevel+".txt");
+			
+			TmpLevelFile2.renameTo(CurrentLevelFile2);
+			
+			File TmpLevelFile3 = new File("src/src/com/github/propa13_orga/gruppe71/leveltmp.txt");
+			TmpLevelFile.delete();
+			
+			this.loadLevel((this.CurrentLevel+1));
+		}
+	}
 	
 	/**
 	 * Laed den naechsten Level
 	 * @param NICHTS
 	 */
 	public void loadNextLevel(){
-		if(this.CurrentLevel < 2) //Max 3 Abschnitte, daher
+		if(this.CurrentLevel < this.anzahlLevel()) //Max 3 Abschnitte, daher
 			this.loadLevel((this.CurrentLevel+1));
 	}
+	
+
+	
+	/**
+	 * Laed den vorigen Level
+	 * @param NICHTS
+	 */
+	public void loadPreviousLevel(){
+		if(this.CurrentLevel > 0) //Max 3 Abschnitte, daher
+			this.loadLevel((this.CurrentLevel-1));
+	}
+	
+	/**
+	 * Gibt zurueck ob Leveldatei existiert
+	 * @param pLevel Nummer des Levels
+	 */
+	public boolean levelExists(int pLevel){
+		File TmpFile = new File("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(pLevel)+".txt");
+		return TmpFile.exists(); 
+	}
+	
+
+	/**
+	 * Gibt Anzahl Level zurueck
+	 * @param NICHTS
+	 */
+	public int anzahlLevel(){
+		boolean TmpLevelExists = true;
+		int i = 0;
+		
+		while(TmpLevelExists == true){
+			TmpLevelExists = this.levelExists(i);
+			
+			if(TmpLevelExists == true)
+			i++;
+		}
+		
+		return i;
+	}
+	
 	
 	/**
 	 * Liest eine Datei aus und laed sie als Level
@@ -312,12 +461,58 @@ public class DLevelPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Speichert eine Datei als Level
+	 * @param Pfad/Dateiname der LevelDatei
+	 */
+	public void saveLevelToFile(String pFilename){
+		
+		String TmpOutputLevelFile = "";
+		
+		for(int i=0; i < 3; i++){// Levelabschnitte
+			if(i == this.CurrentLevelSection){
+				
+				for (int y = 0; y < 12; y++){ //Spalte
+	            	for (int x = 0; x < 20; x++) { //Alle Buchstaben der Spalte durchgehen
+		            	TmpOutputLevelFile += this.DigittoLetter(this.StaticObjects[y][x].getType());
+	            	}
+	            	TmpOutputLevelFile += "\n";
+		    	}
+				
+			}else{
+
+		    	for (int y = 0; y < 12; y++){ //Spalte
+	            	for (int x = 0; x < 20; x++) { //Alle Buchstaben der Spalte durchgehen
+		            	TmpOutputLevelFile += this.DigittoLetter(this.LevelObjects[i][y][x]);
+	            	}
+	            	TmpOutputLevelFile += "\n";
+		    	}	
+				
+			}
+			TmpOutputLevelFile += "\n";
+		}
+		
+		File LevelFile = new File(pFilename); //Dateiname der LevelDatei
+		
+		try {
+			BufferedWriter LevelWriter = new BufferedWriter(new FileWriter(LevelFile.getAbsoluteFile()));
+			LevelWriter.write(TmpOutputLevelFile);
+			LevelWriter.close();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		
+	}
+
+	
 
 	/**
 	 * Konvertiert Typen zu Buchstaben
 	 * @param pLetter Eingabe
 	 */
-	public int DigittoLetter(int pDigit){
+	public char DigittoLetter(int pDigit){
 		char TmpLetter = '0';
 		
 		switch(pDigit){
@@ -586,10 +781,101 @@ public class DLevelPanel extends JPanel {
 		
 		return TmpDigit;
 	}
-	
+
 	/**
-	 * Konvertiert Typen zu Buchstaben
-	 * @param pLetter Eingabe
+	 * Gibt vorigen Typen zurueck
+	 * @param pCurrentType Momentaner Typ
+	 */
+	public int previousType(int pCurrentType){
+		int TmpPreviousType = 0;
+		
+		switch(pCurrentType){
+		case 0://Boden
+			TmpPreviousType = 42;
+			break;
+		case 1://Wand
+			TmpPreviousType = 0;
+			break;
+		case 2://Eingang
+			TmpPreviousType = 1;
+			break;
+		case 3://Durchgang
+			TmpPreviousType = 2;
+			break;
+		case 4://Ausgang
+			TmpPreviousType = 3;
+			break;
+		case 5://Gegner(Schabe)
+			TmpPreviousType = 4;
+			break;
+		case 6://Gegner(Falle)
+			TmpPreviousType = 5;
+			break;
+		case 7://Gegner(Super-Schabe)
+			TmpPreviousType = 6;
+			break;
+		case 8://Boss(Spinne)
+			TmpPreviousType = 7;
+			break;
+		case 9://Boss(SpinnenKrebs)
+			TmpPreviousType = 8;
+			break;
+		case 16://Geheimgang
+			TmpPreviousType = 9;
+			break;
+		case 17: //17 Geheim
+			TmpPreviousType = 16;
+			break;
+		case 18://Teleport
+			TmpPreviousType = 17;
+			break;
+		case 19: //Secret
+			TmpPreviousType = 18;
+			break;
+		case 20: // Cheese/Kaese
+			TmpPreviousType = 19;
+			break;
+		case 21: // Health/Gesundheit
+			TmpPreviousType = 20;
+			break;
+		case 22: // Knife / Messer
+			TmpPreviousType = 21;
+			break;
+		case 23: // Leben
+			TmpPreviousType = 22;
+			break;
+		case 24: // Money/Geld
+			TmpPreviousType = 23;
+			break;
+		case 25: // NPC
+			TmpPreviousType = 24;
+			break;
+		case 26: // Ruestung
+			TmpPreviousType = 25;
+			break;
+		case 27: // Shop
+			TmpPreviousType = 26;
+			break;
+		case 28: //Zaubertrank
+			TmpPreviousType = 27;
+			break;
+		case 40: // NPC
+			TmpPreviousType = 28;
+			break;
+		case 41: // Truhe,Treasure
+			TmpPreviousType = 40;
+			break;
+		case 42://Belohnung
+			TmpPreviousType = 41;
+			break;
+		}
+		
+		return TmpPreviousType;
+	}
+
+	/**
+	 * Gibt folgenden Typen zurueck
+	 * @param pCurrentType Momentaner Typ
 	 */
 	public int nextType(int pCurrentType){
 		int TmpNextType = 0;
@@ -623,7 +909,7 @@ public class DLevelPanel extends JPanel {
 			TmpNextType = 9;
 			break;
 		case 9://Boss(SpinnenKrebs)
-			TmpNextType = 10;
+			TmpNextType = 16;
 			break;
 		case 16://Geheimgang
 			TmpNextType = 17;
@@ -703,6 +989,16 @@ public class DLevelPanel extends JPanel {
 		}
 	}
 	
+
+	/**
+	 * Laed den vorigen Levelabschnitt
+	 * @param NICHTS
+	 */
+	public void loadPreviousLevelSection(){
+		if(this.CurrentLevelSection > 0){ //Max 3 Abschnitte, daher
+		this.loadLevelIntoStaticObjects((this.CurrentLevelSection-1));
+		}
+	}
 	
 	/**
 	 * Laed den naechsten Levelabschnitt
