@@ -93,6 +93,8 @@ public class DPanel extends JPanel {
 		int openY=-1;
 		int questX=-1;
 		int questY=-1;
+		int belohnungX=-1;
+		int belohnungY=-1;
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
 			int[][] tmpGegnerArray = new int[48][3];
@@ -120,7 +122,10 @@ public class DPanel extends JPanel {
 						questX = x; //Speichert wo Geheimstelle
 						questY= y; //in 2 Variablen
 					}
-					
+					if(this.StaticObjects[y][x].getType() == 42){ //Treasure
+						belohnungX = x; //Speichert wo Geheimstelle
+						belohnungY= y; //in 2 Variablen
+					}
 					
 					if(this.StaticObjects[y][x].getType() == 5 || this.StaticObjects[y][x].getType() == 7 || this.StaticObjects[y][x].getType() == 8  || this.StaticObjects[y][x].getType() == 9 ){ //und wenn das Objekt ein Gegner ist
 						tmpGegnerArray[tmpAnzahlGegner][0] = x; //Gegner X Pos zwischenspeichern
@@ -251,8 +256,15 @@ public class DPanel extends JPanel {
 										this.DynamicObjects[i].SetSecret2(false);
 										
 								}
+						
+						else if((this.DynamicObjects[0].getQuestLaufend(0)==true && this.DynamicObjects[0].getMarke()>=5)){//Quest 1
+							this.StaticObjects[belohnungY][belohnungX].setType(0);
+							this.StaticObjects[belohnungY][belohnungX].setCollision(false);
+							this.DynamicObjects[i].setMarke(0);
+						}
+						
 						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
-							if(this.DynamicObjects[i].getQuest(z)==true ){
+							if(this.DynamicObjects[i].getQuest(z)==true){
 								sound=new DSound("src/com/github/propa13_orga/gruppe71/GoodBye.wav");// Good Bye !
 								sound.SetVolume(-10);
 								sound.Abspielen();
@@ -383,6 +395,10 @@ public class DPanel extends JPanel {
 							}
 						}
 					}
+					else if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() == 0 && this.DynamicObjects[i].getType() == 2 && this.DynamicObjects[i].getQuestLaufend(0)==true){//Quest 1
+			
+						this.DynamicObjects[0].setMarke(1);//Hier Marke setzen für Quest
+					}
 					else if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() == 0 && this.DynamicObjects[i].getType() == 4){
 							this.beendeSpiel();
 					} //Beende das Spiel wenn letzter Endgegner stirbt */
@@ -465,6 +481,8 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player03.png"),//38 2.Spieler 1-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//39 2.Spieler 0-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//40 QUEST
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Treasure.png"),//41 Truhe Belohnung Quests
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png")//Nach Quest Vervollständigung
 				};
 	
 		//Zeichne das Bild
@@ -555,6 +573,9 @@ public class DPanel extends JPanel {
 	            			case '!'://Teleport
 	            				TmpLevelObjects[z][y][x] = 18;
 								break;
+	            			case 'B'://Belohnung
+	            				TmpLevelObjects[z][y][x] = 42;
+								break;
 	            			case '?': //Secret
 	            				TmpLevelObjects[z][y][x] = 19;
 								break;
@@ -578,6 +599,9 @@ public class DPanel extends JPanel {
 								break;
 	            			case 'Q': // NPC
 								TmpLevelObjects[z][y][x] = 40;
+								break;
+	            			case 'T': // Truhe,Treasure
+								TmpLevelObjects[z][y][x] = 41;
 								break;
 	            			case 'R': // Ruestung
 								TmpLevelObjects[z][y][x] = 26;

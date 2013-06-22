@@ -33,7 +33,9 @@ public class DDynamic {
 	protected int[] qenabled;//für SpielPanel Environment ändern
 	protected boolean[] qreceived;//wenn schon bekommen Quest
 	protected boolean[] qalready;
-	protected int ehre;
+	protected boolean[] qdenied;//KEINE QUEST
+	protected boolean[] treasure;//Belohnungen
+	protected int marke;
 	
 	protected int[] items;
 	protected int ActiveItem;
@@ -78,9 +80,11 @@ public class DDynamic {
 		//Quest Inits
 		this.quest=new int[3];
 		this.QuestReceived();
+		this.InitBelohnungen();
 		this.QuestAlready();
+		this.InitDenied();
 		this.qenabled=new int[3];
-		
+		this.marke=0;
 
 		
 		
@@ -483,7 +487,7 @@ public class DDynamic {
 					this.Mana--;
 				}
 			}
-			this.WeaponSound(tmpType);
+			this.WeaponSound(tmpType);//Sound Weapon
 			for(int i = 0; i < this.Projectiles.length; i++){
 				if(this.Projectiles[i] == null){
 					// Wenn kein Projektil an der Steller oder ein inaktives
@@ -860,12 +864,23 @@ public class DDynamic {
 		 }
 		 this.qalready[0]=true;
 		}
+		
+		
+		
 		else if(p!=JOptionPane.YES_OPTION){
 			 JOptionPane.showMessageDialog(null, "VERFLUCHET SEID IHR!!!");
 			 this.qreceived[0]=true;
-			 this.qalready[0]=true;
+			 this.qdenied[0]=true;
 		 }
 		}
+	
+	
+	public void Information(){
+		JOptionPane.showMessageDialog(null, "Aufgepasst edler Burger.\nAuf eurer Reise werdet ihr viele Gefahren entdecken"
+				+"\n Deshalb Rüstet euch gut aus und vergesst nicht Coins aufzusammeln"+"\n Sie können das Spiel nur beenden,wenn sie den Endboss besiegt haben!"
+				+"\n Viel Glück!");
+	}
+	
 	
 	public boolean[] QuestReceived(){
 		this.qreceived=new boolean[3];
@@ -883,7 +898,9 @@ public class DDynamic {
 		}
 		return this.qalready;
 	}
-	
+	public boolean getQuestLaufend(int p){
+		return this.qalready[p];
+	}
 	//Quest im SpielPanel Boden
 	public boolean getQuest(int p){
 		return this.qreceived[p];
@@ -897,6 +914,33 @@ public class DDynamic {
 	public int QuestLength(){
 		return this.qreceived.length;
 	}
+	public int getMarke(){
+		return this.marke;
+	}
+	public int setMarke(int p){
+		return this.marke+=p;
+	}
+	//Für die einzelnen Quests die Belohnungen
+	public boolean[] InitBelohnungen(){
+		this.treasure=new boolean[3];
+		for(int i=0; i<this.treasure.length;i++){
+			this.treasure[i]=false;
+		}
+		return this.treasure;
+	}
+	public boolean[] InitDenied(){
+		this.qdenied=new boolean[3];
+		for(int i=0; i<this.qdenied.length;i++){
+			this.qdenied[i]=false;
+		}
+		return this.qdenied;
+	}
 	
+	public boolean QuestDenied(int p){
+		return this.qdenied[p];
+	}
+	public boolean setTreasure(boolean m,int p){
+		return this.treasure[p]=m;
+	}
 }
 	
