@@ -23,6 +23,7 @@ public class DProjectile {
 	private boolean Enabled; // Objekt ist aktiv
 	private int MaxRange; // Max Schussweite eines Proj
 	private int CurrentRange; // Momentanzurueckgelegte Schussweite eines Proj
+	private int Preferred; // Bevorzugter Gegnertyp
 	
 	public DProjectile(DDynamic pShooter, DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, int pCurrentXPos, int pCurrentYPos, int pType, int pDirection){
 		this.SpielPanel = pPanel;
@@ -60,18 +61,21 @@ public class DProjectile {
 			this.Damage = 1;
 			this.Speed = 2;
 			this.MaxRange = 9999;
+			this.Preferred = 3;
 			break;
 
 		case 1: //Kaese
 			this.Damage = 2;
 			this.Speed = 3;
 			this.MaxRange = 9999;
+			this.Preferred = 4;
 			break;
 
 		case 2: //Messer
 			this.Damage = 2;
 			this.Speed = 4;
 			this.MaxRange = 9;
+			this.Preferred = 1;
 			break;
 			
 
@@ -79,18 +83,21 @@ public class DProjectile {
 			this.Damage = 2;
 			this.Speed = 2;
 			this.MaxRange = 9999;
+			this.Preferred = 5; // 5 ist nicht zugewiesen
 			break;
 			
 		case 4: //Spinnweben? (Proj fuer 3. Boss)
 			this.Damage = 2;
 			this.Speed = 2;
 			this.MaxRange = 9999;
+			this.Preferred = 5;
 			break;
 			
 		default:
 			this.Damage = 1;
 			this.Speed = 2;
 			this.MaxRange = 1;
+			this.Preferred = 5;
 			break;
 		}
 	}
@@ -291,6 +298,7 @@ public class DProjectile {
 					 
 					 if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == cleanXPos && this.DynamicObjects[i].getCurrentYPosition() == cleanYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == cleanXPos && this.DynamicObjects[i].getMoveToYPosition() == cleanYPos) ) ) {
 						 //WENN auf Position ein DynamicObject ist
+						  if (this.Preferred == DynamicObjects[i].getType()){this.Damage = this.Damage + 2;}// Erhšht Damage bei bevorzugtem Gegner
 						 for(int d = 0; d < this.Damage; d++){
 							 // So oft Gesundheit abziehen, bis Schaden erreicht
 							 if(this.DynamicObjects[i].getHealth() > 0){

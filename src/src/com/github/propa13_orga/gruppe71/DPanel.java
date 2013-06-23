@@ -237,12 +237,14 @@ public class DPanel extends JPanel {
 					
 					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
 						
+						// if (this.DynamicObjects[i].getHealth() < 5) {this.DynamicObjects[i].setRType(0);} //Setzt RŸstung auf Null 
+						
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein StÃ¼ckchen
 						}
 						
 						
-			
+						
 						
 						else if(this.DynamicObjects[i].getSecret()==true){
 							this.DynamicObjects[i].setCurrentPosition((landungX*30),(landungY*30));
@@ -283,16 +285,24 @@ public class DPanel extends JPanel {
 						if(i == 0) {
 								switch(this.DynamicObjects[i].getHealth()){
 									case 8:
-										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 7:
-										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 6:
-										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 5:
-										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 4:
 										this.drawImageAtPos(pGraphics,11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
@@ -314,16 +324,24 @@ public class DPanel extends JPanel {
 							else if(i == 1) {
 								switch(this.DynamicObjects[i].getHealth()){
 									case 8:
-										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 7:
-										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 6:
-										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 5:
-										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										if (DynamicObjects[i].getRType()== 5){
+											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 4:
 										this.drawImageAtPos(pGraphics,35 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
@@ -420,6 +438,7 @@ public class DPanel extends JPanel {
 					}
 				} 
 			}
+	
 			
 		
 		this.DynamicObjectsPainted = true;
@@ -450,8 +469,8 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_strong_enemy.png"), //7 Starker Gegner(1.Boss)
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy.png"), //8 Starker Boss Spinne(2.Boss)
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy2.png"), //9 End Boss(3.Boss)
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor.png"), //10 Spieler Ruestung
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"),//11 Spieler 4-Leben
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor01.png"), //10 Spieler Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"),//11 Spieler 4-Leben01
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player02.png"),//12 Spieler 3-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player03.png"),//13 Spieler 2-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player04.png"),//14 Spieler 1-Leben
@@ -466,7 +485,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pLive.png"), //23 Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pMoney.png"), //24 Money / Geld
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pHotdog_npc.png"), //25 NPC
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor.png"), //26 Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor01.png"), //26 Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_shop.png"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pTrank.png"), //28 Zaubertrank
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKetchup.png"),  //29 Ketchup
@@ -474,7 +493,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_kaese.png"),//31 [Proj]Kaese
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_messer.png"),//32 [Proj]Messer
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_spiderweb.png"),//33 [Proj]Spinnweben(2. und 3. Boss)
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor.png"),//34 2.Spieler Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor01.png"),//34 2.Spieler Ruestung01
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//35 2.Spieler 4-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//36 2.Spieler 3-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player02.png"),//37 2.Spieler 2-Leben
@@ -482,7 +501,10 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//39 2.Spieler 0-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//40 QUEST
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Treasure.png"),//41 Truhe Belohnung Quests
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png")//Nach Quest Vervollständigung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//Nach Quest Vervollständigung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor02.png"), //43 Ruestung02
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"),//44 1.Spieler Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png") //45 2.Spieler Ruestung
 				};
 	
 		//Zeichne das Bild
@@ -603,8 +625,11 @@ public class DPanel extends JPanel {
 	            			case 'T': // Truhe,Treasure
 								TmpLevelObjects[z][y][x] = 41;
 								break;
-	            			case 'R': // Ruestung
+	            			case 'R': // Ruestung01
 								TmpLevelObjects[z][y][x] = 26;
+								break;
+	            			case '%': // Ruestung02
+								TmpLevelObjects[z][y][x] = 43;
 								break;
 	            			case 'S': // Shop
 								TmpLevelObjects[z][y][x] = 27;

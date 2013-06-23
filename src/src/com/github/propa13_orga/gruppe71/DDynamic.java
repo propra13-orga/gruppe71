@@ -25,9 +25,10 @@ public class DDynamic {
 	protected int Lives; // Leben
 	protected int Money; // Geld
 	protected int Mana; // Mana / Zauberpunkte
-	protected  int Type; // Typ des Bots(normal, Boss etc.)
+	protected int Type; // Typ des Bots(normal, Boss etc.)
 	protected boolean isBot; // Ist ein Bot oder Spieler?
 	protected int Points; //Punkte
+	protected int RType; // Rüstungstyp
 	
 	protected int[] quest; // Quest f¸r JOPTIONPANE
 	protected int[] qenabled;//f¸r SpielPanel Environment ‰ndern
@@ -161,6 +162,22 @@ public class DDynamic {
 	public void setType(int pType){
 		this.Type = pType;
 	}
+	
+	/**
+	* Gibt Type der Ruestung
+	* @param NICHTS
+	*/
+	public int getRType() {
+		return this.RType;
+	}
+
+	/**
+	* Setzt Type der Ruestung
+	* @param pRType neuer RType der Ruestung
+	*/
+	public void setRType(int pRType){
+		this.RType = pRType;
+	}
 	/**
 	 * Setzt, ob das Objekt sich bewegt
 	 * @param pMoves bewegt es sich?
@@ -231,8 +248,17 @@ public class DDynamic {
 					 sound.SetVolume(-10);//
 					 sound.Abspielen();
 					 //Ende
+					 if(this.isBot == false && ((this.getRType() > this.DynamicObjects[i].getType() && this.DynamicObjects[i].getType() < 3) || (this.getRType() > this.DynamicObjects[i].getType() && 2 < this.DynamicObjects[i].getType())) ){ // Überprüft auf Ruestung 
+						 this.setHealth(-1);
+						 if (this.getHealth() <5 ){this.setRType(0);} //WENN Health <5 Setzte Rüstung auf Null
+					 }
+					 else if((this.isBot == true &&(this.DynamicObjects[i].getRType() > this.getType() && this.getType() < 3) || (this.DynamicObjects[i].getRType() > this.getType() && 2 > this.getType()) )){ // Überprüft auf Ruestung 
+						 this.DynamicObjects[i].setHealth(-1);
+						 if (this.DynamicObjects[i].getHealth() <5 ){this.DynamicObjects[i].setRType(0);} //WENN Health <5 Setzte Rüstung auf Null
+					 }else {
 					 this.LoseHealth();
 					 this.DynamicObjects[i].LoseHealth(); 
+					 }
 					 System.out.println("SCHADEN: "+this.getType()+" -> "+this.DynamicObjects[i].getType());
 				 }else if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
 					 //WENN Beides Bots und gleiche Position
@@ -363,9 +389,10 @@ public class DDynamic {
 				break;
 
 			case 26: // Ruestung
-				System.out.println("Ruestung aufgenommen");
+				System.out.println("Ruestung01 aufgenommen");
 				this.Health = 8; // Ruestung = Doppelte Gesundheit
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				this.setRType(3); // RType setzen
 				break;
 
 			case 27: // Shop
@@ -380,6 +407,12 @@ public class DDynamic {
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
+			case 43: // Ruestung02
+				System.out.println("Ruestung02 aufgenommen");
+				this.Health = 8; // Ruestung = Doppelte Gesundheit
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
+				this.setRType(5); // RType setzen
+				break;
 				
 			}
 		}
@@ -637,12 +670,14 @@ public class DDynamic {
 			System.out.println("Verliere Leben Typ: "+ this.getType());
 		
 		if(this.SpielPanel.SpielerModus() == 1){ // gucke nach Modi
-			this.setHealth(-1);// 1 Gesundheit weniger
+			if (getHealth() > 4) { this.setHealth(-2);}// 2 Gesundheit weniger
+			else { this.setHealth(-1);// 1 Gesundheit weniger
 			
-			if(this.getHealth() == 0 && this.getLives() > 0 && this.isBot == false){ 
-				//Gesundheit des Spielers 0?
-				this.Lives--; // Leben weniger
-				this.Health = 4; //Gesundheit wieder voll
+				if(this.getHealth() == 0 && this.getLives() > 0 && this.isBot == false){ 
+					//Gesundheit des Spielers 0?
+					this.Lives--; // Leben weniger
+					this.Health = 4; //Gesundheit wieder voll
+				}
 			}
 			
 			if(this.getHealth() == 0 && this.getLives() == 0 && this.isBot == false){ //wenn Leben 0 ist!
@@ -663,12 +698,14 @@ public class DDynamic {
 				}
 			}	
 		}else if(this.SpielPanel.SpielerModus() == 2){ //Modus 2 Spieler
-			this.setHealth(-1);	// 1 Gesundheit weniger
+			if (getHealth() > 4) { this.setHealth(-2);}// 2 Gesundheit weniger
+			else{this.setHealth(-1);	// 1 Gesundheit weniger
 
-			if(this.getHealth() == 0 && this.getLives() > 0 && this.isBot == false){ 
-				//Gesundheit einer der Spieler 0?
-				this.Lives--; // Leben weniger
-				this.Health = 4; //Gesundheit wieder voll
+				if(this.getHealth() == 0 && this.getLives() > 0 && this.isBot == false){ 
+					//Gesundheit einer der Spieler 0?
+					this.Lives--; // Leben weniger
+					this.Health = 4; //Gesundheit wieder voll
+				}
 			}
 			
 			if(this.getHealth() == 0 && this.getLives() == 0 && this.isBot == false){ 
@@ -942,5 +979,6 @@ public class DDynamic {
 	public boolean setTreasure(boolean m,int p){
 		return this.treasure[p]=m;
 	}
+	
 }
 	
