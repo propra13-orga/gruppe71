@@ -20,7 +20,7 @@ public class DDynamic {
 	protected boolean moves; //Entscheidet ob Bewegt oder nicht
 	protected int Direction;
 
-	protected int counter; //F¸r mehrere Sounds
+	protected int counter; //Fuer mehrere Sounds
 	protected int Health; // Gesundheit
 	protected int Lives; // Leben
 	protected int Money; // Geld
@@ -30,8 +30,8 @@ public class DDynamic {
 	protected int Points; //Punkte
 	protected int RType; // Rüstungstyp
 	
-	protected int[] quest; // Quest f¸r JOPTIONPANE
-	protected int[] qenabled;//f¸r SpielPanel Environment ‰ndern
+	protected int[] quest; // Quest fuer JOPTIONPANE
+	protected int[] qenabled;//fuer SpielPanel Environment aendern
 	protected boolean[] qreceived;//wenn schon bekommen Quest
 	protected boolean[] qalready;
 	protected boolean[] qdenied;//KEINE QUEST
@@ -254,8 +254,11 @@ public class DDynamic {
 					 }
 					 else if((this.isBot == true &&(this.DynamicObjects[i].getRType() > this.getType() && this.getType() < 3) || (this.DynamicObjects[i].getRType() > this.getType() && 2 > this.getType()) )){ // Überprüft auf Ruestung 
 						 this.DynamicObjects[i].setHealth(-1);
-						 if (this.DynamicObjects[i].getHealth() <5 ){this.DynamicObjects[i].setRType(0);} //WENN Health <5 Setzte Rüstung auf Null
-					 }else {
+						 if (this.DynamicObjects[i].getHealth() <5 ){this.DynamicObjects[i].setRType(0);//WENN Health <5 Setzte Rüstung auf Null
+						 } 
+					 }
+					
+					 else {
 					 this.LoseHealth();
 					 this.DynamicObjects[i].LoseHealth(); 
 					 }
@@ -374,10 +377,10 @@ public class DDynamic {
 
 			case 25: // NPC
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[0]==false){//Quest 1
-				   this.quest[0]=JOptionPane.showOptionDialog(null, "Hˆrt mich an EDLER BURGER!",
+				   this.quest[0]=JOptionPane.showOptionDialog(null, "Hoert mich an EDLER BURGER!",
 			                  "Quest 1", JOptionPane.YES_NO_CANCEL_OPTION,
 			                  JOptionPane.WARNING_MESSAGE, null, 
-			                  new String[]{"Schieﬂt los heiﬂer Hund!", "ICH AUF EINE NIEDERE SPEISE H÷REN?????!"}, "ICH AUF EINE NIEDERE SPEISE H÷REN?????!");
+			                  new String[]{"Schieﬂt los heiﬂer Hund!", "ICH AUF EINE NIEDERE SPEISE HOEREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HOEREN?????!");
 				   this.Quest1(quest[0]);
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 ){
@@ -535,7 +538,8 @@ public class DDynamic {
 					this.Projectiles[i].setCurrentPosition(this.CurrentXPos, this.CurrentYPos);
 					this.Projectiles[i].setDirection(this.Direction);
 					this.Projectiles[i].setType(tmpType);
-					this.Projectiles[i].setShooter(this);				
+					this.Projectiles[i].setShooter(this);	
+					System.out.println(this.DynamicObjects[0].getMarke()+" Marke(n)");
 					System.out.println("Neues Proj(von "+this.getType()+"): Pos X: "+this.Projectiles[i].getCurrentXPosition()+" Y: "+this.Projectiles[i].getCurrentYPosition()+ " Dir: "+this.Projectiles[i].getDirection()+" T: "+this.Projectiles[i].getType()+" CR: "+this.Projectiles[i].getCurrentRange()+" MR: "+this.Projectiles[i].getMaxRange());
 					i = this.Projectiles.length; //Schleife beenden
 				}
@@ -827,7 +831,7 @@ public class DDynamic {
 	}
 	
 	/**
-	 * Alle SoundDateien f¸r DDynamic
+	 * Alle SoundDateien fuer DDynamic
 	 * @return
 	 */
 	public String[] SoundDateien(){
@@ -843,7 +847,7 @@ public class DDynamic {
 		datei[7]="src/com/github/propa13_orga/gruppe71/Slash.wav";//Messer
 		datei[8]="src/com/github/propa13_orga/gruppe71/KaeseBazooka.wav";//Kaese
 		datei[9]="src/com/github/propa13_orga/gruppe71/GoodBye.wav";//Bye
-		datei[10]="src/com/github/propa13_orga/gruppe71/NextLevel.wav";//N‰chster Level
+		datei[10]="src/com/github/propa13_orga/gruppe71/NextLevel.wav";//Naechster Level
 		return this.datei;
 		
 	}
@@ -891,8 +895,8 @@ public class DDynamic {
 	public void Quest1(int p){
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOﬂEN SOLLEN DIR IMMER HOLD SEIN..." +
-		 		"\nDIE KƒFER SIND WIEDER IM ANMARSCH! WENN IHR --5-- von IHNEN T÷TEN K÷NNTET, W‹RDET IHR \nDEN HEISSEN HUNDEN CLAN F‹R IMMER IN ERRINNERUNG BLEIBEN\n" +
-		 		"BITTE BEEILT EUCH!\n(fl¸stern: Nat¸rlich gibt es auch eine groﬂe Belohnung...)",
+		 		"\nDIE KAEFER SIND WIEDER IM ANMARSCH! WENN IHR --5-- von IHNEN TOETEN KOENNTET, WUERDET IHR \nDEN HEISSEN HUNDEN CLAN FUER IMMER IN ERRINNERUNG BLEIBEN\n" +
+		 		"BITTE BEEILT EUCH!\n(fluestern: Natuerlich gibt es auch eine groﬂe Belohnung...)",
                  "Quest 1 ANGENOMMEN", JOptionPane.OK_OPTION,
                  JOptionPane.INFORMATION_MESSAGE, null, 
                  new String[]{"Ich tue was ich kann!"}, "Ich tue was ich kann!");
@@ -914,8 +918,8 @@ public class DDynamic {
 	
 	public void Information(){
 		JOptionPane.showMessageDialog(null, "Aufgepasst edler Burger.\nAuf eurer Reise werdet ihr viele Gefahren entdecken"
-				+"\n Deshalb R¸stet euch gut aus und vergesst nicht Coins aufzusammeln"+"\n Sie kˆnnen das Spiel nur beenden,wenn sie den Endboss besiegt haben!"
-				+"\n Viel Gl¸ck!");
+				+"\n Deshalb Ruestet euch gut aus und vergesst nicht Coins aufzusammeln"+"\n Sie koennen das Spiel nur beenden,wenn sie den Endboss besiegt haben!"
+				+"\n Viel Glueck!");
 	}
 	
 	
@@ -927,7 +931,7 @@ public class DDynamic {
 		return this.qreceived;
 	}
 	
-	//Checkt ob schon der NPC ber¸hrt wurde
+	//Checkt ob schon der NPC beruehrt wurde
 	public boolean[] QuestAlready(){
 		this.qalready=new boolean[3];
 		for(int i=0; i<this.qalready.length;i++){
@@ -957,7 +961,7 @@ public class DDynamic {
 	public int setMarke(int p){
 		return this.marke+=p;
 	}
-	//F¸r die einzelnen Quests die Belohnungen
+	//Fuer die einzelnen Quests die Belohnungen
 	public boolean[] InitBelohnungen(){
 		this.treasure=new boolean[3];
 		for(int i=0; i<this.treasure.length;i++){

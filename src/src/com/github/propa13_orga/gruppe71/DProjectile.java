@@ -302,17 +302,24 @@ public class DProjectile {
 						 for(int d = 0; d < this.Damage; d++){
 							 // So oft Gesundheit abziehen, bis Schaden erreicht
 							 if(this.DynamicObjects[i].getHealth() > 0){
-								 this.DynamicObjects[i].LoseHealth(); 
+								 this.DynamicObjects[i].LoseHealth();
+								 						 
 							 }
+							 
+							
 						 }
-
+						 if(this.DynamicObjects[i].getHealth()==0)
+						 this.DynamicObjects[0].setMarke(1); 
 						if(this.SpielPanel.getDebugMode() == true)
 							System.out.println("DO "+i+" getroffen! von "+this.Shooter.getType());
-
+						
 						this.Enabled = false;
+						
 						i = this.DynamicObjects.length; //Beende Schleife
 					 }
+					
 				 }
+				
 			}
 		}else{
 

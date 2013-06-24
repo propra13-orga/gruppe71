@@ -10,7 +10,10 @@ public class StaticObject {
 	public StaticObject (int pType){
 	this.Type = pType;
 
-	if (this.Type == 1 || this.Type == 6 || this.Type==16 || this.Type==25 ||this.Type==40 || this.Type==42) {this.Collision = true;}
+	if (this.Type == 1 || this.Type == 6 || this.Type==16 || this.Type==25 ||this.Type==40 || this.Type==42) 
+	{
+		this.Collision = true;
+	}
 	else {this.Collision = false;}
 	
 	}

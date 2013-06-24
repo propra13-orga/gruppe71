@@ -101,7 +101,7 @@ public class DItems  {
 	}
 	
 	/**
-	 * Alles wird nun dem Panel zugefügt , Dimension etc.
+	 * Alles wird nun dem Panel zugefuegt , Dimension etc.
 	 *
 	 */
 	public void AddToPan(){
@@ -118,7 +118,7 @@ public class DItems  {
 			   z+=70;
 			}
 		
-		this.money= new JTextField("Dein Vermögen: "+this.SpielPanel.getDynamicObject(0).getMoney()+" $$$");
+		this.money= new JTextField("Dein Vermoegen: "+this.SpielPanel.getDynamicObject(0).getMoney()+" $$$");
 		Dimension size2=money.getPreferredSize();
 		money.setBounds(20,340,size2.width, size2.height);
 		money.setEditable(false);
@@ -127,7 +127,7 @@ public class DItems  {
 	}
 	
 	/**
-	 * Die Bilder für die Items 6 Stk. kommen hier
+	 * Die Bilder fuer die Items 6 Stk. kommen hier
 	 * 
 	 */
 	public void InitPic(){

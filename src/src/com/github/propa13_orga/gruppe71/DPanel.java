@@ -95,6 +95,7 @@ public class DPanel extends JPanel {
 		int questY=-1;
 		int belohnungX=-1;
 		int belohnungY=-1;
+		
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
 			int[][] tmpGegnerArray = new int[48][3];
@@ -259,10 +260,11 @@ public class DPanel extends JPanel {
 										
 								}
 						
-						else if((this.DynamicObjects[0].getQuestLaufend(0)==true && this.DynamicObjects[0].getMarke()>=5)){//Quest 1
+						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5){//Quest 1
+							System.out.println("SAMMY");
 							this.StaticObjects[belohnungY][belohnungX].setType(0);
 							this.StaticObjects[belohnungY][belohnungX].setCollision(false);
-							this.DynamicObjects[i].setMarke(0);
+							
 						}
 						
 						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
@@ -413,10 +415,7 @@ public class DPanel extends JPanel {
 							}
 						}
 					}
-					else if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() == 0 && this.DynamicObjects[i].getType() == 2 && this.DynamicObjects[i].getQuestLaufend(0)==true){//Quest 1
-			
-						this.DynamicObjects[0].setMarke(1);//Hier Marke setzen für Quest
-					}
+					
 					else if(this.DynamicObjects[i] != null && this.DynamicObjects[i].getHealth() == 0 && this.DynamicObjects[i].getType() == 4){
 							this.beendeSpiel();
 					} //Beende das Spiel wenn letzter Endgegner stirbt */
@@ -501,7 +500,7 @@ public class DPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//39 2.Spieler 0-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//40 QUEST
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Treasure.png"),//41 Truhe Belohnung Quests
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//Nach Quest Vervollständigung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//42  Quest Vervollstaendigung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor02.png"), //43 Ruestung02
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"),//44 1.Spieler Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png") //45 2.Spieler Ruestung
@@ -595,7 +594,7 @@ public class DPanel extends JPanel {
 	            			case '!'://Teleport
 	            				TmpLevelObjects[z][y][x] = 18;
 								break;
-	            			case 'B'://Belohnung
+	            			case '#'://Belohnung
 	            				TmpLevelObjects[z][y][x] = 42;
 								break;
 	            			case '?': //Secret
