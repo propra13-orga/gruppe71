@@ -93,8 +93,7 @@ public class DPanel extends JPanel {
 		int openY=-1;
 		int questX=-1;
 		int questY=-1;
-		int belohnungX=-1;
-		int belohnungY=-1;
+		
 		
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
@@ -119,14 +118,17 @@ public class DPanel extends JPanel {
 						openX = x; //Speichert wo Geheimstelle
 						openY= y; //in 2 Variablen
 					}
-					if(this.StaticObjects[y][x].getType() == 40){ //Geheimgang,Trittstelle
-						questX = x; //Speichert wo Geheimstelle
+					if(this.StaticObjects[y][x].getType() == 42){ //Treasure Weg
+						geheimX=x; //Speichert wo Geheimstelle
+						geheimY=y; //in 2 Variablen
+					
+					}
+					if(this.StaticObjects[y][x].getType() == 40){ //Truhe
+						questX = x; //Speichert Truhe
 						questY= y; //in 2 Variablen
+						System.out.println(questX +" X"+questY+" Y");
 					}
-					if(this.StaticObjects[y][x].getType() == 42){ //Treasure
-						belohnungX = x; //Speichert wo Geheimstelle
-						belohnungY= y; //in 2 Variablen
-					}
+					
 					
 					if(this.StaticObjects[y][x].getType() == 5 || this.StaticObjects[y][x].getType() == 7 || this.StaticObjects[y][x].getType() == 8  || this.StaticObjects[y][x].getType() == 9 ){ //und wenn das Objekt ein Gegner ist
 						tmpGegnerArray[tmpAnzahlGegner][0] = x; //Gegner X Pos zwischenspeichern
@@ -244,7 +246,10 @@ public class DPanel extends JPanel {
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						}
 						
-						
+					
+					
+							
+							
 						
 						
 						else if(this.DynamicObjects[i].getSecret()==true){
@@ -259,14 +264,6 @@ public class DPanel extends JPanel {
 										this.DynamicObjects[i].SetSecret2(false);
 										
 								}
-						
-						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5){//Quest 1
-							System.out.println("SAMMY");
-							this.StaticObjects[belohnungY][belohnungX].setType(0);
-							this.StaticObjects[belohnungY][belohnungX].setCollision(false);
-							
-						}
-						
 						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
 							if(this.DynamicObjects[i].getQuest(z)==true){
 								sound=new DSound("src/com/github/propa13_orga/gruppe71/GoodBye.wav");// Good Bye !
@@ -276,10 +273,16 @@ public class DPanel extends JPanel {
 							this.StaticObjects[questY][questX].setCollision(false);
 							this.DynamicObjects[i].setQuest(false,z);
 							break;
+							}
+						
+						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5){//Quest 1
 							
-					}
-						}	
+							this.StaticObjects[geheimY][geheimX].setCollision(false);
+							this.StaticObjects[geheimY][geheimX].setType(0);
 							
+						}
+					}	
+				
 				
 						
 						int[] TmpDynamicObjectPosition=this.DynamicObjects[i].getCurrentPosition();
