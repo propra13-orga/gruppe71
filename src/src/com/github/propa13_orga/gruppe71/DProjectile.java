@@ -1,13 +1,18 @@
 package src.com.github.propa13_orga.gruppe71;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 
 import javax.swing.JOptionPane;
 
 
 
-public class DProjectile {
+public class DProjectile implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1355342426708356991L;
 	private DPanel SpielPanel;
 	private StaticObject[][] StaticObjects;
 	private DDynamic[] DynamicObjects;

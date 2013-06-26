@@ -5,9 +5,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.event.KeyAdapter;
+import java.io.Serializable;
 
-public class DSteuerung {
+public class DSteuerung implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4505870276814398897L;
 	private JFrame SpielFenster;
 	
 	
@@ -105,6 +110,16 @@ public class DSteuerung {
 	    		{
 	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
     				SpielPanel.getDynamicObject(0).ItemBag();
+	    		}
+	    		else if(e.getKeyCode()==KeyEvent.VK_Z) //Spiel speichern
+    	    	{
+    	    		// Wenn man Z drueckt wird was hier steht ausgefuehrt
+        			SpielPanel.SaveGame();
+    	    	}
+    			else if(e.getKeyCode()==KeyEvent.VK_U) //Spiel laden
+    	    	{
+    	    		// Wenn man U drueckt wird was hier steht ausgefuehrt
+        			SpielPanel.LoadGame();
 	    		}
 	    			else 
 	    			{	

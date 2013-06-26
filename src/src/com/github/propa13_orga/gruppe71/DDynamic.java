@@ -1,13 +1,18 @@
 					package src.com.github.propa13_orga.gruppe71;
 
 import java.awt.Graphics;
+import java.io.Serializable;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
 
 
 
-public class DDynamic {
+public class DDynamic implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6109931997164167600L;
 	protected DSound sound;
 	protected DPanel SpielPanel;
 	protected StaticObject[][] StaticObjects; // private int[][] StaticObjects; 

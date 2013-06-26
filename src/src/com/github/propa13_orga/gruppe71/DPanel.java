@@ -10,18 +10,25 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JFrame;
 
-public class DPanel extends JPanel {
+public class DPanel extends JPanel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	protected JFrame SpielFenster;
@@ -927,10 +934,53 @@ public class DPanel extends JPanel {
 			this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
 			this.DynamicObjects[0] = this.CheckpointObject;
 			this.CheckpointLoaded = true;
-			this.setCheckpointObject(null);
+			this.setCheckpointObject(null);}
+		}
+	
+	/**
+	 * Speichert den aktuellen Spielstand (mit Z)
+	 * @param Keine Parameter
+	 */
+	public void SaveGame(){
+		ObjectOutputStream output = null;
+	
+		try{
+			output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("Spielstand.dun")));
+			output.writeObject(DynamicObjects[0]); // Speichert Spieler1
+			output.writeObject(DynamicObjects[1]); // Speichert Spieler2
+			output.writeInt(AnzahlSpieler); 
+			output.writeInt(CurrentLevelSection); 
+			output.writeInt(CurrentLevel);
+			output.close();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Laden den aktuellen Spielstand (mit U)
+	 * @param Keine Parameter
+	 */
+	public void LoadGame(){
+		try{
+			ObjectInputStream input = null;
+			input = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Spielstand.dun")));
+			
+			this.DynamicObjects[0] = (DDynamic) input.readObject();
+			this.DynamicObjects[1] = (DDynamic) input.readObject();
+			this.AnzahlSpieler = input.readInt();
+			this.CurrentLevelSection = input.readInt();
+			this.CurrentLevel = input.readInt();
+			input.close();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		
+		this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
+		
+	}
 
 }
 
