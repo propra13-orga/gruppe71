@@ -133,7 +133,7 @@ public class DPanel extends JPanel implements Serializable {
 					if(this.StaticObjects[y][x].getType() == 40){ //Truhe
 						questX = x; //Speichert Truhe
 						questY= y; //in 2 Variablen
-						System.out.println(questX +" X"+questY+" Y");
+						
 					}
 					
 					
@@ -253,7 +253,12 @@ public class DPanel extends JPanel implements Serializable {
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
 						}
 						
-					
+						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5){//Quest 1
+							
+							this.StaticObjects[geheimY][geheimX].setCollision(false);
+							this.StaticObjects[geheimY][geheimX].setType(0);
+							
+						}
 					
 							
 							
@@ -282,12 +287,7 @@ public class DPanel extends JPanel implements Serializable {
 							break;
 							}
 						
-						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5){//Quest 1
-							
-							this.StaticObjects[geheimY][geheimX].setCollision(false);
-							this.StaticObjects[geheimY][geheimX].setType(0);
-							
-						}
+						
 					}	
 				
 				
@@ -373,6 +373,7 @@ public class DPanel extends JPanel implements Serializable {
 						
 								}
 						}
+							
 				}
 				}	
 					

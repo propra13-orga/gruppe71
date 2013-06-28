@@ -388,11 +388,19 @@ public class DDynamic implements Serializable {
 			                  new String[]{"Schießt los heißer Hund!", "ICH AUF EINE NIEDERE SPEISE HOEREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HOEREN?????!");
 				   this.Quest1(quest[0]);
 				}
-				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 ){
-					JOptionPane.showMessageDialog(null, "Es war einmal 1...");
+				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[1]==false ){
+					 this.quest[1]=JOptionPane.showOptionDialog(null, "Das Unheil...",
+			                  "Quest 2", JOptionPane.YES_NO_CANCEL_OPTION,
+			                  JOptionPane.WARNING_MESSAGE, null, 
+			                  new String[]{"Hoere ich recht?", "Schon wieder ein Hund..."}, "Schon wieder ein Hund...");
+				   this.Quest2(quest[1]);
 				}
-				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0 ){
-					JOptionPane.showMessageDialog(null, "Es war einmal 2...");
+				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[2]==false ){
+					this.quest[2]=JOptionPane.showOptionDialog(null, "Euch schicken die 3 Sterne Koeche!",
+			                  "Quest 3", JOptionPane.YES_NO_CANCEL_OPTION,
+			                  JOptionPane.WARNING_MESSAGE, null, 
+			                  new String[]{"Hoffentlich das letzte Mal...", "Ich bin nicht zu haben."}, "Ich bin nicht zu haben.");
+				   this.Quest3(quest[2]);
 				}
 				break;
 
@@ -830,7 +838,9 @@ public class DDynamic implements Serializable {
 	public void ItemBag(){
 		DItems it = new DItems(SpielPanel);
 		}
-	
+	/**
+	 * Shop Interaktion, beim Betretten des Shops
+	 */
 	public void Shop(){
 		DShop shop=new DShop(SpielPanel);
 	}
@@ -892,11 +902,20 @@ public class DDynamic implements Serializable {
 	}
 	
 	}
+	/**
+	 * ein counter für DSound Magie etc.
+	 * @param int p
+	 * @return
+	 */
 	public int setCounter(int p){
 		this.counter+=p;
 		return this.counter;
 }	
 	
+	/**
+	 * Quest Dialog 1
+	 * @param int p
+	 */
 	public void Quest1(int p){
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOßEN SOLLEN DIR IMMER HOLD SEIN..." +
@@ -910,9 +929,6 @@ public class DDynamic implements Serializable {
 		 }
 		 this.qalready[0]=true;
 		}
-		
-		
-		
 		else if(p!=JOptionPane.YES_OPTION){
 			 JOptionPane.showMessageDialog(null, "VERFLUCHET SEID IHR!!!");
 			 this.qreceived[0]=true;
@@ -920,14 +936,70 @@ public class DDynamic implements Serializable {
 		 }
 		}
 	
+	/**
+	 * Quest Dialog 2
+	 * @param int p
+	 */
+	public void Quest2(int p){
+		if(p==JOptionPane.YES_OPTION){
+		 this.qenabled[1]=JOptionPane.showOptionDialog(null, "\n SCHLUESSEL...VERSCHWUNDEN...ZU SPAET...\n" +
+		 		"\nZU VIELE...EIN BURGER?... RETTUNG?..." +
+		 		"\nWas hab ich gesagt?\n WIR BRAUCHEN KEINE HILFE!\n(QUEST: FINDET DEN SCHLUESSEL",
+                 "Quest 2 ANGENOMMEN", JOptionPane.OK_OPTION,
+                 JOptionPane.INFORMATION_MESSAGE, null, 
+                 new String[]{"Ich werde sie nie verstehen."}, "Ich werde sie nie verstehen.");
+		 if(this.qalready[1]==false){
+		 this.qreceived[1]=true;
+		 }
+		 this.qalready[1]=true;
+		}
+		else if(p!=JOptionPane.YES_OPTION){
+			 JOptionPane.showMessageDialog(null, "SCHOENEN TAG...");
+			 this.qreceived[1]=true;
+			 this.qdenied[1]=true;
+		 }
+		}
 	
+	/**
+	 * Quest Dialog 3
+	 * @param int p
+	 */
+	public void Quest3(int p){
+		if(p==JOptionPane.YES_OPTION){
+		 this.qenabled[2]=JOptionPane.showOptionDialog(null, "\nWIE IHR HIER?" +
+		 		"\nHmm... BEWEIST EUREN MUT\n TOETET ALLE GEGNER IM RAUM..." +
+		 		"\n SONST .. Kommt ihr nicht durch...",
+                 "Quest 1 ANGENOMMEN", JOptionPane.OK_OPTION,
+                 JOptionPane.INFORMATION_MESSAGE, null, 
+                 new String[]{"Warum habe ich Angenommen?"}, "Warum hab ich Angenommen?");
+		 if(this.qalready[2]==false){
+		 this.qreceived[2]=true;
+		 }
+		 this.qalready[2]=true;
+		}
+		else if(p!=JOptionPane.YES_OPTION){
+			 JOptionPane.showMessageDialog(null, "Hier gibts kein Entkommen...");
+			 this.qreceived[2]=true;
+			 this.qdenied[2]=true;
+		 }
+		}
+	
+	
+	
+	/**
+	 * Informatio am Anfang des Spiels
+	 * 
+	 */
 	public void Information(){
 		JOptionPane.showMessageDialog(null, "Aufgepasst edler Burger.\nAuf eurer Reise werdet ihr viele Gefahren entdecken"
 				+"\n Deshalb Ruestet euch gut aus und vergesst nicht Coins aufzusammeln"+"\n Sie koennen das Spiel nur beenden,wenn sie den Endboss besiegt haben!"
 				+"\n Viel Glueck!");
 	}
 	
-	
+	/**
+	 * Initialisierung Quest bekommen
+	 * @return boolean[]
+	 */
 	public boolean[] QuestReceived(){
 		this.qreceived=new boolean[3];
 		for(int i=0; i<this.qreceived.length;i++){
@@ -937,6 +1009,11 @@ public class DDynamic implements Serializable {
 	}
 	
 	//Checkt ob schon der NPC beruehrt wurde
+	
+	/**
+	 * Initialisierung Quest Already
+	 * @return boolean[]
+	 */
 	public boolean[] QuestAlready(){
 		this.qalready=new boolean[3];
 		for(int i=0; i<this.qalready.length;i++){
@@ -944,29 +1021,64 @@ public class DDynamic implements Serializable {
 		}
 		return this.qalready;
 	}
+	
+	/**
+	 * Bekomme Quest Already
+	 * @param int 
+	 * @return boolean
+	 */
 	public boolean getQuestLaufend(int p){
 		return this.qalready[p];
 	}
-	//Quest im SpielPanel Boden
+	
+	/**
+	 * Bekomme Quest
+	 * @param p
+	 * @return boolean
+	 */
 	public boolean getQuest(int p){
 		return this.qreceived[p];
 	}
 	
-	//Quest im SpielPanel Boden
+	/**
+	 * Quest  bekommen setzen
+	 * @param p
+	 * @param x
+	 * @return boolean
+	 */
 		public boolean setQuest(boolean p,int x){
 			return this.qreceived[x]=p;
 		}
-	//Wie viele Quests?
+		
+	/**
+	 * Bekomme Quest Länge
+	 * @return int
+	 */
 	public int QuestLength(){
 		return this.qreceived.length;
 	}
+	
+	/**
+	 * Bekomme Quest Marken
+	 * @return int
+	 */
 	public int getMarke(){
 		return this.marke;
 	}
+	
+	/**
+	 *  Quest Marken setzen
+	 * @param int p
+	 * @return int
+	 */
 	public int setMarke(int p){
 		return this.marke+=p;
 	}
-	//Fuer die einzelnen Quests die Belohnungen
+
+ /**
+ * Initialisiereung Belohnungen
+ * @return boolean[]
+ */
 	public boolean[] InitBelohnungen(){
 		this.treasure=new boolean[3];
 		for(int i=0; i<this.treasure.length;i++){
@@ -974,6 +1086,10 @@ public class DDynamic implements Serializable {
 		}
 		return this.treasure;
 	}
+	/**
+	 * Initialisierung QuestDenied
+	 * @return boolean[]
+	 */
 	public boolean[] InitDenied(){
 		this.qdenied=new boolean[3];
 		for(int i=0; i<this.qdenied.length;i++){
@@ -981,10 +1097,18 @@ public class DDynamic implements Serializable {
 		}
 		return this.qdenied;
 	}
-	
+	/**
+	 * Aufgabe,Quest wurde nicht angenommen.
+	 * @param int p
+	 */
 	public boolean QuestDenied(int p){
 		return this.qdenied[p];
 	}
+	
+	/**
+	 * Schatz wird auf true oder false gesetzt.
+	 * @param boolean , int
+	 */
 	public boolean setTreasure(boolean m,int p){
 		return this.treasure[p]=m;
 	}
