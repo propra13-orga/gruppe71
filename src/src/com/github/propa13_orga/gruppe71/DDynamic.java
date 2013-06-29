@@ -42,6 +42,12 @@ public class DDynamic implements Serializable {
 	protected boolean[] qdenied;//KEINE QUEST
 	protected boolean[] treasure;//Belohnungen
 	protected int marke;
+	protected boolean info;
+	protected boolean key;
+	protected int hidden;
+	protected int ok;// Für Schlüssel JOptionPane
+	protected int posX;//Spezielle Positionen für key
+	protected int posY;
 	
 	protected int[] items;
 	protected int ActiveItem;
@@ -91,9 +97,11 @@ public class DDynamic implements Serializable {
 		this.InitDenied();
 		this.qenabled=new int[3];
 		this.marke=0;
-
-		
-		
+		this.info=false;
+		this.key=false;
+		this.hidden=0;
+		int posX=0;
+		int posY=0;
 	}
     
 	/**
@@ -241,7 +249,9 @@ public class DDynamic implements Serializable {
 	 * @param pYStart Neue Y Position
 	 */
 	public void setMoveToPosition(int pXPos, int pYPos){
-		
+		int maeuse=0;
+		int kaese=0;
+		int messer=0;
 		boolean tmpAndererBotAnPos = false; // Collision zwischen Bots
 		
 		// Schaden hinzufÃ¼gen wenn Gegner und Spieler sich beruehren
@@ -381,13 +391,15 @@ public class DDynamic implements Serializable {
 				break;
 
 			case 25: // NPC
+				//NPC1
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[0]==false){//Quest 1
 				   this.quest[0]=JOptionPane.showOptionDialog(null, "Hoert mich an EDLER BURGER!",
 			                  "Quest 1", JOptionPane.YES_NO_CANCEL_OPTION,
 			                  JOptionPane.WARNING_MESSAGE, null, 
-			                  new String[]{"Schieï¿½t los heiï¿½er Hund!", "ICH AUF EINE NIEDERE SPEISE HOEREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HOEREN?????!");
+			                  new String[]{"Schiesst los heisser Hund!", "ICH AUF EINE NIEDERE SPEISE HOEREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HOEREN?????!");
 				   this.Quest1(quest[0]);
 				}
+				//NPC 2
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[1]==false ){
 					 this.quest[1]=JOptionPane.showOptionDialog(null, "Das Unheil...",
 			                  "Quest 2", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -395,6 +407,33 @@ public class DDynamic implements Serializable {
 			                  new String[]{"Hoere ich recht?", "Schon wieder ein Hund..."}, "Schon wieder ein Hund...");
 				   this.Quest2(quest[1]);
 				}
+				//NPC 2 nach Schluesel Abgabe
+				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[1]==true && this.getKey()==true ){
+					 this.ok=JOptionPane.showOptionDialog(null, "Danke..."+"\n Ihr seid doch ein Held?",
+			                  "Quest 2", JOptionPane.OK_OPTION,
+			                  JOptionPane.INFORMATION_MESSAGE, null, 
+			                  new String[]{"ICH BEKOMME NICHTS?"}, "ICH BEKOMME NICHTS?");
+					 this.key=false;
+					 this.hidden+=1;
+				   
+				}
+				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.key==false && this.hidden==2 ){
+					 JOptionPane.showOptionDialog(null, "Ahso...",
+			                  "Quest 2 FERTIG", JOptionPane.OK_OPTION,
+			                  JOptionPane.INFORMATION_MESSAGE, null, 
+			                  new String[]{"MANIEREN HABT IHR KEINE!"}, "MANIEREN HABT IHR KEINE!");
+					 maeuse=1000;
+					 kaese=15;
+					 messer=1;
+					 this.setMoney(maeuse);
+					 this.items[0]+=messer;
+					 this.items[1]+=kaese;
+					this.Belohnung2(maeuse, kaese, messer);
+					this.marke=0;
+					this.hidden+=1;
+				   
+				}
+				//NPC 3
 				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[2]==false ){
 					this.quest[2]=JOptionPane.showOptionDialog(null, "Euch schicken die 3 Sterne Koeche!",
 			                  "Quest 3", JOptionPane.YES_NO_CANCEL_OPTION,
@@ -422,6 +461,30 @@ public class DDynamic implements Serializable {
 				this.Mana += 10;
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
+				
+			case 41: // Ruestung02
+				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0){
+					maeuse+=150;
+					kaese+=10;
+					this.setMoney(maeuse);
+					this.items[1]+=kaese;
+					this.Belohnung1(maeuse, kaese);
+					this.setTreasure(true,0);
+					this.marke=0;
+					
+				}
+				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0){
+					maeuse+=3000;
+					kaese+=30;
+					messer+=5;
+					this.setMoney(maeuse);
+					this.items[1]+=kaese;
+					this.items[0]+=messer;
+					this.Belohnung3(maeuse, kaese,messer);
+					this.setTreasure(true,2);
+					this.marke=0;
+				}
+				break;
 
 			case 43: // Ruestung02
 				System.out.println("Ruestung02 aufgenommen");
@@ -430,6 +493,14 @@ public class DDynamic implements Serializable {
 				this.setRType(5); // RType setzen
 				break;
 				
+			case 46: // Information
+				this.Information();
+				this.info=true;
+				break;
+				
+			case 47: // Schluessel
+				this.key=true;
+				break;
 			}
 		}
 		/*
@@ -619,6 +690,8 @@ public class DDynamic implements Serializable {
 	public int getMoney(){
 		return this.Money;	
 	}
+	
+	
 
 	/**
 	* Setzt Money
@@ -903,7 +976,7 @@ public class DDynamic implements Serializable {
 	
 	}
 	/**
-	 * ein counter fï¿½r DSound Magie etc.
+	 * ein counter fuer DSound Magie etc.
 	 * @param int p
 	 * @return
 	 */
@@ -918,9 +991,9 @@ public class DDynamic implements Serializable {
 	 */
 	public void Quest1(int p){
 		if(p==JOptionPane.YES_OPTION){
-		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOï¿½EN SOLLEN DIR IMMER HOLD SEIN..." +
+		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOSSEN SOLLEN DIR IMMER HOLD SEIN..." +
 		 		"\nDIE KAEFER SIND WIEDER IM ANMARSCH! WENN IHR --5-- von IHNEN TOETEN KOENNTET, WUERDET IHR \nDEN HEISSEN HUNDEN CLAN FUER IMMER IN ERRINNERUNG BLEIBEN\n" +
-		 		"BITTE BEEILT EUCH!\n(fluestern: Natuerlich gibt es auch eine groï¿½e Belohnung...)",
+		 		"BITTE BEEILT EUCH!\n(fluestern: Natuerlich gibt es auch eine grosse Belohnung...)",
                  "Quest 1 ANGENOMMEN", JOptionPane.OK_OPTION,
                  JOptionPane.INFORMATION_MESSAGE, null, 
                  new String[]{"Ich tue was ich kann!"}, "Ich tue was ich kann!");
@@ -944,7 +1017,7 @@ public class DDynamic implements Serializable {
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[1]=JOptionPane.showOptionDialog(null, "\n SCHLUESSEL...VERSCHWUNDEN...ZU SPAET...\n" +
 		 		"\nZU VIELE...EIN BURGER?... RETTUNG?..." +
-		 		"\nWas hab ich gesagt?\n WIR BRAUCHEN KEINE HILFE!\n(QUEST: FINDET DEN SCHLUESSEL",
+		 		"\nWas hab ich gesagt?\n WIR BRAUCHEN KEINE HILFE!\n(QUEST: FINDET DEN SCHLUESSEL IN DIESEM RAUM!)",
                  "Quest 2 ANGENOMMEN", JOptionPane.OK_OPTION,
                  JOptionPane.INFORMATION_MESSAGE, null, 
                  new String[]{"Ich werde sie nie verstehen."}, "Ich werde sie nie verstehen.");
@@ -967,8 +1040,8 @@ public class DDynamic implements Serializable {
 	public void Quest3(int p){
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[2]=JOptionPane.showOptionDialog(null, "\nWIE IHR HIER?" +
-		 		"\nHmm... BEWEIST EUREN MUT\n TOETET ALLE GEGNER IM RAUM..." +
-		 		"\n SONST .. Kommt ihr nicht durch...",
+		 		"\nHmm... BEWEIST EUREN MUT\n TOETET 12 BESTIEN..." +
+		 		"\n SONST ... KEINE BELOHNUNG!",
                  "Quest 1 ANGENOMMEN", JOptionPane.OK_OPTION,
                  JOptionPane.INFORMATION_MESSAGE, null, 
                  new String[]{"Warum habe ich Angenommen?"}, "Warum hab ich Angenommen?");
@@ -994,6 +1067,55 @@ public class DDynamic implements Serializable {
 		JOptionPane.showMessageDialog(null, "Aufgepasst edler Burger.\nAuf eurer Reise werdet ihr viele Gefahren entdecken"
 				+"\n Deshalb Ruestet euch gut aus und vergesst nicht Coins aufzusammeln"+"\n Sie koennen das Spiel nur beenden,wenn sie den Endboss besiegt haben!"
 				+"\n Viel Glueck!");
+	}
+	/**
+	 * Belohnung 1
+	 * @param p
+	 * @param y
+	 */
+	public void Belohnung1(int p,int y){//Belohnung
+			JOptionPane.showOptionDialog(null, "Belohnung:" +
+		 		"\n Coins: " +p+
+		 		"\n Kaese: "+y,
+                 "SCHATZ GEFUNDEN", JOptionPane.OK_OPTION,
+                 JOptionPane.INFORMATION_MESSAGE, null, 
+                 new String[]{"GENAU WAS ICH BRAUCHE!"}, "GENAU WAS ICH BRAUCHE!");
+		
+	}
+	/**
+	 * Belohnung 2
+	 * @param int p
+	 * @param int y
+	 * @param int z
+	 */
+	public void Belohnung2(int p,int y,int z){//Belohnung
+		if(this.ok==JOptionPane.OK_OPTION){
+			JOptionPane.showOptionDialog(null, "Belohnung:" +
+		 		"\n Coins: " +p+
+		 		"\n Kaese: "+y+
+		 		"\n Messer: "+z,
+                 "SCHATZ GEFUNDEN", JOptionPane.OK_OPTION,
+                 JOptionPane.INFORMATION_MESSAGE, null, 
+                 new String[]{"GENAU WAS ICH BRAUCHE!"}, "GENAU WAS ICH BRAUCHE!");
+		}
+	}
+	
+	/**
+	 * Belohnung 3
+	 * @param int p
+	 * @param int y
+	 * @param int z
+	 */
+	public void Belohnung3(int p,int y,int z){//Belohnung
+		if(this.ok==JOptionPane.OK_OPTION){
+			JOptionPane.showOptionDialog(null, "Belohnung:" +
+		 		"\n Coins: " +p+
+		 		"\n Kaese: "+y+
+		 		"\n Messer: "+z,
+                 "SCHATZ GEFUNDEN", JOptionPane.OK_OPTION,
+                 JOptionPane.INFORMATION_MESSAGE, null, 
+                 new String[]{"NICHT SCHLECHT"}, "NICHT SCHLECHT!");
+		}
 	}
 	
 	/**
@@ -1104,7 +1226,14 @@ public class DDynamic implements Serializable {
 	public boolean QuestDenied(int p){
 		return this.qdenied[p];
 	}
-	
+	/**
+	 * bekomme Schatz Verhalten
+	 * @param p
+	 * @return boolean
+	 */
+	public boolean getTreasure(int p){
+		return this.treasure[p];
+	}
 	/**
 	 * Schatz wird auf true oder false gesetzt.
 	 * @param boolean , int
@@ -1113,5 +1242,78 @@ public class DDynamic implements Serializable {
 		return this.treasure[p]=m;
 	}
 	
+	/**
+	 * Bekomme die Informatinsvariable( Am Anfang des Spiels =false gesetzt)
+	 * @return boolean
+	 */
+	public boolean getInfo(){
+		return this.info;
+	}
+	/**
+	 * Bekomme Schlüssel Wert
+	 * @return
+	 */
+	public boolean getKey(){
+		return this.key;
+	}
+	
+	/**
+	 * Schüssel setzen
+	 * @param p
+	 * @return boolean
+	 */
+	public boolean setKey(boolean p){
+		return this.key=p;
+	}
+	/**
+	 * Setze Hidden Variable fuer versteckte Gegenstände
+	 * @return int
+	 */
+	public int getHidden(){
+		return this.hidden;
+	}
+	/**
+	 * Setze Hidden Variable siehe get
+	 * @param int p
+	 * @return int
+	 */
+	public int setHidden(int p){
+		return this.hidden+=p;
+	}
+	
+	/**
+	 * Spezielle Position des Schlüssels X
+	 * @return
+	 */
+	public int getPosX(){
+		return this.posX;
+	}
+	
+	/**
+	 * Spezielle Position des Schlüssels Y
+	 * @return
+	 */
+	public int getPosY(){
+		return this.posY;
+	}
+	
+	/**
+	 *  Speichert key Position Y
+	 * @param int p
+	 * @return int
+	 */
+	public int setPosY(int p){
+		return this.posY+=p;
+	}
+	
+	
+	/**
+	 *  Speichert key Position X
+	 * @param int p
+	 * @return int
+	 */
+	public int setPosX(int p){
+		return this.posX+=p;
+	}
 }
 	

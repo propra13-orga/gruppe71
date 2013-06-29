@@ -89,6 +89,7 @@ public class DPanel extends JPanel implements Serializable {
 
 		super.paintComponent(pGraphics);
 		
+		int counter=0;
 		// Variablen um zu Speichern, wo der Eingang ist
 		int TmpXStart = -1;
 		int TmpYStart = -1;
@@ -100,7 +101,14 @@ public class DPanel extends JPanel implements Serializable {
 		int openY=-1;
 		int questX=-1;
 		int questY=-1;
-		
+		int infoX=-1;
+		int infoY=-1;
+		int belohnungX=-1;
+		int belohnungY=-1;
+		int npc2X=-1;
+		int npc2Y=-1;
+		int keyX=-1;
+		int keyY=-1;
 		
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
@@ -130,9 +138,30 @@ public class DPanel extends JPanel implements Serializable {
 						geheimY=y; //in 2 Variablen
 					
 					}
-					if(this.StaticObjects[y][x].getType() == 40){ //Truhe
+					if(this.StaticObjects[y][x].getType() == 40){ //Truhe Eingang
 						questX = x; //Speichert Truhe
 						questY= y; //in 2 Variablen
+						
+					}
+					
+					if(this.StaticObjects[y][x].getType() == 41){ //Truhe ,Belohnung
+						belohnungX = x; //Speichert Truhe
+						belohnungY= y; //in 2 Variablen
+						
+					}
+					if(this.StaticObjects[y][x].getType() == 46){ //Information
+						infoX = x; //Speichert Truhe
+						infoY= y; //in 2 Variablen
+						
+					}
+					if(this.StaticObjects[y][x].getType() == 47){ //Schluessel
+						keyX = x;
+						keyY= y; 
+						
+					}
+					if(this.StaticObjects[y][x].getType() == 25){ //NPC
+						npc2X = x; 
+						npc2Y= y; 
 						
 					}
 					
@@ -253,13 +282,62 @@ public class DPanel extends JPanel implements Serializable {
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein StÃ¼ckchen
 						}
 						
-						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5 && geheimY > 0 && geheimX > 0){//Quest 1
+						//Quest 1
+						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5 && geheimY > 0 && geheimX > 0){
 							
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);
 							
 						}
-					
+						
+						//Quest 3
+						else if(this.DynamicObjects[i].getQuestLaufend(2)==true && this.DynamicObjects[i].getMarke()>=12 && geheimY > 0 && geheimX > 0){
+							
+							this.StaticObjects[geheimY][geheimX].setCollision(false);
+							this.StaticObjects[geheimY][geheimX].setType(0);
+							
+						}
+						
+						//Schluessel nicht sichtbar
+						else if(this.DynamicObjects[i].getKey()==false && keyX>0 && keyY>0 && this.DynamicObjects[i].getHidden()==0){
+							this.StaticObjects[keyY][keyX].setCollision(false);
+							this.StaticObjects[keyY][keyX].setType(0);
+							this.DynamicObjects[i].setHidden(1);
+							this.DynamicObjects[i].setPosX(keyX);
+							this.DynamicObjects[i].setPosY(keyY);
+						}
+						
+						//Schluessel sichtbar
+						else if(this.DynamicObjects[i].getKey()==true){
+							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
+							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(0);
+							
+						}
+						//Quest 2
+						else if(this.DynamicObjects[i].getQuestLaufend(1)==true && this.DynamicObjects[i].getMarke()>=5 ){
+							
+							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
+							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(47);
+							
+							
+						}
+						
+						else if(this.DynamicObjects[i].getInfo()==true && infoY > 0 && infoX > 0){//Information
+							this.StaticObjects[infoY][infoX].setType(0);
+							
+						}
+						else if(this.DynamicObjects[i].getTreasure(0)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 1
+							
+							this.StaticObjects[belohnungY][belohnungX].setType(0);
+							
+							
+						}
+						else if(this.DynamicObjects[i].getTreasure(2)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 3
+							
+							this.StaticObjects[belohnungY][belohnungX].setType(0);
+							
+							
+						}
 							
 							
 						
@@ -514,7 +592,10 @@ public class DPanel extends JPanel implements Serializable {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//42  Quest Vervollstaendigung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor02.png"), //43 Ruestung02
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"),//44 1.Spieler Ruestung
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png") //45 2.Spieler Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"), //45 2.Spieler Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"),//46 Information
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Key.png")//47 Schlüssel
+				
 				};
 	
 		//Zeichne das Bild
@@ -646,6 +727,13 @@ public class DPanel extends JPanel implements Serializable {
 								break;
 	            			case 'Z': //Zaubertrank
 								TmpLevelObjects[z][y][x] = 28;
+								break;
+	            			case '*': //Schluessel
+								TmpLevelObjects[z][y][x] = 47;
+								break;
+								
+	            			case 'I': //Zaubertrank
+								TmpLevelObjects[z][y][x] = 46;
 								break;
 							default:
 								TmpLevelObjects[z][y][x] = 24;

@@ -101,7 +101,7 @@ public class DItems  {
 	}
 	
 	/**
-	 * Alles wird nun dem Panel zugefuegt , Dimension etc.
+	 * Alles wird nun dem Panel zugefuegt , Dimension etc.(Shop)
 	 *
 	 */
 	public void AddToPan(){

@@ -121,6 +121,11 @@ public class DSteuerung implements Serializable{
     	    		// Wenn man U drueckt wird was hier steht ausgefuehrt
         			SpielPanel.LoadGame();
 	    		}
+    			else if(e.getKeyCode()==KeyEvent.VK_P) //Spiel laden
+    	    	{
+    	    		// Wenn man U drueckt wird was hier steht ausgefuehrt
+        			SpielPanel.loadLevel(2);
+	    		}
 	    			else 
 	    			{	
 	    				System.out.println("Keine Lauftaste 1"); // tue nichts	
