@@ -247,13 +247,13 @@ public class DPanel extends JPanel implements Serializable {
 					
 					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
 						
-						// if (this.DynamicObjects[i].getHealth() < 5) {this.DynamicObjects[i].setRType(0);} //Setzt RŸstung auf Null 
+						// if (this.DynamicObjects[i].getHealth() < 5) {this.DynamicObjects[i].setRType(0);} //Setzt Rï¿½stung auf Null 
 						
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein StÃ¼ckchen
 						}
 						
-						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5){//Quest 1
+						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5 && geheimY > 0 && geheimX > 0){//Quest 1
 							
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);
@@ -264,20 +264,20 @@ public class DPanel extends JPanel implements Serializable {
 							
 						
 						
-						else if(this.DynamicObjects[i].getSecret()==true){
+						else if(this.DynamicObjects[i].getSecret()==true && landungX > 0 && landungY > 0){
 							this.DynamicObjects[i].setCurrentPosition((landungX*30),(landungY*30));
 							this.DynamicObjects[i].SetSecret(false);
 						}
 						
 				
-						else if(this.DynamicObjects[i].getSecret2()==true ){
+						else if(this.DynamicObjects[i].getSecret2()==true && openY > 0 && openX > 0){
 										this.StaticObjects[openY][openX].setType(0);
 										this.StaticObjects[openY][openX].setCollision(false);
 										this.DynamicObjects[i].SetSecret2(false);
 										
 								}
 						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
-							if(this.DynamicObjects[i].getQuest(z)==true){
+							if(this.DynamicObjects[i].getQuest(z)==true && questY > 0 && questX > 0){
 								sound=new DSound("src/com/github/propa13_orga/gruppe71/GoodBye.wav");// Good Bye !
 								sound.SetVolume(-10);
 								sound.Abspielen();

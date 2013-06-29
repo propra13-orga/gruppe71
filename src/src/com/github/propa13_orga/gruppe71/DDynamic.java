@@ -33,7 +33,7 @@ public class DDynamic implements Serializable {
 	protected int Type; // Typ des Bots(normal, Boss etc.)
 	protected boolean isBot; // Ist ein Bot oder Spieler?
 	protected int Points; //Punkte
-	protected int RType; // RŸstungstyp
+	protected int RType; // Rï¿½stungstyp
 	
 	protected int[] quest; // Quest fuer JOPTIONPANE
 	protected int[] qenabled;//fuer SpielPanel Environment aendern
@@ -253,13 +253,13 @@ public class DDynamic implements Serializable {
 					 sound.SetVolume(-10);//
 					 sound.Abspielen();
 					 //Ende
-					 if(this.isBot == false && ((this.getRType() > this.DynamicObjects[i].getType() && this.DynamicObjects[i].getType() < 3) || (this.getRType() > this.DynamicObjects[i].getType() && 2 < this.DynamicObjects[i].getType())) ){ // †berprŸft auf Ruestung 
+					 if(this.isBot == false && ((this.getRType() > this.DynamicObjects[i].getType() && this.DynamicObjects[i].getType() < 3) || (this.getRType() > this.DynamicObjects[i].getType() && 2 < this.DynamicObjects[i].getType())) ){ // ï¿½berprï¿½ft auf Ruestung 
 						 this.setHealth(-1);
-						 if (this.getHealth() <5 ){this.setRType(0);} //WENN Health <5 Setzte RŸstung auf Null
+						 if (this.getHealth() <5 ){this.setRType(0);} //WENN Health <5 Setzte Rï¿½stung auf Null
 					 }
-					 else if((this.isBot == true &&(this.DynamicObjects[i].getRType() > this.getType() && this.getType() < 3) || (this.DynamicObjects[i].getRType() > this.getType() && 2 > this.getType()) )){ // †berprŸft auf Ruestung 
+					 else if((this.isBot == true &&(this.DynamicObjects[i].getRType() > this.getType() && this.getType() < 3) || (this.DynamicObjects[i].getRType() > this.getType() && 2 > this.getType()) )){ // ï¿½berprï¿½ft auf Ruestung 
 						 this.DynamicObjects[i].setHealth(-1);
-						 if (this.DynamicObjects[i].getHealth() <5 ){this.DynamicObjects[i].setRType(0);//WENN Health <5 Setzte RŸstung auf Null
+						 if (this.DynamicObjects[i].getHealth() <5 ){this.DynamicObjects[i].setRType(0);//WENN Health <5 Setzte Rï¿½stung auf Null
 						 } 
 					 }
 					
@@ -385,7 +385,7 @@ public class DDynamic implements Serializable {
 				   this.quest[0]=JOptionPane.showOptionDialog(null, "Hoert mich an EDLER BURGER!",
 			                  "Quest 1", JOptionPane.YES_NO_CANCEL_OPTION,
 			                  JOptionPane.WARNING_MESSAGE, null, 
-			                  new String[]{"Schießt los heißer Hund!", "ICH AUF EINE NIEDERE SPEISE HOEREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HOEREN?????!");
+			                  new String[]{"Schieï¿½t los heiï¿½er Hund!", "ICH AUF EINE NIEDERE SPEISE HOEREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HOEREN?????!");
 				   this.Quest1(quest[0]);
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[1]==false ){
@@ -903,7 +903,7 @@ public class DDynamic implements Serializable {
 	
 	}
 	/**
-	 * ein counter für DSound Magie etc.
+	 * ein counter fï¿½r DSound Magie etc.
 	 * @param int p
 	 * @return
 	 */
@@ -918,9 +918,9 @@ public class DDynamic implements Serializable {
 	 */
 	public void Quest1(int p){
 		if(p==JOptionPane.YES_OPTION){
-		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOßEN SOLLEN DIR IMMER HOLD SEIN..." +
+		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOï¿½EN SOLLEN DIR IMMER HOLD SEIN..." +
 		 		"\nDIE KAEFER SIND WIEDER IM ANMARSCH! WENN IHR --5-- von IHNEN TOETEN KOENNTET, WUERDET IHR \nDEN HEISSEN HUNDEN CLAN FUER IMMER IN ERRINNERUNG BLEIBEN\n" +
-		 		"BITTE BEEILT EUCH!\n(fluestern: Natuerlich gibt es auch eine große Belohnung...)",
+		 		"BITTE BEEILT EUCH!\n(fluestern: Natuerlich gibt es auch eine groï¿½e Belohnung...)",
                  "Quest 1 ANGENOMMEN", JOptionPane.OK_OPTION,
                  JOptionPane.INFORMATION_MESSAGE, null, 
                  new String[]{"Ich tue was ich kann!"}, "Ich tue was ich kann!");
@@ -1051,7 +1051,7 @@ public class DDynamic implements Serializable {
 		}
 		
 	/**
-	 * Bekomme Quest Länge
+	 * Bekomme Quest Lï¿½nge
 	 * @return int
 	 */
 	public int QuestLength(){

@@ -26,10 +26,12 @@ public class DSound {
 	}
 	
 	public void Abspielen(){
+		clip.stop();
 		clip.setMicrosecondPosition(0);
 		clip.start();
 	}
 	public void Title(){
+		clip.stop();
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
 		clip.start();
 	}
