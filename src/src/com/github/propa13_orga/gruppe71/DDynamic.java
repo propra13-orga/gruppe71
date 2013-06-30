@@ -58,8 +58,13 @@ public class DDynamic implements Serializable {
 	protected int exp;//Erfahrungspunkte
 	protected int level; //Level des Spielers
 	protected int[] grenze;// für verschiedene Level Grenzen
+	protected int skills;
+	protected int[] rank;
+	protected int[] wisdom,greed,magie,kaese,knife;
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot, int itemnumber){
+	
+	
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot, int itemnumber,int e, int l,int sk){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
@@ -104,12 +109,18 @@ public class DDynamic implements Serializable {
 		this.info=false;
 		this.key=false;
 		this.hidden=0;
-		this.posX=0;
 		
+		this.posX=0;
 		this.posY=0;
-		this.exp=0;
-		this.level=1;
+		
+		this.exp=e;
+		this.level=l;
 		this.InitLevelGrenze();
+		this.skills=sk;
+		
+		this.InitRank();
+		this.InitWisdom();
+		this.InitGreed();
 	}
     
 	/**
@@ -439,6 +450,8 @@ public class DDynamic implements Serializable {
 					this.Belohnung2(maeuse, kaese, messer);
 					this.marke=0;
 					this.hidden+=1;
+					this.setExp(100);
+					this.LevelUp();
 				   
 				}
 				//NPC 3
@@ -1383,19 +1396,157 @@ public class DDynamic implements Serializable {
 	}
 	
 	/**
+	 * LevelUp Algorithmus
 	 * 
 	 */
 	public void LevelUp(){
 		for(int i=0;i<this.grenze.length;i++){
-		if(this.exp>=this.grenze[i] && this.level==i+1 && this.level<10){
+		if(this.exp>=this.grenze[i] && this.level==i+1 && this.level<this.grenze.length){
 			sound=new DSound(datei[11]); //Item aufsammeln
 			 sound.SetVolume(0);//
 			 sound.Abspielen();
 			this.setLevel(1);
+			this.setSkills(2);
 			this.exp-=this.grenze[i];
 			
 		}
 	}
 	}
+	/**
+	 * Bekomme Skillpunkte
+	 * @return int
+	 */
+	public int getSkills(){
+		return this.skills;
+	}
+	
+	/**
+	 * Setze Skillpunkte
+	 * @return int
+	 */
+	public int setSkills(int p){
+		return this.skills+=p;
+	}
+	
+	/**
+	 * Skill Baum per F Taste aufrufbar
+	 */
+	public void SkillBaum(){
+		DSkill skill=new DSkill(SpielPanel);
+	}
+	
+
+	
+	/**
+	 * Initialisiert EXP Zunahme
+	 * @return int[]
+	 */
+	public int[] InitWisdom(){
+		this.wisdom=new int[6];
+		
+		this.wisdom[0]=0; //EXP 3 etc.
+		this.wisdom[1]=6;
+		this.wisdom[2]=9;
+		this.wisdom[3]=12;
+		this.wisdom[4]=18;
+		this.wisdom[5]=30;
+		
+		return this.wisdom;
+	}
+	
+	
+	/**
+	 * Bekomme Wisdom
+	 * @param int p
+	 * @return int
+	 */
+	public int getCurrentWisdom(int p){
+		return this.wisdom[p];
+	}
+	
+	/**
+	 * Setze Wisdom hoch
+	 * @param int p
+	 * @param int a
+	 * @return int
+	 */
+	public int setCurrentWisdom(int p,int a){
+		return this.wisdom[p+a];
+		
+	}
+	/**
+	 * Laenge des Arrays Passive sowie Aktive Fähigkeiten
+	 * @return int
+	 */
+	public int getLengthPA(){
+		return this.wisdom.length;
+		
+	}
+	
+	/**
+	 * Bekomme Greed
+	 * @param int p
+	 * @return int
+	 */
+	public int getCurrentGreed(int p){
+		return this.greed[p];
+	}
+	
+	/**
+	 * Setze Greed hoch
+	 * @param int p
+	 * @param int a
+	 * @return int
+	 */
+	public int setCurrentGreed(int p,int a){
+		return this.greed[p+a];
+		
+	}
+	
+	/**
+	 * Initialisiert Coins Zunahme
+	 * @return int[]
+	 */
+	public int[] InitGreed(){
+		this.greed=new int[6];
+		
+		this.greed[0]=0;
+		this.greed[1]=8;
+		this.greed[2]=12;
+		this.greed[3]=16;
+		this.greed[4]=20;
+		this.greed[5]=30;
+		
+		return this.wisdom;
+	}
+	
+	/**
+	 * Ranks der einzelnen Fähigkeiten
+	 * @return int[]
+	 */
+	public int[] InitRank(){
+		this.rank=new int[this.wisdom.length];
+		for(int i=0;i<this.wisdom.length;i++){
+			this.rank[i]=0;
+		}
+		return this.rank;
+	}
+	/**
+	 * Bekomme Rank
+	 * @return int
+	 */
+	public int getCurrentRank(int p){
+		return this.rank[p];
+	}
+	
+	/**
+	 * Setze Rank
+	 * @return int
+	 */
+	public int setCurrentRank(int p,int a){
+		return this.rank[p]+=a;
+	}
+	
+	
 }
 	
