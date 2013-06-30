@@ -145,7 +145,7 @@ public class DItems  {
 	public String[] Bild(){
 		this.bild=new String[SpielPanel.getDynamicObject(0).NumberItems()];
 		
-		bild[0]="src/src/com/github/propa13_orga/gruppe71/bb_pMesser.png";
+		bild[0]="src/src/com/github/propa13_orga/gruppe71/bb_messer.png";
 		bild[1]="src/src/com/github/propa13_orga/gruppe71/bb_pKaese.png";
 		bild[2]="src/src/com/github/propa13_orga/gruppe71/messer.png";
 		bild[3]="src/src/com/github/propa13_orga/gruppe71/bb_ketchup01.png";

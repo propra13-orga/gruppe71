@@ -313,8 +313,29 @@ public class DProjectile implements Serializable{
 							 
 							
 						 }
-						 if(this.DynamicObjects[i].getHealth()==0)
-						 this.DynamicObjects[0].setMarke(1); 
+						 
+						 if(this.DynamicObjects[i].getHealth()==0){ // Marken setzen und EXP kriegen
+						 this.DynamicObjects[0].setMarke(1);
+						 if(DynamicObjects[i].getType()==1){
+						 this.DynamicObjects[0].setExp(10);
+						 this.DynamicObjects[0].LevelUp();
+						 }
+						 else if(DynamicObjects[i].getType()==2){
+							this.DynamicObjects[0].setExp(18);
+							this.DynamicObjects[0].LevelUp();
+						 }
+						 else if(DynamicObjects[i].getType()==3){
+								this.DynamicObjects[0].setExp(24);
+								this.DynamicObjects[0].LevelUp();
+							 }
+						 else if(DynamicObjects[i].getType()==4){
+								this.DynamicObjects[0].setExp(33);
+								this.DynamicObjects[0].LevelUp();
+							 }
+						 System.out.println(DynamicObjects[0].getExp());
+						 System.out.println(DynamicObjects[0].SpielerLevel());
+						 System.out.println("UND?");
+						 } 
 						if(this.SpielPanel.getDebugMode() == true)
 							System.out.println("DO "+i+" getroffen! von "+this.Shooter.getType());
 						

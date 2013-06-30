@@ -55,6 +55,10 @@ public class DDynamic implements Serializable {
 	protected boolean secret;
 	protected boolean secret2;
 	
+	protected int exp;//Erfahrungspunkte
+	protected int level; //Level des Spielers
+	protected int[] grenze;// für verschiedene Level Grenzen
+	
 	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot, int itemnumber){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
@@ -100,8 +104,12 @@ public class DDynamic implements Serializable {
 		this.info=false;
 		this.key=false;
 		this.hidden=0;
-		int posX=0;
-		int posY=0;
+		this.posX=0;
+		
+		this.posY=0;
+		this.exp=0;
+		this.level=1;
+		this.InitLevelGrenze();
 	}
     
 	/**
@@ -936,6 +944,7 @@ public class DDynamic implements Serializable {
 		datei[8]="src/com/github/propa13_orga/gruppe71/KaeseBazooka.wav";//Kaese
 		datei[9]="src/com/github/propa13_orga/gruppe71/GoodBye.wav";//Bye
 		datei[10]="src/com/github/propa13_orga/gruppe71/NextLevel.wav";//Naechster Level
+		datei[11]="src/com/github/propa13_orga/gruppe71/LevelUp.wav";//Naechster Level
 		return this.datei;
 		
 	}
@@ -1314,6 +1323,79 @@ public class DDynamic implements Serializable {
 	 */
 	public int setPosX(int p){
 		return this.posX+=p;
+	}
+	
+	/**
+	 * Ab hier LEVEL , EXP ETC.
+	 */
+	
+	/**
+	 * Bekomme Erfahrungspunkte
+	 * @return int
+	 */
+	public int getExp(){
+		return this.exp;
+	}
+	/**
+	 * Setze Erfahrungspunkte
+	 * @param int p
+	 * @return int
+	 */
+	public int setExp(int p){
+		return this.exp+=p;
+	}
+	
+	/**
+	 * Spieler Level
+	 * @return int
+	 */
+	public int SpielerLevel(){
+		return this.level;
+	}
+	
+	/**
+	 * Setze Level
+	 * @param int p
+	 * @return
+	 */
+	public int setLevel(int p){
+		return this.level+=p;
+	}
+	/**
+	 * Die Level Grenzen
+	 * @return int[]
+	 */
+	public int[] InitLevelGrenze(){
+		this.grenze=new int[10];
+		//Benötigte EXP
+		this.grenze[0]=100; //Grenze zu Level 2
+		this.grenze[1]=150; //Grenze zu Level 3
+		this.grenze[2]=200; //Grenze zu Level 4
+		this.grenze[4]=250; //Grenze zu Level 5
+		this.grenze[5]=300; //Grenze zu Level 6
+		this.grenze[6]=350; //Grenze zu Level 7
+		this.grenze[7]=400; //Grenze zu Level 8
+		this.grenze[8]=450; //Grenze zu Level 9
+		this.grenze[9]=500; //Grenze zu Level 10
+		
+		
+		return this.grenze;
+	}
+	
+	/**
+	 * 
+	 */
+	public void LevelUp(){
+		for(int i=0;i<this.grenze.length;i++){
+		if(this.exp>=this.grenze[i] && this.level==i+1 && this.level<10){
+			sound=new DSound(datei[11]); //Item aufsammeln
+			 sound.SetVolume(0);//
+			 sound.Abspielen();
+			this.setLevel(1);
+			this.exp-=this.grenze[i];
+			
+		}
+	}
 	}
 }
 	
