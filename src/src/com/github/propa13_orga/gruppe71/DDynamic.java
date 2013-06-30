@@ -60,11 +60,12 @@ public class DDynamic implements Serializable {
 	protected int[] grenze;// für verschiedene Level Grenzen
 	protected int skills;
 	protected int[] rank;
-	protected int[] wisdom,greed,magie,kaese,knife;
+	protected int[] wisdom,greed;
+	protected double[] crit;
 	
 	
 	
-	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot, int itemnumber,int e, int l,int sk){
+	public DDynamic(DPanel pPanel, StaticObject[][] pStaticObjects, DDynamic[] pDynamicObjects, DProjectile[] pProjectiles, int pCurrentXPos, int pCurrentYPos, int pHealth, int pPunkte, boolean pisBot, int itemnumber,int e, int l,int sk,int money){
 		this.SpielPanel = pPanel;
 		this.StaticObjects = pStaticObjects;
 		this.DynamicObjects = pDynamicObjects;
@@ -78,7 +79,7 @@ public class DDynamic implements Serializable {
 		
 		this.Health = pHealth;
 		this.Points = pPunkte;
-		this.Money = 100;
+		this.Money = money;
 		this.Mana = 50;
 		this.isBot = pisBot;
 		if(pisBot == true){
@@ -121,6 +122,7 @@ public class DDynamic implements Serializable {
 		this.InitRank();
 		this.InitWisdom();
 		this.InitGreed();
+		this.InitCrit();
 	}
     
 	/**
@@ -405,7 +407,7 @@ public class DDynamic implements Serializable {
 				 sound.SetVolume(0);//
 				 sound.Abspielen();
 				Random zufallsZahl = new Random();				
-				this.Money += (zufallsZahl.nextInt(4)+1); //Zahl zwischen 1 und 5
+				this.Money += (zufallsZahl.nextInt(4)+1)+this.getCurrentGreed(this.DynamicObjects[0].getCurrentRank(1)); //Zahl zwischen 1 und 5
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
@@ -450,7 +452,7 @@ public class DDynamic implements Serializable {
 					this.Belohnung2(maeuse, kaese, messer);
 					this.marke=0;
 					this.hidden+=1;
-					this.setExp(100);
+					this.setExp(100+this.DynamicObjects[0].getCurrentGreed(this.DynamicObjects[0].getCurrentRank(0)));
 					this.LevelUp();
 				   
 				}
@@ -485,17 +487,18 @@ public class DDynamic implements Serializable {
 				
 			case 41: // Ruestung02
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0){
-					maeuse+=150;
+					maeuse+=150+this.DynamicObjects[0].getCurrentGreed(this.DynamicObjects[0].getCurrentRank(1));
 					kaese+=10;
 					this.setMoney(maeuse);
 					this.items[1]+=kaese;
 					this.Belohnung1(maeuse, kaese);
 					this.setTreasure(true,0);
 					this.marke=0;
+					this.setExp(120+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
 					
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0){
-					maeuse+=3000;
+					maeuse+=3000+this.DynamicObjects[0].getCurrentGreed(this.DynamicObjects[0].getCurrentRank(1));
 					kaese+=30;
 					messer+=5;
 					this.setMoney(maeuse);
@@ -504,6 +507,7 @@ public class DDynamic implements Serializable {
 					this.Belohnung3(maeuse, kaese,messer);
 					this.setTreasure(true,2);
 					this.marke=0;
+					this.setExp(140+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
 				}
 				break;
 
@@ -1388,8 +1392,8 @@ public class DDynamic implements Serializable {
 		this.grenze[5]=300; //Grenze zu Level 6
 		this.grenze[6]=350; //Grenze zu Level 7
 		this.grenze[7]=400; //Grenze zu Level 8
-		this.grenze[8]=450; //Grenze zu Level 9
-		this.grenze[9]=500; //Grenze zu Level 10
+		this.grenze[8]=750; //Grenze zu Level 9
+		this.grenze[9]=1000; //Grenze zu Level 10
 		
 		
 		return this.grenze;
@@ -1471,17 +1475,15 @@ public class DDynamic implements Serializable {
 	 * @return int
 	 */
 	public int setCurrentWisdom(int p,int a){
-		return this.wisdom[p+a];
-		
+		if(this.wisdom[p+a]<this.wisdom.length-1){
+			
+			return this.wisdom[p+a];
+			}
+			return this.wisdom[p+a];
 	}
-	/**
-	 * Laenge des Arrays Passive sowie Aktive Fähigkeiten
-	 * @return int
-	 */
-	public int getLengthPA(){
-		return this.wisdom.length;
-		
-	}
+	
+	
+	
 	
 	/**
 	 * Bekomme Greed
@@ -1499,8 +1501,12 @@ public class DDynamic implements Serializable {
 	 * @return int
 	 */
 	public int setCurrentGreed(int p,int a){
-		return this.greed[p+a];
 		
+		if(this.greed[p+a]<this.greed.length-1){
+			
+		return this.greed[p+a];
+		}
+		return this.greed[p+a];
 	}
 	
 	/**
@@ -1525,8 +1531,8 @@ public class DDynamic implements Serializable {
 	 * @return int[]
 	 */
 	public int[] InitRank(){
-		this.rank=new int[this.wisdom.length];
-		for(int i=0;i<this.wisdom.length;i++){
+		this.rank=new int[6];
+		for(int i=0;i<this.rank.length;i++){
 			this.rank[i]=0;
 		}
 		return this.rank;
@@ -1545,6 +1551,49 @@ public class DDynamic implements Serializable {
 	 */
 	public int setCurrentRank(int p,int a){
 		return this.rank[p]+=a;
+	}
+	
+	
+	
+	/**
+	 * Initialisiert Crit 
+	 * @return double[]
+	 */
+	public double[] InitCrit(){
+		this.crit=new double[6];
+		
+		this.crit[0]=0.00; //Crit Raten
+		this.crit[1]=0.05;
+		this.crit[2]=0.10;
+		this.crit[3]=0.15;
+		this.crit[4]=0.20;
+		this.crit[5]=0.25;
+		
+		return this.crit;
+	}
+	
+	
+	/**
+	 * Bekomme Crit Rate
+	 * @param int p
+	 * @return double
+	 */
+	public double getCurrentCrit(int p){
+		return this.crit[p];
+	}
+	
+	/**
+	 * Setze Crit hoch
+	 * @param int p
+	 * @param int a
+	 * @return double
+	 */
+	public double setCurrentCrit(int p,int a){
+		if(this.crit[p+a]<this.crit.length-1){
+			
+			return this.crit[p+a];
+			}
+			return this.crit[p+a];
 	}
 	
 	

@@ -193,8 +193,8 @@ public class DPanel extends JPanel implements Serializable {
 					int Points = 0; //Punkte Marke
 					
 					//Spieler initialisieren
-					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6,0,1,0); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6,0,1,0); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6,0,1,0,100); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6,0,1,0,100); //initialisiere, damit Objekt neben Eingang
 				}	
 				else
 				{
@@ -210,7 +210,7 @@ public class DPanel extends JPanel implements Serializable {
 					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
 					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
 					
-					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3,0,DynamicObjects[0].SpielerLevel(),DynamicObjects[0].getSkills());
+					this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3,0,DynamicObjects[0].SpielerLevel(),DynamicObjects[0].getSkills(),DynamicObjects[0].getMoney());
 				} 
 				
 
@@ -227,7 +227,7 @@ public class DPanel extends JPanel implements Serializable {
 						switch(tmpGegnerType){
 						case 5: //Standard Gegner
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
 							}
@@ -236,7 +236,7 @@ public class DPanel extends JPanel implements Serializable {
 							break;
 						case 7: //Starker Gegner (1. Boss)
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 2000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));	
 							}
@@ -245,7 +245,7 @@ public class DPanel extends JPanel implements Serializable {
 							break;
 						case 8: //Starker Boss Spinne (2.Boss)
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 25000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
 							}
@@ -254,7 +254,7 @@ public class DPanel extends JPanel implements Serializable {
 							break;
 						case 9: //End Boss Spinne2? (3.Boss)
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new DDynamic(this, this.StaticObjects, this.DynamicObjects, this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 50000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
 							}

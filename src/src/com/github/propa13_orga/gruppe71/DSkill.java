@@ -22,9 +22,10 @@ public class DSkill implements ActionListener {
 	public JLabel[] rank;
 	public JTextField passive;
 	public JLabel hast,hast2,hast3;//bewirkt mehr Exp bei Mobs töten
-	public JLabel greed,greed2;//mehr coins
-	public JButton wisdom;//wisdom gehört zu hast...
-	public JButton greed3;
+	public JLabel greed,greed2,greed3;//mehr coins
+	public JLabel crit,crit2,crit3;
+	public JButton wisdom,greed4,crit4;//wisdom gehört zu hast...
+	
 	
 	public String[] rank2;
 	
@@ -38,7 +39,7 @@ public class DSkill implements ActionListener {
 		pan.setLayout(null);
 		//Init Objekte
 		
-		this.Rank();
+		
 		//Titel JTextField
 		JTextField info= new JTextField("Fähigkeiten Upgrade!");
 		Dimension size1=info.getPreferredSize();
@@ -73,12 +74,12 @@ public class DSkill implements ActionListener {
 		pan.add(hast);
 		
 		
-		this.hast2= new JLabel("Current Rank:  ");
+		this.hast2= new JLabel("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(0));
 		Dimension size7=hast.getPreferredSize();
 		hast2.setBounds(20,160,size7.width, size7.height);
 		pan.add(hast2);
 		
-		this.hast3= new JLabel("Bonus:  ");
+		this.hast3= new JLabel("Bonus:+  "+SpielPanel.getDynamicObject(0).getCurrentWisdom(SpielPanel.getDynamicObject(0).getCurrentRank(0))+"  EXP");
 		Dimension size8=hast.getPreferredSize();
 		hast3.setBounds(20,180,size8.width, size8.height);
 		pan.add(hast3);
@@ -91,27 +92,63 @@ public class DSkill implements ActionListener {
 		pan.add(wisdom);
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//Greed
+		//Greed; Coins Rank 1
 		this.greed= new JLabel("2.Greed-> MEHR COINS");
 		Dimension size6=greed.getPreferredSize();
 		greed.setBounds(20,240,size6.width, size6.height);
 		pan.add(greed);
 		
+		this.greed2= new JLabel("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(1));
+		Dimension size10=greed2.getPreferredSize();
+		greed2.setBounds(20,260,size10.width, size10.height);
+		pan.add(greed2);
+		
+		this.greed3= new JLabel("Bonus:+ "+SpielPanel.getDynamicObject(0).getCurrentWisdom(SpielPanel.getDynamicObject(0).getCurrentRank(1))+" Coins");
+		Dimension size11=greed3.getPreferredSize();
+		greed3.setBounds(20,280,size11.width+20, size11.height);
+		pan.add(greed3);
+		
+		//Button Wisdom
+		this.greed4= new JButton("UPGRADE");
+		Dimension size12=greed4.getPreferredSize();
+		greed4.setBounds(20,300,size12.width, size12.height);
+		this.greed4.addActionListener(this);
+		pan.add(greed4);
+		
+	   // Crit Rank 2
+		
+		this.crit= new JLabel("3.HAWK EYE-> CRIT");
+		Dimension size13=crit.getPreferredSize();
+		crit.setBounds(360,140,size13.width, size13.height);
+		pan.add(crit);
+				
+		this.crit2= new JLabel("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(2));
+		Dimension size14=crit2.getPreferredSize();
+		crit2.setBounds(360,160,size14.width, size14.height);
+		pan.add(crit2);
+				
+		this.crit3= new JLabel("Bonus:+ "+SpielPanel.getDynamicObject(0).getCurrentCrit(SpielPanel.getDynamicObject(0).getCurrentRank(2))+" Crit Multiplier");
+		Dimension size15=crit3.getPreferredSize();
+		crit3.setBounds(360,180,size15.width+20, size15.height);
+		pan.add(crit3);
+				
+		//Button Wisdom
+		this.crit4= new JButton("UPGRADE");
+		Dimension size16=crit4.getPreferredSize();
+		crit4.setBounds(360,200,size16.width, size16.height);
+		this.crit4.addActionListener(this);
+		pan.add(crit4);
 		
 		
-
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 
 		//Eigenschaften Frame
@@ -125,32 +162,68 @@ public class DSkill implements ActionListener {
 		frame.setVisible(true);
 	}
 	
-	//Hier wird alles Initialisiert
-	public String[] Rank(){
-		this.rank2=new String[6];
-		
-		this.rank2[0]="0";
-		this.rank2[1]="1";
-		this.rank2[2]="2";
-		this.rank2[3]="3";
-		this.rank2[4]="4";
-		this.rank2[5]="5";
-		
-		return this.rank2;
-		
-	}
-	
 	/**
 	 * ActionListener hoert auf Button
 	 * 
 	 */
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==this.wisdom){
-			if(SpielPanel.getDynamicObject(0).getSkills()>=2){//Hier
-				SpielPanel.getDynamicObject(0).setSkills(-2);
+		if(e.getSource()==this.wisdom){// rank 0 Array WISDOM
+			try{
+			if(SpielPanel.getDynamicObject(0).getSkills()>=1 && SpielPanel.getDynamicObject(0).getCurrentRank(0)<=5){//Hier
+				SpielPanel.getDynamicObject(0).setSkills(-1);
+				SpielPanel.getDynamicObject(0).setCurrentRank(0,1);
+				SpielPanel.getDynamicObject(0).setCurrentWisdom(0,SpielPanel.getDynamicObject(0).getCurrentRank(0));
+				//Changes
 				this.points.setText("Total Skillpoints Left: "+SpielPanel.getDynamicObject(0).getSkills());
+				this.hast2.setText("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(0));
+				this.hast3.setText("Bonus:+  "+SpielPanel.getDynamicObject(0).getCurrentWisdom(SpielPanel.getDynamicObject(0).getCurrentRank(0))+"EXP");
 			}
+			}
+			catch(ArrayIndexOutOfBoundsException ex){
+				SpielPanel.getDynamicObject(0).setCurrentRank(0,-1);
+			}
+		}
 			
+			if(e.getSource()==this.greed4){// rank 1 Array GREED
+				try{
+				if(SpielPanel.getDynamicObject(0).getSkills()>=1 && SpielPanel.getDynamicObject(0).getCurrentRank(1)<=5){//Hier
+					SpielPanel.getDynamicObject(0).setSkills(-1);
+					SpielPanel.getDynamicObject(0).setCurrentRank(1,1);
+					SpielPanel.getDynamicObject(0).setCurrentGreed(0,SpielPanel.getDynamicObject(0).getCurrentRank(1));
+					//Changes
+					this.points.setText("Total Skillpoints Left: "+SpielPanel.getDynamicObject(0).getSkills());
+					this.greed2.setText("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(1));
+					this.greed3.setText("Bonus:+  "+SpielPanel.getDynamicObject(0).getCurrentGreed(SpielPanel.getDynamicObject(0).getCurrentRank(1))+" Coins");
+					
+					
+				}
+				}
+				catch(ArrayIndexOutOfBoundsException ex){
+					SpielPanel.getDynamicObject(0).setCurrentRank(1,-1);
+					System.out.println(SpielPanel.getDynamicObject(0).getCurrentRank(1));
+				}
+			
+			
+	}
+			
+			if(e.getSource()==this.crit4){// rank 1 Array crit
+				try{
+				if(SpielPanel.getDynamicObject(0).getSkills()>=2 && SpielPanel.getDynamicObject(0).getCurrentRank(1)<=5){//Hier
+					SpielPanel.getDynamicObject(0).setSkills(-2);
+					SpielPanel.getDynamicObject(0).setCurrentRank(2,1);
+					SpielPanel.getDynamicObject(0).setCurrentCrit(0,SpielPanel.getDynamicObject(0).getCurrentRank(2));
+					//Changes
+					this.points.setText("Total Skillpoints Left: "+SpielPanel.getDynamicObject(0).getSkills());
+					this.crit2.setText("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(2));
+					this.crit3.setText("Bonus:+  "+SpielPanel.getDynamicObject(0).getCurrentCrit(SpielPanel.getDynamicObject(0).getCurrentRank(2))+" Crit Multiplier");
+					
+					
+				}
+				}
+				catch(ArrayIndexOutOfBoundsException ex){
+					SpielPanel.getDynamicObject(0).setCurrentRank(2,-1);
+					System.out.println(SpielPanel.getDynamicObject(0).getCurrentRank(2));
+				}
 			
 			
 	}
@@ -160,5 +233,6 @@ public class DSkill implements ActionListener {
 	
 	
 	
-
 }
+
+

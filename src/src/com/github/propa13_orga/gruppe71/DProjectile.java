@@ -63,21 +63,21 @@ public class DProjectile implements Serializable{
 		switch(this.Type){
 		case 0: //Zauber
 			
-			this.Damage = 1;
+			this.Damage = 334;
 			this.Speed = 2;
 			this.MaxRange = 9999;
 			this.Preferred = 3;
 			break;
 
 		case 1: //Kaese
-			this.Damage = 2;
+			this.Damage = 666;
 			this.Speed = 3;
 			this.MaxRange = 9999;
 			this.Preferred = 4;
 			break;
 
 		case 2: //Messer
-			this.Damage = 2;
+			this.Damage = 999;
 			this.Speed = 4;
 			this.MaxRange = 9;
 			this.Preferred = 1;
@@ -303,7 +303,10 @@ public class DProjectile implements Serializable{
 					 
 					 if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == cleanXPos && this.DynamicObjects[i].getCurrentYPosition() == cleanYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == cleanXPos && this.DynamicObjects[i].getMoveToYPosition() == cleanYPos) ) ) {
 						 //WENN auf Position ein DynamicObject ist
-						  if (this.Preferred == DynamicObjects[i].getType()){this.Damage = this.Damage + 2;}// Erhšht Damage bei bevorzugtem Gegner
+						  if (this.Preferred == DynamicObjects[i].getType())// Erhoeht Damage bei bevorzugtem Gegner
+						  {
+							  this.Damage = this.Damage + 150;
+						  }
 						 for(int d = 0; d < this.Damage; d++){
 							 // So oft Gesundheit abziehen, bis Schaden erreicht
 							 if(this.DynamicObjects[i].getHealth() > 0){
@@ -314,22 +317,22 @@ public class DProjectile implements Serializable{
 							
 						 }
 						 
-						 if(this.DynamicObjects[i].getHealth()==0){ // Marken setzen und EXP kriegen
+						 if(this.DynamicObjects[i].getHealth()==0){ // Marken setzen und EXP kriegen Rank 0
 						 this.DynamicObjects[0].setMarke(1);
 						 if(DynamicObjects[i].getType()==1){
-						 this.DynamicObjects[0].setExp(10);
+						 this.DynamicObjects[0].setExp(10+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
 						 this.DynamicObjects[0].LevelUp();
 						 }
 						 else if(DynamicObjects[i].getType()==2){
-							this.DynamicObjects[0].setExp(18);
+							this.DynamicObjects[0].setExp(18+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
 							this.DynamicObjects[0].LevelUp();
 						 }
 						 else if(DynamicObjects[i].getType()==3){
-								this.DynamicObjects[0].setExp(24);
+								this.DynamicObjects[0].setExp(24+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
 								this.DynamicObjects[0].LevelUp();
 							 }
 						 else if(DynamicObjects[i].getType()==4){
-								this.DynamicObjects[0].setExp(33);
+								this.DynamicObjects[0].setExp(33+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
 								this.DynamicObjects[0].LevelUp();
 							 }
 						 System.out.println(DynamicObjects[0].getExp());

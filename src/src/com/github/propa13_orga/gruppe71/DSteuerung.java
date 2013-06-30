@@ -124,7 +124,9 @@ public class DSteuerung implements Serializable{
     			else if(e.getKeyCode()==KeyEvent.VK_F) //Spiel laden
     	    	{
     	    		// Wenn man U drueckt wird was hier steht ausgefuehrt
+    				SpielPanel.getDynamicObject(0).setSkills(10);
         			SpielPanel.getDynamicObject(0).SkillBaum();
+        			
 	    		}
 	    		
     			else if(e.getKeyCode()==KeyEvent.VK_P) //Spiel laden
