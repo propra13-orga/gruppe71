@@ -61,7 +61,8 @@ public class DDynamic implements Serializable {
 	protected int skills;
 	protected int[] rank;
 	protected int[] wisdom,greed;
-	protected double[] crit;
+	protected int[] crit;//critical strike!
+	protected int critted;
 	
 	
 	
@@ -118,6 +119,7 @@ public class DDynamic implements Serializable {
 		this.level=l;
 		this.InitLevelGrenze();
 		this.skills=sk;
+		this.critted=1;
 		
 		this.InitRank();
 		this.InitWisdom();
@@ -295,8 +297,8 @@ public class DDynamic implements Serializable {
 					 }
 					
 					 else {
-					 this.LoseHealth();
-					 this.DynamicObjects[i].LoseHealth(); 
+					 this.LoseHealth(1);
+					 this.DynamicObjects[i].LoseHealth(1); 
 					 }
 					 System.out.println("SCHADEN: "+this.getType()+" -> "+this.DynamicObjects[i].getType());
 				 }else if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
@@ -337,7 +339,7 @@ public class DDynamic implements Serializable {
 				break;
 				
 			case 6: // Objekt ist eine Falle!
-				this.LoseHealth();
+				this.LoseHealth(1);
 				break;
 			
 			case 16:
@@ -531,7 +533,7 @@ public class DDynamic implements Serializable {
 		/*
 		 * switch(this.DDynamic[(pYPos/30)][(pXPos/30)].isBot()){
 		case 11: // Objekt ist ein Gegener
-			this.LoseHealth();
+			this.LoseHealth(1);
 			break;
 		default:
 			System.out.println("Fehler in Schleife zur Gegner Erkenneung");
@@ -690,6 +692,7 @@ public class DDynamic implements Serializable {
 	 */
 	public void setHealth(int pHealth){
 		this.Health += pHealth;
+		
 	}
 
 	/**
@@ -776,17 +779,24 @@ public class DDynamic implements Serializable {
 	}	
 	/** 
 	 * Methode Gesundheit verlieren kann in Verknuepfung mit Schadenssystem benutzt werden
-	 * @param Nichts
+	 * @param crit
 	 */
-	public void LoseHealth(){ 
+	public void LoseHealth(int crit){ 
 		int p;
 		
 		if(this.SpielPanel.getDebugMode() == true)
 			System.out.println("Verliere Leben Typ: "+ this.getType());
 		
 		if(this.SpielPanel.SpielerModus() == 1){ // gucke nach Modi
-			if (getHealth() > 4) { this.setHealth(-2);}// 2 Gesundheit weniger
-			else { this.setHealth(-1);// 1 Gesundheit weniger
+			
+			if (getHealth() > 4) {
+				this.setHealth(-2*crit);// 2 Gesundheit weniger
+				
+				
+				}
+			else { 
+				this.setHealth(-1);// 1 Gesundheit weniger
+				
 			
 				if(this.getHealth() == 0 && this.getLives() > 0 && this.isBot == false){ 
 					//Gesundheit des Spielers 0?
@@ -961,7 +971,8 @@ public class DDynamic implements Serializable {
 		datei[8]="src/com/github/propa13_orga/gruppe71/KaeseBazooka.wav";//Kaese
 		datei[9]="src/com/github/propa13_orga/gruppe71/GoodBye.wav";//Bye
 		datei[10]="src/com/github/propa13_orga/gruppe71/NextLevel.wav";//Naechster Level
-		datei[11]="src/com/github/propa13_orga/gruppe71/LevelUp.wav";//Naechster Level
+		datei[11]="src/com/github/propa13_orga/gruppe71/LevelUp.wav";//Level UP!
+		datei[12]="src/com/github/propa13_orga/gruppe71/Crit.wav";//Critical Strike
 		return this.datei;
 		
 	}
@@ -1406,7 +1417,7 @@ public class DDynamic implements Serializable {
 	public void LevelUp(){
 		for(int i=0;i<this.grenze.length;i++){
 		if(this.exp>=this.grenze[i] && this.level==i+1 && this.level<this.grenze.length){
-			sound=new DSound(datei[11]); //Item aufsammeln
+			sound=new DSound(datei[11]); //Level UP
 			 sound.SetVolume(0);//
 			 sound.Abspielen();
 			this.setLevel(1);
@@ -1557,17 +1568,17 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Initialisiert Crit 
-	 * @return double[]
+	 * @return int[]
 	 */
-	public double[] InitCrit(){
-		this.crit=new double[6];
+	public int[] InitCrit(){
+		this.crit=new int[6];
 		
-		this.crit[0]=0.00; //Crit Raten
-		this.crit[1]=0.05;
-		this.crit[2]=0.10;
-		this.crit[3]=0.15;
-		this.crit[4]=0.20;
-		this.crit[5]=0.25;
+		this.crit[0]=1; //Crit Raten
+		this.crit[1]=7;
+		this.crit[2]=15;
+		this.crit[3]=27;
+		this.crit[4]=39;
+		this.crit[5]=50;
 		
 		return this.crit;
 	}
@@ -1576,9 +1587,9 @@ public class DDynamic implements Serializable {
 	/**
 	 * Bekomme Crit Rate
 	 * @param int p
-	 * @return double
+	 * @return int
 	 */
-	public double getCurrentCrit(int p){
+	public int getCurrentCrit(int p){
 		return this.crit[p];
 	}
 	
@@ -1586,9 +1597,9 @@ public class DDynamic implements Serializable {
 	 * Setze Crit hoch
 	 * @param int p
 	 * @param int a
-	 * @return double
+	 * @return int
 	 */
-	public double setCurrentCrit(int p,int a){
+	public int setCurrentCrit(int p,int a){
 		if(this.crit[p+a]<this.crit.length-1){
 			
 			return this.crit[p+a];
@@ -1597,5 +1608,60 @@ public class DDynamic implements Serializable {
 	}
 	
 	
+	/**
+	 *  Bekomme critted -> wirkliche Chance auf Crit
+	 * @return int
+	 */
+	public int getCritted(){
+		return this.critted;
+	}
+	
+	/**
+	 * Setze critted 
+	 * @param int p
+	 * @return int
+	 */
+	public int setCritted(int p){
+		return this.critted=p;
+	}
+	/**
+	 *  Das Crit System arbeitet mit Random
+	 * @param int p
+	 * @return int
+	 */
+	public int CritSystem(int p){
+		this.critted=1;
+		int x=1;
+		
+		Random zufallsZahl=new Random();
+		int fest = zufallsZahl.nextInt(99);// 0-99 100 Zahlen
+		int chance = zufallsZahl.nextInt(99);
+		
+		System.out.println(fest+ "Fest");
+		System.out.println(chance+"Chance");
+		for(int i=0;i<p;i++){
+		if(chance==fest){
+			System.out.println("Gecritted");
+			sound=new DSound(datei[12]); //Item aufsammeln
+			 sound.SetVolume(0);//
+			 sound.Abspielen();
+			 x=2;
+			 break;
+		}
+			else if(fest>chance){
+			chance+=1;
+			System.out.println(chance+"Chance 2");
+			}
+			else if(fest<chance){
+				chance-=1;
+				System.out.println(chance+"Chance3");
+			}
+		
+		
+		
+	}
+		System.out.println(x);
+		return this.critted=x;
+	}
 }
 	

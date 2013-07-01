@@ -250,6 +250,7 @@ public class DProjectile implements Serializable{
 	 * @param NICHTS
 	 */
 	public void AnimateMoving(){
+		int x=1;
 		if(this.MaxRange > this.CurrentRange){
 		
 		if(this.Direction == 0){ // Oben
@@ -302,18 +303,24 @@ public class DProjectile implements Serializable{
 					 // Wenn Objekt nicht der, der es abgeschossen hat ist und nicht beides Spieler/Bots
 					 
 					 if(((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == cleanXPos && this.DynamicObjects[i].getCurrentYPosition() == cleanYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == cleanXPos && this.DynamicObjects[i].getMoveToYPosition() == cleanYPos) ) ) {
-						 //WENN auf Position ein DynamicObject ist
+						//WENN auf Position ein DynamicObject ist
 						  if (this.Preferred == DynamicObjects[i].getType())// Erhoeht Damage bei bevorzugtem Gegner
 						  {
 							  this.Damage = this.Damage + 150;
 						  }
+						  
 						 for(int d = 0; d < this.Damage; d++){
+							 
+							 if(d==0){
+								 x= this.DynamicObjects[0].CritSystem(this.DynamicObjects[0].getCurrentCrit(this.DynamicObjects[0].getCurrentRank(2)));
+								 
+							 }
 							 // So oft Gesundheit abziehen, bis Schaden erreicht
 							 if(this.DynamicObjects[i].getHealth() > 0){
-								 this.DynamicObjects[i].LoseHealth();
-								 						 
+								 this.DynamicObjects[i].LoseHealth(x);
+											 
 							 }
-							 
+						
 							
 						 }
 						 

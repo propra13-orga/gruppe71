@@ -127,12 +127,12 @@ public class DSkill implements ActionListener {
 		crit2.setBounds(360,160,size14.width, size14.height);
 		pan.add(crit2);
 				
-		this.crit3= new JLabel("Bonus:+ "+SpielPanel.getDynamicObject(0).getCurrentCrit(SpielPanel.getDynamicObject(0).getCurrentRank(2))+" Crit Multiplier");
+		this.crit3= new JLabel("Bonus:+ "+SpielPanel.getDynamicObject(0).getCurrentCrit(SpielPanel.getDynamicObject(0).getCurrentRank(2))+"% Crit ");
 		Dimension size15=crit3.getPreferredSize();
 		crit3.setBounds(360,180,size15.width+20, size15.height);
 		pan.add(crit3);
 				
-		//Button Wisdom
+		//Button Crit
 		this.crit4= new JButton("UPGRADE");
 		Dimension size16=crit4.getPreferredSize();
 		crit4.setBounds(360,200,size16.width, size16.height);
@@ -181,6 +181,7 @@ public class DSkill implements ActionListener {
 			}
 			catch(ArrayIndexOutOfBoundsException ex){
 				SpielPanel.getDynamicObject(0).setCurrentRank(0,-1);
+				SpielPanel.getDynamicObject(0).setSkills(1);//+1 wieder
 			}
 		}
 			
@@ -200,28 +201,30 @@ public class DSkill implements ActionListener {
 				}
 				catch(ArrayIndexOutOfBoundsException ex){
 					SpielPanel.getDynamicObject(0).setCurrentRank(1,-1);
+					SpielPanel.getDynamicObject(0).setSkills(1);//+1 wieder
 					System.out.println(SpielPanel.getDynamicObject(0).getCurrentRank(1));
 				}
 			
 			
 	}
 			
-			if(e.getSource()==this.crit4){// rank 1 Array crit
+			if(e.getSource()==this.crit4){// rank 2 Array crit
 				try{
-				if(SpielPanel.getDynamicObject(0).getSkills()>=2 && SpielPanel.getDynamicObject(0).getCurrentRank(1)<=5){//Hier
+				if(SpielPanel.getDynamicObject(0).getSkills()>=2 && SpielPanel.getDynamicObject(0).getCurrentRank(2)<=5){//Hier
 					SpielPanel.getDynamicObject(0).setSkills(-2);
 					SpielPanel.getDynamicObject(0).setCurrentRank(2,1);
 					SpielPanel.getDynamicObject(0).setCurrentCrit(0,SpielPanel.getDynamicObject(0).getCurrentRank(2));
 					//Changes
 					this.points.setText("Total Skillpoints Left: "+SpielPanel.getDynamicObject(0).getSkills());
 					this.crit2.setText("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(2));
-					this.crit3.setText("Bonus:+  "+SpielPanel.getDynamicObject(0).getCurrentCrit(SpielPanel.getDynamicObject(0).getCurrentRank(2))+" Crit Multiplier");
+					this.crit3.setText("Bonus:+  "+SpielPanel.getDynamicObject(0).getCurrentCrit(SpielPanel.getDynamicObject(0).getCurrentRank(2))+" % Crit");
 					
 					
 				}
 				}
 				catch(ArrayIndexOutOfBoundsException ex){
 					SpielPanel.getDynamicObject(0).setCurrentRank(2,-1);
+					SpielPanel.getDynamicObject(0).setSkills(2);//+2 wieder
 					System.out.println(SpielPanel.getDynamicObject(0).getCurrentRank(2));
 				}
 			
