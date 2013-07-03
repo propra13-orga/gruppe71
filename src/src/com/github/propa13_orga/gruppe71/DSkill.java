@@ -25,6 +25,9 @@ public class DSkill implements ActionListener {
 	public JLabel greed,greed2,greed3;//mehr coins
 	public JLabel crit,crit2,crit3;
 	public JButton wisdom,greed4,crit4;//wisdom gehört zu hast...
+	public JLabel lifesteal,lifesteal2,lifesteal3;
+	public JButton lifesteal4;
+	public JTextField ultiminfo;
 	
 	
 	public String[] rank2;
@@ -50,9 +53,16 @@ public class DSkill implements ActionListener {
 		//Max Rank
 		JTextField info2= new JTextField("Max Rank for all abilities is: 5");
 		Dimension size2=info.getPreferredSize();
-		info2.setBounds(360,50,size2.width+50, size2.height);
+		info2.setBounds(340,50,size2.width+50, size2.height);
 		info2.setEditable(false);
 		pan.add(info2);
+		
+		//Ultima Info
+		JTextField ultimainfo= new JTextField("Ultima needs Rank 5 of WS/GR/HE");
+		Dimension size40=info.getPreferredSize();
+		ultimainfo.setBounds(340,100,size40.width+150, size40.height);
+		ultimainfo.setEditable(false);
+		pan.add(ultimainfo);
 		
 		
 		this.points= new JTextField("Total Skillpoints Left: "+SpielPanel.getDynamicObject(0).getSkills());
@@ -119,25 +129,49 @@ public class DSkill implements ActionListener {
 		
 		this.crit= new JLabel("3.HAWK EYE-> CRIT");
 		Dimension size13=crit.getPreferredSize();
-		crit.setBounds(360,140,size13.width, size13.height);
+		crit.setBounds(340,140,size13.width, size13.height);
 		pan.add(crit);
 				
 		this.crit2= new JLabel("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(2));
 		Dimension size14=crit2.getPreferredSize();
-		crit2.setBounds(360,160,size14.width, size14.height);
+		crit2.setBounds(340,160,size14.width, size14.height);
 		pan.add(crit2);
 				
 		this.crit3= new JLabel("Bonus:+ "+SpielPanel.getDynamicObject(0).getCurrentCrit(SpielPanel.getDynamicObject(0).getCurrentRank(2))+"% Crit ");
 		Dimension size15=crit3.getPreferredSize();
-		crit3.setBounds(360,180,size15.width+20, size15.height);
+		crit3.setBounds(340,180,size15.width+20, size15.height);
 		pan.add(crit3);
 				
 		//Button Crit
 		this.crit4= new JButton("UPGRADE");
 		Dimension size16=crit4.getPreferredSize();
-		crit4.setBounds(360,200,size16.width, size16.height);
+		crit4.setBounds(340,200,size16.width, size16.height);
 		this.crit4.addActionListener(this);
 		pan.add(crit4);
+		
+		// Ultima Lifesteal Rank 3 Max 1.
+		
+		this.lifesteal= new JLabel("4.BLOOD LUST(ULTIMA)");
+		Dimension size17=lifesteal.getPreferredSize();
+		lifesteal.setBounds(340,240,size17.width, size17.height);
+		pan.add(lifesteal);
+				
+		this.lifesteal2= new JLabel("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(3));
+		Dimension size18=lifesteal2.getPreferredSize();
+		lifesteal2.setBounds(340,260,size18.width, size18.height);
+		pan.add(lifesteal2);
+				
+		this.lifesteal3= new JLabel("Bonus: 50% Health Restore per kill");
+		Dimension size19=lifesteal3.getPreferredSize();
+		lifesteal3.setBounds(340,280,size19.width+70, size19.height);
+		pan.add(lifesteal3);
+				
+		//Button lifesteal
+		this.lifesteal4= new JButton("GET ULTIMA!");
+		Dimension size20=lifesteal4.getPreferredSize();
+		lifesteal4.setBounds(340,300,size20.width, size20.height);
+		this.lifesteal4.addActionListener(this);
+		pan.add(lifesteal4);
 		
 		
 		
@@ -228,10 +262,35 @@ public class DSkill implements ActionListener {
 					System.out.println(SpielPanel.getDynamicObject(0).getCurrentRank(2));
 				}
 			
+				
 			
 	}
 	
 	
+
+	
+	if(e.getSource()==this.lifesteal4){// rank 2 Array crit
+		try{
+		if(SpielPanel.getDynamicObject(0).getCurrentRank(1)==5 && SpielPanel.getDynamicObject(0).getCurrentRank(2)==5 && SpielPanel.getDynamicObject(0).getCurrentRank(0)==5 && SpielPanel.getDynamicObject(0).getCurrentRank(3)<1){
+			
+			SpielPanel.getDynamicObject(0).setCurrentRank(3,1);
+			SpielPanel.getDynamicObject(0).setUltima(true);
+			//Changes
+			
+			this.lifesteal2.setText("Current Rank:  "+SpielPanel.getDynamicObject(0).getCurrentRank(3));
+			
+			
+			
+		}
+		}
+		catch(ArrayIndexOutOfBoundsException ex){
+			SpielPanel.getDynamicObject(0).setCurrentRank(3,-1);
+			
+		}
+	
+		
+	
+}
 	}
 	
 	

@@ -493,7 +493,7 @@ public class DPanel extends JPanel implements Serializable {
 							
 								}
 								
-								if(this.DynamicObjects[i].getType() > 2){ //Wenn Starker Boss(3) oder Endboss(4)
+								if(this.DynamicObjects[i].getType() > 2){ //Wenn Starker Boss(3) oder Endboss(4) Hier Fehler???
 
 									int randomshot = zufallsZahl.nextInt(3);
 									

@@ -326,6 +326,9 @@ public class DProjectile implements Serializable{
 						 
 						 if(this.DynamicObjects[i].getHealth()==0){ // Marken setzen und EXP kriegen Rank 0
 						 this.DynamicObjects[0].setMarke(1);
+						 if(DynamicObjects[0].getUltima()==true && DynamicObjects[0].getHealth()<=2 ){
+							 DynamicObjects[0].Lifesteal(2);//50%
+						 }
 						 if(DynamicObjects[i].getType()==1){
 						 this.DynamicObjects[0].setExp(10+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
 						 this.DynamicObjects[0].LevelUp();

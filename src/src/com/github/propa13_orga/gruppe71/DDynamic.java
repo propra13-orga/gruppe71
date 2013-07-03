@@ -63,6 +63,8 @@ public class DDynamic implements Serializable {
 	protected int[] wisdom,greed;
 	protected int[] crit;//critical strike!
 	protected int critted;
+	protected int lifesteal;// setHealthh Methode
+	protected boolean ultimaready;//Ultimate Lifesteal;
 	
 	
 	
@@ -119,12 +121,14 @@ public class DDynamic implements Serializable {
 		this.level=l;
 		this.InitLevelGrenze();
 		this.skills=sk;
+		
 		this.critted=1;
 		
 		this.InitRank();
 		this.InitWisdom();
 		this.InitGreed();
 		this.InitCrit();
+		this.ultimaready=false;
 	}
     
 	/**
@@ -497,6 +501,7 @@ public class DDynamic implements Serializable {
 					this.setTreasure(true,0);
 					this.marke=0;
 					this.setExp(120+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
+					this.LevelUp();
 					
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0){
@@ -510,6 +515,7 @@ public class DDynamic implements Serializable {
 					this.setTreasure(true,2);
 					this.marke=0;
 					this.setExp(140+this.DynamicObjects[0].getCurrentWisdom(this.DynamicObjects[0].getCurrentRank(0)));
+					this.LevelUp();
 				}
 				break;
 
@@ -1574,11 +1580,11 @@ public class DDynamic implements Serializable {
 		this.crit=new int[6];
 		
 		this.crit[0]=1; //Crit Raten
-		this.crit[1]=7;
-		this.crit[2]=15;
-		this.crit[3]=27;
-		this.crit[4]=39;
-		this.crit[5]=50;
+		this.crit[1]=5;
+		this.crit[2]=10;
+		this.crit[3]=15;
+		this.crit[4]=20;
+		this.crit[5]=25;
 		
 		return this.crit;
 	}
@@ -1662,6 +1668,33 @@ public class DDynamic implements Serializable {
 	}
 		System.out.println(x);
 		return this.critted=x;
+	}
+	
+	/**
+	 * Methode Lifesteal benutzt Methode setHealth
+	 * @param int p
+	 */
+	
+	public void Lifesteal(int p){
+		
+		this.setHealth(p);
+		
+	}
+	
+	/**
+	 * setUltima
+	 * @param boolean p
+	 * @return boolean
+	 */
+	public boolean setUltima(boolean p){
+		return this.ultimaready=p;
+	}
+	/**
+	 * Methode getUltima
+	 * @return boolean
+	 */
+	public boolean getUltima(){
+		return this.ultimaready;
 	}
 }
 	

@@ -42,6 +42,8 @@ public class HUDPanel extends JPanel {
 	private Dimension[] h;
 	private JLabel[] exp;
 	private JLabel[] level;
+	private JLabel[] skills;
+	
 	
 	/**
 	 * Initialisiert die Klassenattribute
@@ -63,7 +65,7 @@ public class HUDPanel extends JPanel {
 		this.Spieler_Weapon_Amount = new JLabel[2];			
 		this.exp=new JLabel[2];
 		this.level=new JLabel[2];
-		
+		this.skills=new JLabel[2];
 		this.InitTasten();
 		this.InitKeys();
 		this.InitDimension();
@@ -82,11 +84,18 @@ public class HUDPanel extends JPanel {
 
 			
 			
-			//EXP
+			//Level
 			this.level[i] = new JLabel("Level: "); // create some stuff
 			this.level[i].setFont(new Font("Serif", Font.BOLD, 20));
 			this.level[i].setBounds(20, 35+(i*40), 100, 60);
 			this.add(this.level[i]);
+			
+			
+			//Skills Unused
+			this.skills[i] = new JLabel("Skillpoints Left: "); // create some stuff
+			this.skills[i].setFont(new Font("Serif", Font.BOLD, 20));
+			this.skills[i].setBounds(170, 35+(i*40), 200, 60);
+			this.add(this.skills[i]);
 			
 			
 			//EXP
@@ -177,7 +186,8 @@ public class HUDPanel extends JPanel {
 			this.Spieler_Mana[i].setText(Integer.toString(this.DynamicObjects[i].getMana())); // Mana
 			this.Spieler_Money[i].setText(Integer.toString(this.DynamicObjects[i].getMoney())); // Geld
 			this.exp[i].setText("EXP:  "+this.DynamicObjects[i].getExp()); // EXP
-			this.level[i].setText("LEVEL:  "+this.DynamicObjects[i].SpielerLevel()); // EXP
+			this.level[i].setText("LEVEL:  "+this.DynamicObjects[i].SpielerLevel()); // Level
+			this.skills[i].setText("Skillpoints Left:  "+this.DynamicObjects[i].getSkills()); // Level
 			
 			
 			Image Image_Weapon = null;
