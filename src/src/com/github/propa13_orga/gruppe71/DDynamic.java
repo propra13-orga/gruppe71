@@ -33,7 +33,7 @@ public class DDynamic implements Serializable {
 	protected int Type; // Typ des Bots(normal, Boss etc.)
 	protected boolean isBot; // Ist ein Bot oder Spieler?
 	protected int Points; //Punkte
-	protected int RType; // R�stungstyp
+	protected int RType; // Ruestungstyp
 	
 	protected int[] quest; // Quest fuer JOPTIONPANE
 	protected int[] qenabled;//fuer SpielPanel Environment aendern
@@ -281,7 +281,7 @@ public class DDynamic implements Serializable {
 		int messer=0;
 		boolean tmpAndererBotAnPos = false; // Collision zwischen Bots
 		
-		// Schaden hinzufügen wenn Gegner und Spieler sich beruehren
+		// Schaden hinzufuegen wenn Gegner und Spieler sich beruehren
 		 for (int i = 0; i < this.DynamicObjects.length; i++){ // Wenn der Gegner an der gleichen Position ist verlieren beide ein Leben
 			 if(this.DynamicObjects[i] != null && (this.DynamicObjects[i].getHealth() > 0 && this.getHealth() > 0)){ //Wenn existieren und beide Gesundheit haben
 				 if(this.DynamicObjects[i].isBot != this.isBot && ((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
@@ -290,13 +290,13 @@ public class DDynamic implements Serializable {
 					 sound.SetVolume(-10);//
 					 sound.Abspielen();
 					 //Ende
-					 if(this.isBot == false && ((this.getRType() > this.DynamicObjects[i].getType() && this.DynamicObjects[i].getType() < 3) || (this.getRType() > this.DynamicObjects[i].getType() && 2 < this.DynamicObjects[i].getType())) ){ // �berpr�ft auf Ruestung 
+					 if(this.isBot == false && ((this.getRType() == 3 && this.DynamicObjects[i].getType() < 3) || (this.getRType() == 5 && 2 < this.DynamicObjects[i].getType())) ){ // Ueberprueft auf Ruestung 
 						 this.setHealth(-1);
-						 if (this.getHealth() <5 ){this.setRType(0);} //WENN Health <5 Setzte R�stung auf Null
+						 if (this.getHealth() <5 ){this.setRType(0);} //WENN Health <5 Setzte Ruestung auf Null
 					 }
-					 else if((this.isBot == true &&(this.DynamicObjects[i].getRType() > this.getType() && this.getType() < 3) || (this.DynamicObjects[i].getRType() > this.getType() && 2 > this.getType()) )){ // �berpr�ft auf Ruestung 
+					 else if((this.isBot == true &&(this.DynamicObjects[i].getRType() == 3 && this.getType() < 3) || (this.DynamicObjects[i].getRType() == 5 && 2 < this.getType()) )){ // Ueberprueft auf Ruestung 
 						 this.DynamicObjects[i].setHealth(-1);
-						 if (this.DynamicObjects[i].getHealth() <5 ){this.DynamicObjects[i].setRType(0);//WENN Health <5 Setzte R�stung auf Null
+						 if (this.DynamicObjects[i].getHealth() <5 ){this.DynamicObjects[i].setRType(0);//WENN Health <5 Setzte Ruestung auf Null
 						 } 
 					 }
 					
