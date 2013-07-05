@@ -33,7 +33,7 @@ public class NPanel extends JPanel {
 	protected JFrame SpielFenster;
 	protected StaticObject[][] StaticObjects;
 	protected NDynamic[] DynamicObjects;
-	protected NSound sound;
+	
 	protected NProjectile[] Projectiles;
 	protected int[][][] LevelObjects; //Hier werden die aus der Datei geladenen Levelabschnitte zwischengespeichert
 	protected NDynamic CheckpointObject;
@@ -138,7 +138,7 @@ public class NPanel extends JPanel {
 		super.paintComponent(pGraphics);
 		
 		//System.out.println("PAINTCOMP");
-			int counter=0;
+		
 		// Variablen um zu Speichern, wo der Eingang ist
 		int TmpXStart = -1;
 		int TmpYStart = -1;
@@ -148,17 +148,6 @@ public class NPanel extends JPanel {
 		int geheimY=-1;
 		int openX=-1;
 		int openY=-1;
-		int questX=-1;
-		int questY=-1;
-		int infoX=-1;
-		int infoY=-1;
-		int belohnungX=-1;
-		int belohnungY=-1;
-		int npc2X=-1;
-		int npc2Y=-1;
-		int keyX=-1;
-		int keyY=-1;
-		
 		if(this.StaticObjectsLoaded == true){//Wenn der Level/Statische Objekte geladen wurde
 			
 			int[][] tmpGegnerArray = new int[48][3];
@@ -181,37 +170,6 @@ public class NPanel extends JPanel {
 					if(this.StaticObjects[y][x].getType() == 16){ //Geheimgang,Trittstelle
 						openX = x; //Speichert wo Geheimstelle
 						openY= y; //in 2 Variablen
-					}
-					if(this.StaticObjects[y][x].getType() == 42){ //Treasure Weg
-						geheimX=x; //Speichert wo Geheimstelle
-						geheimY=y; //in 2 Variablen
-					
-					}
-					if(this.StaticObjects[y][x].getType() == 40){ //Truhe Eingang
-						questX = x; //Speichert Truhe
-						questY= y; //in 2 Variablen
-						
-					}
-					
-					if(this.StaticObjects[y][x].getType() == 41){ //Truhe ,Belohnung
-						belohnungX = x; //Speichert Truhe
-						belohnungY= y; //in 2 Variablen
-						
-					}
-					if(this.StaticObjects[y][x].getType() == 46){ //Information
-						infoX = x; //Speichert Truhe
-						infoY= y; //in 2 Variablen
-						
-					}
-					if(this.StaticObjects[y][x].getType() == 47){ //Schluessel
-						keyX = x;
-						keyY= y; 
-						
-					}
-					if(this.StaticObjects[y][x].getType() == 25){ //NPC
-						npc2X = x; 
-						npc2Y= y; 
-						
 					}
 					
 					
@@ -242,8 +200,8 @@ public class NPanel extends JPanel {
 					int Points = 0; //Punkte Marke
 					
 					//Spieler initialisieren
-					this.DynamicObjects[0] = new NDynamic(this, this.StaticObjects, this.DynamicObjects, 0, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6,0,1,0,100); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1] = new NDynamic(this, this.StaticObjects, this.DynamicObjects,1, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6,0,1,0,100); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[0] = new NDynamic(this, this.StaticObjects, this.DynamicObjects, 0, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6); //initialisiere, damit Objekt neben Eingang
+					this.DynamicObjects[1] = new NDynamic(this, this.StaticObjects, this.DynamicObjects, 1, this.Projectiles, (TmpXStart*30), (TmpYStart*30), Health, Points, false,6); //initialisiere, damit Objekt neben Eingang
 				}	
 				else
 				{
@@ -256,10 +214,10 @@ public class NPanel extends JPanel {
 					this.DynamicObjects[1].setStaticObjects(this.StaticObjects); //StaticObjects vom neuen Levelabschnitt	
 					
 					// Neuer Levelabschnitt, also Checkpoint speichern
-					//this.CheckpointObject = new NDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
+					//this.CheckpointObject = new DDynamic(this, this.StaticObjects, this.DynamicObjects, 0, 0, 4, 0);
 					int[] tmpPos = DynamicObjects[0].getCurrentPosition();
 					
-					this.CheckpointObject = new NDynamic(this, this.StaticObjects, this.DynamicObjects,0, this.Projectiles, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3,0,DynamicObjects[0].SpielerLevel(),DynamicObjects[0].getSkills(),DynamicObjects[0].getMoney());
+					this.CheckpointObject = new NDynamic(this, this.StaticObjects, this.DynamicObjects, 0, this.Projectiles, tmpPos[0], tmpPos[1],DynamicObjects[0].getHealth(), DynamicObjects[0].getPoints(), false,3);
 				} 
 				
 
@@ -276,7 +234,7 @@ public class NPanel extends JPanel {
 						switch(tmpGegnerType){
 						case 5: //Standard Gegner
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects,(2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects, (2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
 							}
@@ -285,7 +243,7 @@ public class NPanel extends JPanel {
 							break;
 						case 7: //Starker Gegner (1. Boss)
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects,(2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 2000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects, (2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));	
 							}
@@ -294,7 +252,7 @@ public class NPanel extends JPanel {
 							break;
 						case 8: //Starker Boss Spinne (2.Boss)
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects,(2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 25000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects, (2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
 							}
@@ -303,7 +261,7 @@ public class NPanel extends JPanel {
 							break;
 						case 9: //End Boss Spinne2? (3.Boss)
 							if(this.DynamicObjects[2+i] == null){
-								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects,(2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 50000, 0, true, 0,0,0,0,0); //initialisiere, Gegner
+								this.DynamicObjects[2+i] = new NDynamic(this, this.StaticObjects, this.DynamicObjects, (2+i), this.Projectiles, (tmpGegnerXPos*30), (tmpGegnerYPos*30), 1, 0, true, 0); //initialisiere, Gegner
 							}else{
 								this.DynamicObjects[2+i].setCurrentPosition((tmpGegnerXPos*30), (tmpGegnerYPos*30));
 							}
@@ -329,93 +287,24 @@ public class NPanel extends JPanel {
 							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stueckchen
 						}
 						
-						//Quest 1
-						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5 && geheimY > 0 && geheimX > 0){
-							
-							this.StaticObjects[geheimY][geheimX].setCollision(false);
-							this.StaticObjects[geheimY][geheimX].setType(0);
-							
-						}
-						
-						//Quest 3
-						else if(this.DynamicObjects[i].getQuestLaufend(2)==true && this.DynamicObjects[i].getMarke()>=12 && geheimY > 0 && geheimX > 0){
-							
-							this.StaticObjects[geheimY][geheimX].setCollision(false);
-							this.StaticObjects[geheimY][geheimX].setType(0);
-							
-						}
-						
-						//Schluessel nicht sichtbar
-						else if(this.DynamicObjects[i].getKey()==false && keyX>0 && keyY>0 && this.DynamicObjects[i].getHidden()==0){
-							this.StaticObjects[keyY][keyX].setCollision(false);
-							this.StaticObjects[keyY][keyX].setType(0);
-							this.DynamicObjects[i].setHidden(1);
-							this.DynamicObjects[i].setPosX(keyX);
-							this.DynamicObjects[i].setPosY(keyY);
-						}
-						
-						//Schluessel sichtbar
-						else if(this.DynamicObjects[i].getKey()==true){
-							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
-							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(0);
-							
-						}
-						//Quest 2
-						else if(this.DynamicObjects[i].getQuestLaufend(1)==true && this.DynamicObjects[i].getMarke()>=5 ){
-							
-							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
-							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(47);
-							
-							
-						}
-						
-						else if(this.DynamicObjects[i].getInfo()==true && infoY > 0 && infoX > 0){//Information
-							this.StaticObjects[infoY][infoX].setType(0);
-							
-						}
-						else if(this.DynamicObjects[i].getTreasure(0)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 1
-							
-							this.StaticObjects[belohnungY][belohnungX].setType(0);
-							
-							
-						}
-						else if(this.DynamicObjects[i].getTreasure(2)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 3
-							
-							this.StaticObjects[belohnungY][belohnungX].setType(0);
-							
-							
-						}
-							
-							
 						
 			
 						
-						else if(this.DynamicObjects[i].getSecret()==true && landungX > 0 && landungY > 0){
+						else if(this.DynamicObjects[i].getSecret()==true){
 							this.DynamicObjects[i].setCurrentPosition((landungX*30),(landungY*30));
 							this.DynamicObjects[i].SetSecret(false);
 						}
 						
 				
-						else if(this.DynamicObjects[i].getSecret2()==true && openY > 0 && openX > 0){
+						else if(this.DynamicObjects[i].getSecret2()==true ){
 										this.StaticObjects[openY][openX].setType(0);
 										this.StaticObjects[openY][openX].setCollision(false);
 										this.DynamicObjects[i].SetSecret2(false);
 										
 								}
-						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
-							if(this.DynamicObjects[i].getQuest(z)==true && questY > 0 && questX > 0){
-								sound=new NSound("src/com/github/propa13_orga/gruppe71/GoodBye.wav");// Good Bye !
-								sound.SetVolume(-10);
-								sound.Abspielen();
-							this.StaticObjects[questY][questX].setType(0);
-							this.StaticObjects[questY][questX].setCollision(false);
-							this.DynamicObjects[i].setQuest(false,z);
-							break;
-							}
-						
-						
-					}	
-				
+						 
+					
+							
 				
 						
 						int[] TmpDynamicObjectPosition=this.DynamicObjects[i].getCurrentPosition();
@@ -423,24 +312,16 @@ public class NPanel extends JPanel {
 						if(i == 0) {
 								switch(this.DynamicObjects[i].getHealth()){
 									case 8:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 7:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 6:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 5:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,44 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,10 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 4:
 										this.drawImageAtPos(pGraphics,11 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
@@ -462,24 +343,16 @@ public class NPanel extends JPanel {
 							else if(i == 1) {
 								switch(this.DynamicObjects[i].getHealth()){
 									case 8:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 7:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 6:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 5:
-										if (DynamicObjects[i].getRType()== 5){
-											this.drawImageAtPos(pGraphics,45 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
-										}else this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
+										this.drawImageAtPos(pGraphics,34 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
 										break;
 									case 4:
 										this.drawImageAtPos(pGraphics,35 , TmpDynamicObjectPosition[0], TmpDynamicObjectPosition[1]);
@@ -499,7 +372,6 @@ public class NPanel extends JPanel {
 						
 								}
 						}
-							
 				}
 				}	
 					
@@ -603,8 +475,8 @@ public class NPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_strong_enemy.png"), //7 Starker Gegner(1.Boss)
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy.png"), //8 Starker Boss Spinne(2.Boss)
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_boss_enemy2.png"), //9 End Boss(3.Boss)
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor01.png"), //10 Spieler Ruestung
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"),//11 Spieler 4-Leben01
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor.png"), //10 Spieler Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player01.png"),//11 Spieler 4-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player02.png"),//12 Spieler 3-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player03.png"),//13 Spieler 2-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_player04.png"),//14 Spieler 1-Leben
@@ -619,7 +491,7 @@ public class NPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pLive.png"), //23 Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pMoney.png"), //24 Money / Geld
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pHotdog_npc.png"), //25 NPC
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor01.png"), //26 Ruestung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor.png"), //26 Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_shop.png"), //27 Shop
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pTrank.png"), //28 Zaubertrank
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pKetchup.png"),  //29 Ketchup
@@ -627,21 +499,12 @@ public class NPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_kaese.png"),//31 [Proj]Kaese
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_messer.png"),//32 [Proj]Messer
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/proj_spiderweb.png"),//33 [Proj]Spinnweben(2. und 3. Boss)
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor01.png"),//34 2.Spieler Ruestung01
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor.png"),//34 2.Spieler Ruestung
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//35 2.Spieler 4-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player01.png"),//36 2.Spieler 3-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player02.png"),//37 2.Spieler 2-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player03.png"),//38 2.Spieler 1-Leben
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//39 2.Spieler 0-Leben
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//40 QUEST
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Treasure.png"),//41 Truhe Belohnung Quests
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//42  Quest Vervollstaendigung
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_pArmor02.png"), //43 Ruestung02
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"),//44 1.Spieler Ruestung02
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"), //45 2.Spieler Ruestung02
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"),//46 Information
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Key.png")//47 Schluessel
-				
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png")//39 2.Spieler 0-Leben
 				};
 	
 		//Zeichne das Bild
@@ -732,9 +595,6 @@ public class NPanel extends JPanel {
 	            			case '!'://Teleport
 	            				TmpLevelObjects[z][y][x] = 18;
 								break;
-	            			case '#'://Belohnung
-	            				TmpLevelObjects[z][y][x] = 42;
-								break;
 	            			case '?': //Secret
 	            				TmpLevelObjects[z][y][x] = 19;
 								break;
@@ -756,30 +616,14 @@ public class NPanel extends JPanel {
 	            			case 'N': // NPC
 								TmpLevelObjects[z][y][x] = 25;
 								break;
-	            			case 'Q': // NPC
-								TmpLevelObjects[z][y][x] = 40;
-								break;
-	            			case 'T': // Truhe,Treasure
-								TmpLevelObjects[z][y][x] = 41;
-								break;
-	            			case 'R': // Ruestung01
+	            			case 'R': // Ruestung
 								TmpLevelObjects[z][y][x] = 26;
-								break;
-	            			case '%': // Ruestung02
-								TmpLevelObjects[z][y][x] = 43;
 								break;
 	            			case 'S': // Shop
 								TmpLevelObjects[z][y][x] = 27;
 								break;
 	            			case 'Z': //Zaubertrank
 								TmpLevelObjects[z][y][x] = 28;
-								break;
-	            			case '*': //Schluessel
-								TmpLevelObjects[z][y][x] = 47;
-								break;
-								
-	            			case 'I': //Zaubertrank
-								TmpLevelObjects[z][y][x] = 46;
 								break;
 							default:
 								TmpLevelObjects[z][y][x] = 24;
