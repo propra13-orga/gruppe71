@@ -6,7 +6,9 @@ import java.io.Serializable;
 import javax.swing.JOptionPane;
 
 
-
+/**
+* Klasse der Projektile, die Gegner und Spieler abschiessen 
+*/
 public class DProjectile implements Serializable{
 	
 	/**
@@ -47,7 +49,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	 * Initalisiert die Standardwerte des Objekts
-	 * @param NICHTS 
+	 *   
 	 */
 	public void init(){
 		
@@ -109,7 +111,7 @@ public class DProjectile implements Serializable{
     
 	/**
 	 * Gibt Momentane Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int[] getCurrentPosition(){
 		  int[] CurrentPosition = new int[2]; //2 Rueckgabewerte: x und y
@@ -122,7 +124,7 @@ public class DProjectile implements Serializable{
 
 	/**
 	 * Gibt Momentane X-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentXPosition(){
 		  return this.CurrentXPos;
@@ -130,7 +132,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	 * Gibt Momentane Y-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentYPosition(){
 		  return this.CurrentYPos;
@@ -149,7 +151,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	* Gibt Typ zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getType(){
 	return this.Type;	
@@ -157,7 +159,7 @@ public class DProjectile implements Serializable{
 
 	/**
 	* Setzt Typ
-	* @param pTyp Welcher Typ?
+	* @param pType Welcher Typ?
 	*/
 	public void setType(int pType){
 	this.Type = pType;
@@ -166,7 +168,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	* Gibt Richtung zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getDirection(){
 	return this.Direction;	
@@ -182,7 +184,7 @@ public class DProjectile implements Serializable{
 
 	/**
 	* Gibt Momentane Weite zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getCurrentRange(){
 	return this.CurrentRange;
@@ -198,7 +200,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	* Gibt Max Weite zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getMaxRange(){
 	return this.MaxRange;
@@ -214,7 +216,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	* Gibt Schuetzen zurueck
-	* @param NICHTS
+	*  
 	*/
 	public DDynamic getShooter(){
 		return this.Shooter;
@@ -230,7 +232,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	* Gibt zurueck ob aktiv oder nicht
-	* @param NICHTS
+	*  
 	*/
 	public boolean IsEnabled(){
 	return this.Enabled;	
@@ -247,7 +249,7 @@ public class DProjectile implements Serializable{
 	
 	/**
 	 * Animiert das Projektil, bewegt es um ein Stueck bei jedem Aufruf
-	 * @param NICHTS
+	 *  
 	 */
 	public void AnimateMoving(){
 		int x=1;
@@ -297,7 +299,7 @@ public class DProjectile implements Serializable{
 		
 		if(this.StaticObjects[(cleanYPos/30)][(cleanXPos/30)].getCollision() == false){ // Keine Kollision also weiter
 			
-			// Schaden hinzufügen wenn ein DynamicObject beruehrt wird
+			// Schaden hinzufuegen wenn ein DynamicObject beruehrt wird
 			for (int i = 0; i < this.DynamicObjects.length; i++){
 				 if(this.DynamicObjects[i] != null && this.DynamicObjects[i] != this.Shooter && this.Shooter.IsBot() != this.DynamicObjects[i].IsBot() && this.DynamicObjects[i].getHealth() > 0){
 					 // Wenn Objekt nicht der, der es abgeschossen hat ist und nicht beides Spieler/Bots

@@ -22,6 +22,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+/**
+* Klasse des Leveleditors 
+*/
 public class DLevelEditor extends JFrame{
 	
 

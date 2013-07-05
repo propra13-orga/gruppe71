@@ -5,6 +5,9 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 
+/**
+* Klasse der Soundeffekte 
+*/
 public class DSound {
 
 	protected Clip clip;
@@ -25,16 +28,28 @@ public class DSound {
 		}
 	}
 	
+	/**
+	 * Spielt Sound ab
+	 */
 	public void Abspielen(){
 		clip.stop();
 		clip.setMicrosecondPosition(0);
 		clip.start();
 	}
+
+	/**
+	 * Setzt Titel
+	 */
 	public void Title(){
 		clip.stop();
 		clip.loop(Clip.LOOP_CONTINUOUSLY);
 		clip.start();
 	}
+	
+	/**
+	 * Setzt Lautstaerke
+	 * @param value Wert
+	 */
 	public void SetVolume(float value){
 		laut.setValue(value);
 	}

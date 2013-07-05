@@ -11,7 +11,9 @@ import java.awt.event.KeyAdapter;
 import java.io.*;
 import java.net.*;
 
-
+/**
+* Klasse der Steuerung im Netzwerkspiel 
+*/
 public class NSteuerung {
 
 	public boolean IsHost;
@@ -71,7 +73,7 @@ public class NSteuerung {
 		
 		//Setze Listener damit die gedrueckte Taste erkannt werden kann
 		SpielPanel.addKeyListener(new KeyAdapter(){
-	    	/*Methode für Taste herunter gedrueckt
+	    	/*Methode fuer Taste herunter gedrueckt
     		 * (non-Javadoc)
     		 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
     		 */
@@ -157,7 +159,7 @@ public class NSteuerung {
 	
 	/**
 	 * Gibt zurueck, ob Host oder Client?
-	 * @param NICHTS 
+	 *   
 	 */
 	public boolean isHost(){
 		  return this.IsHost;

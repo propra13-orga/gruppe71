@@ -28,6 +28,9 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+/**
+* Klasse des DPanels, das Panel vom Spielfenster
+*/
 public class DPanel extends JPanel implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -276,10 +279,10 @@ public class DPanel extends JPanel implements Serializable {
 					
 					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
 						
-						// if (this.DynamicObjects[i].getHealth() < 5) {this.DynamicObjects[i].setRType(0);} //Setzt R�stung auf Null 
+						// if (this.DynamicObjects[i].getHealth() < 5) {this.DynamicObjects[i].setRType(0);} //Setzt Ruestung auf Null 
 						
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
-							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
+							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stueckchen
 						}
 						
 						//Quest 1
@@ -472,7 +475,7 @@ public class DPanel extends JPanel implements Serializable {
 							break;
 						}
 							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden? Zufalls-Bewegung
-							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
+							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stueckchen
 							} else {
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
@@ -522,7 +525,7 @@ public class DPanel extends JPanel implements Serializable {
 						else
 							this.drawImageAtPos(pGraphics, (33) , this.Projectiles[i].getCurrentXPosition(), this.Projectiles[i].getCurrentYPosition());						
 
-						this.Projectiles[i].AnimateMoving(); //Bewege es ein Stückchen
+						this.Projectiles[i].AnimateMoving(); //Bewege es ein Stueckchen
 					}
 				} 
 			}
@@ -594,7 +597,7 @@ public class DPanel extends JPanel implements Serializable {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"),//44 1.Spieler Ruestung02
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_armor02.png"), //45 2.Spieler Ruestung02
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_floor01.png"),//46 Information
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Key.png")//47 Schl�ssel
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Key.png")//47 Schluessel
 				
 				};
 	
@@ -604,7 +607,7 @@ public class DPanel extends JPanel implements Serializable {
 		
 	/**
 	 * Laed Level Nummer....
-	 * @param Nummer des Levels
+	 * @param pLevel Nummer des Levels
 	 */
 	public void loadLevel(int pLevel){	
 		//Lade eine Level Datei in den Zwischenspeicher
@@ -618,7 +621,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Laed den naechsten Level
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadNextLevel(){
 		if(this.CurrentLevel < 2) //Max 3 Abschnitte, daher
@@ -627,7 +630,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Liest eine Datei aus und laed sie als Level
-	 * @param Pfad/Dateiname der LevelDatei
+	 * @param pFilename Pfad/Dateiname der LevelDatei
 	 */
 	public void loadLevelFromFile(String pFilename){
 		
@@ -667,7 +670,7 @@ public class DPanel extends JPanel implements Serializable {
 		    //Momentan haben wir nur String[], brauchen aber int
 		    int[][][] TmpLevelObjects = new int[3][12][20]; 
 		    
-		    //Dazu lesen wir jetzt den String Zeile für Zeile auf
+		    //Dazu lesen wir jetzt den String Zeile fuer Zeile auf
 		    //und speichern jedes Zeichen(Char) als Nummer(int) in das int[][]
 		    for (int z = 0; z < 3; z++){ //Level-Abschnitt
 		    	for (int y = 0; y < 12; y++){ //Spalte
@@ -790,7 +793,7 @@ public class DPanel extends JPanel implements Serializable {
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 20; x++) {
 				// Es wird ein neues StaticObject mit neuem Typ erzeugt(Typ = was auch immer in LevelObject
-				// steht, am Ende ist der StaticObject Array gefüllt mit neuen StatiObject Objekten
+				// steht, am Ende ist der StaticObject Array gefuellt mit neuen StatiObject Objekten
 				this.StaticObjects[y][x] = new StaticObject(LevelObjects[pSection][y][x]);
 			}
 		}
@@ -809,7 +812,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Laed den naechsten Levelabschnitt
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadNextLevelSection(){
 		if(this.CurrentLevelSection < 2){ //Max 3 Abschnitte, daher
@@ -820,7 +823,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt den Array der Dynamischen Objekte(bewegliche Objekte wie Player/Gegner/Gegenstaende) zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public DDynamic[] getDynamicObjects(){
 		return this.DynamicObjects;
@@ -837,14 +840,14 @@ public class DPanel extends JPanel implements Serializable {
 	/**
 	 * Setzt den Array der Dynamischen Objekte(bewegliche Objekte wie Player/Gegner etc.)
 	 * zu einem uebergebenen Wert
-	 * @param int[][] Array von Dynamischen Objekten
+	 * @param pDynamicObjects Array von Dynamischen Objekten
 	 */
 	public void setDynamicObjects(DDynamic[] pDynamicObjects){
 		this.DynamicObjects = pDynamicObjects;
 	}
 	
 	/**
-	 * Gibt das Checkpointobject zurück
+	 * Gibt das Checkpointobject zurueck
 	 */
 	public DDynamic getCheckpointObject(){
 		return this.CheckpointObject;
@@ -852,7 +855,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Setzt den Wert des Checkpointobjects
-	 * @param DDynamic zu speicherndes Checkpointobject
+	 * @param pCheckpointObject DDynamic zu speicherndes Checkpointobject
 	 */
 	public void setCheckpointObject(DDynamic pCheckpointObject){
 		this.CheckpointObject = pCheckpointObject;
@@ -860,7 +863,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.) zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public StaticObject[][] getStaticObjects(){
 		return this.StaticObjects;
@@ -877,7 +880,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt den Array der Level-Objekte zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int[][][] getLevelObjects(){
 		return this.LevelObjects;
@@ -894,7 +897,7 @@ public class DPanel extends JPanel implements Serializable {
 
 	/**
 	 * Gibt den momentanen Level zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int getCurrentLevel(){
 		return this.CurrentLevel;
@@ -910,7 +913,7 @@ public class DPanel extends JPanel implements Serializable {
 
 	/**
 	 * Gibt den momentanen Levelabschnitt zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int getCurrentLevelSection(){
 		return this.CurrentLevelSection;
@@ -918,7 +921,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Setzt den momentanen Levelabschnitt
-	 * @param pLevel Nummer des zu setzenden Levelabscnitts
+	 * @param pLevelSection Nummer des zu setzenden Levelabschnitts
 	 */
 	public void setCurrentLevelSection(int pLevelSection){
 		this.CurrentLevelSection = pLevelSection;
@@ -926,7 +929,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt zurueck, ob ein Checkpoint existiert
-	 * @param NICHTS
+	 *  
 	 */
 	public boolean CheckpointExists(){
 		if(this.CheckpointObject != null)
@@ -937,7 +940,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt zurueck, ob ein Checkpoint geladen wurde
-	 * @param NICHTS
+	 *  
 	 */
 	public boolean CheckpointLoaded(){
 		return this.CheckpointLoaded;
@@ -945,7 +948,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt den momentanen Checkpoint zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public DDynamic getCheckpoint(){
 		return this.CheckpointObject;
@@ -961,7 +964,7 @@ public class DPanel extends JPanel implements Serializable {
 
 	/**
 	 * Startet Das Spiel neu, Reset zum ersten Levelabschnitt
-	 * @param NICHTS
+	 *  
 	 */
 	public void neuStart(){
 		this.loadLevelIntoStaticObjects(0); // Lade ersten Levelabschnitt
@@ -969,7 +972,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Beendet das Spiel und geht zurueck zum Startmenue
-	 * @param NICHTS
+	 *  
 	 */
 	public void beendeSpiel(){
 		this.SpielFenster.dispose(); // Schliesst das Spielfenster
@@ -979,7 +982,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt Anzahl der Spieler zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int SpielerModus(){
 		return this.AnzahlSpieler;
@@ -987,7 +990,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Gibt zurueck ob wir gerade im Debug-Modus sind(Fehlersuche)
-	 * @param NICHTS
+	 *  
 	 */
 	public boolean getDebugMode(){
 		return this.DebugMode;
@@ -995,7 +998,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/** Messagedialog 
 	 * -> Spieler bekommen Spielstand
-	 * @param NICHTS
+	 *  
 	 */
 	public void Spielstand()
 	{
@@ -1004,7 +1007,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Beim Sterben und bei Checkpoint == true kommt ein Messagefenster mit JOptionPane
-	 * @param Keine Parameter
+	 *  
 	 */
 	public int Checkpoint(){//Fragt nach Checkpoint Benutzung wenn moeglich.
 		int opt = JOptionPane.showOptionDialog(null, "OH LEIDER GEGESSEN WORDEN!\nCheckpoint:\n"+this.DynamicObjects[0].CheckAussage(),
@@ -1016,7 +1019,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
-	 * @param Keine Parameter
+	 *  
 	 */
 	public void RevivePaint(){
 		if(this.CheckpointLoaded == false){
@@ -1028,7 +1031,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Speichert den aktuellen Spielstand (mit Z)
-	 * @param Keine Parameter
+	 *  
 	 */
 	public void SaveGame(){
 		ObjectOutputStream output = null;
@@ -1049,7 +1052,7 @@ public class DPanel extends JPanel implements Serializable {
 	
 	/**
 	 * Laden den aktuellen Spielstand (mit U)
-	 * @param Keine Parameter
+	 *  
 	 */
 	public void LoadGame(){
 		try{

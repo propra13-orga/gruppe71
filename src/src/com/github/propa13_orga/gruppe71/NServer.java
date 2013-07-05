@@ -15,6 +15,9 @@ import java.awt.event.KeyAdapter;
 import java.io.*;
 import java.net.*;
 
+/**
+* Klasse des Servers fuer das Netzwerkspiel
+*/
 public class NServer implements Runnable{
 	private static final long serialVersionUID = 1L;
 
@@ -30,6 +33,9 @@ public class NServer implements Runnable{
 	
 
 	  @Override
+	  	/**
+		 * Initialisiert den Netzwerk-Server
+		 */
 	  public void run()
 	  {
 	    this.HostServerSocket = null;
@@ -56,7 +62,7 @@ public class NServer implements Runnable{
 	        Socket NewSocket = this.HostServerSocket.accept();
 	        
 	        //Wenn die Anfrage da ist, dann wird ein Thread gestartet, der 
-	        //die weitere Verarbeitung übernimmt.
+	        //die weitere Verarbeitung uebernimmt.
 	        System.out.println ("Server: Client Connected");
 	        Thread SocketThread = new Thread(new NServerHandler(this.ClientQueues,NewSocket, this.SpielPanel) );
 	        SocketThread.start();

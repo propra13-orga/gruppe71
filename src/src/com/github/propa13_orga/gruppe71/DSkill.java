@@ -13,6 +13,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+/**
+* Klasse fuer die Faehigkeiten 
+*/
 public class DSkill implements ActionListener {
 	
 	private DPanel SpielPanel;
@@ -21,10 +24,10 @@ public class DSkill implements ActionListener {
 	public JTextField points;
 	public JLabel[] rank;
 	public JTextField passive;
-	public JLabel hast,hast2,hast3;//bewirkt mehr Exp bei Mobs töten
+	public JLabel hast,hast2,hast3;//bewirkt mehr Exp bei Mobs toeten
 	public JLabel greed,greed2,greed3;//mehr coins
 	public JLabel crit,crit2,crit3;
-	public JButton wisdom,greed4,crit4;//wisdom gehört zu hast...
+	public JButton wisdom,greed4,crit4;//wisdom gehoert zu hast...
 	public JLabel lifesteal,lifesteal2,lifesteal3;
 	public JButton lifesteal4;
 	public JTextField ultiminfo;
@@ -44,7 +47,7 @@ public class DSkill implements ActionListener {
 		
 		
 		//Titel JTextField
-		JTextField info= new JTextField("Fähigkeiten Upgrade!");
+		JTextField info= new JTextField("Fï¿½higkeiten Upgrade!");
 		Dimension size1=info.getPreferredSize();
 		info.setBounds(200,20,size1.width, size1.height);
 		info.setEditable(false);
@@ -71,7 +74,7 @@ public class DSkill implements ActionListener {
 		points.setEditable(false);
 		pan.add(points);
 		
-		this.passive= new JTextField("Passive Fähigkeiten:");
+		this.passive= new JTextField("Passive Faehigkeiten:");
 		Dimension size4=points.getPreferredSize();
 		passive.setBounds(20,100,size4.width-5, size4.height);
 		passive.setEditable(false);
@@ -186,7 +189,7 @@ public class DSkill implements ActionListener {
 		
 
 		//Eigenschaften Frame
-		frame.setTitle("Fähigkeiten");
+		frame.setTitle("Faehigkeiten");
 		frame.getContentPane().add(pan);
 		pan.setBackground(Color.ORANGE);
 		frame.setLocation(350,150);

@@ -24,6 +24,9 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+/**
+* Klasse des NPanels, das Spielfeld vom Spielfenster im Netzwerkspiel 
+*/
 public class NPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -281,7 +284,7 @@ public class NPanel extends JPanel {
 					if(this.DynamicObjects[i] != null){ //Wenn Objekt aktiv
 						
 						if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden?
-							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
+							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stueckchen
 						}
 						
 						
@@ -389,7 +392,7 @@ public class NPanel extends JPanel {
 							break;
 						}
 							if(this.DynamicObjects[i].IsMoving() == true){ //Soll es bewegt werden? Zufalls-Bewegung
-							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stückchen
+							this.DynamicObjects[i].AnimateMoving(); //Bewege es ein Stueckchen
 							} else {
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
@@ -438,7 +441,7 @@ public class NPanel extends JPanel {
 						else
 							this.drawImageAtPos(pGraphics, (33) , this.Projectiles[i].getCurrentXPosition(), this.Projectiles[i].getCurrentYPosition());						
 
-						this.Projectiles[i].AnimateMoving(); //Bewege es ein Stückchen
+						this.Projectiles[i].AnimateMoving(); //Bewege es ein Stueckchen
 					}
 				} 
 			}
@@ -510,7 +513,7 @@ public class NPanel extends JPanel {
 		
 	/**
 	 * Laed Level Nummer....
-	 * @param Nummer des Levels
+	 * @param pLevel Nummer des Levels
 	 */
 	public void loadLevel(int pLevel){	
 		//Lade eine Level Datei in den Zwischenspeicher
@@ -524,7 +527,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Laed den naechsten Level
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadNextLevel(){
 		if(this.CurrentLevel < 2) //Max 3 Abschnitte, daher
@@ -533,7 +536,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Liest eine Datei aus und laed sie als Level
-	 * @param Pfad/Dateiname der LevelDatei
+	 * @param pFilename Pfad/Dateiname der LevelDatei
 	 */
 	public void loadLevelFromFile(String pFilename){
 		
@@ -573,7 +576,7 @@ public class NPanel extends JPanel {
 		    //Momentan haben wir nur String[], brauchen aber int
 		    int[][][] TmpLevelObjects = new int[3][12][20]; 
 		    
-		    //Dazu lesen wir jetzt den String Zeile für Zeile auf
+		    //Dazu lesen wir jetzt den String Zeile fuer Zeile auf
 		    //und speichern jedes Zeichen(Char) als Nummer(int) in das int[][]
 		    for (int z = 0; z < 3; z++){ //Level-Abschnitt
 		    	for (int y = 0; y < 12; y++){ //Spalte
@@ -677,7 +680,7 @@ public class NPanel extends JPanel {
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 20; x++) {
 				// Es wird ein neues StaticObject mit neuem Typ erzeugt(Typ = was auch immer in LevelObject
-				// steht, am Ende ist der StaticObject Array gefüllt mit neuen StatiObject Objekten
+				// steht, am Ende ist der StaticObject Array gefuellt mit neuen StatiObject Objekten
 				this.StaticObjects[y][x] = new StaticObject(LevelObjects[pSection][y][x]);
 			}
 		}
@@ -696,7 +699,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Laed den naechsten Levelabschnitt
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadNextLevelSection(){
 		if(this.CurrentLevelSection < 2){ //Max 3 Abschnitte, daher
@@ -707,7 +710,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt den Array der Dynamischen Objekte(bewegliche Objekte wie Player/Gegner/Gegenstaende) zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public NDynamic[] getDynamicObjects(){
 		return this.DynamicObjects;
@@ -724,14 +727,14 @@ public class NPanel extends JPanel {
 	/**
 	 * Setzt den Array der Dynamischen Objekte(bewegliche Objekte wie Player/Gegner etc.)
 	 * zu einem uebergebenen Wert
-	 * @param int[][] Array von Dynamischen Objekten
+	 * @param pDynamicObjects Array von Dynamischen Objekten
 	 */
 	public void setDynamicObjects(NDynamic[] pDynamicObjects){
 		this.DynamicObjects = pDynamicObjects;
 	}
 	
 	/**
-	 * Gibt das Checkpointobject zurück
+	 * Gibt das Checkpointobject zurueck
 	 */
 	public NDynamic getCheckpointObject(){
 		return this.CheckpointObject;
@@ -739,7 +742,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Setzt den Wert des Checkpointobjects
-	 * @param NDynamic zu speicherndes Checkpointobject
+	 * @param pCheckpointObject zu speicherndes Checkpointobject
 	 */
 	public void setCheckpointObject(NDynamic pCheckpointObject){
 		this.CheckpointObject = pCheckpointObject;
@@ -747,7 +750,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.) zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public StaticObject[][] getStaticObjects(){
 		return this.StaticObjects;
@@ -764,7 +767,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt den Array der Level-Objekte zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int[][][] getLevelObjects(){
 		return this.LevelObjects;
@@ -781,7 +784,7 @@ public class NPanel extends JPanel {
 
 	/**
 	 * Gibt den momentanen Level zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int getCurrentLevel(){
 		return this.CurrentLevel;
@@ -797,7 +800,7 @@ public class NPanel extends JPanel {
 
 	/**
 	 * Gibt den momentanen Levelabschnitt zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int getCurrentLevelSection(){
 		return this.CurrentLevelSection;
@@ -805,7 +808,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Setzt den momentanen Levelabschnitt
-	 * @param pLevel Nummer des zu setzenden Levelabscnitts
+	 * @param pLevelSection Nummer des zu setzenden Levelabscnitts
 	 */
 	public void setCurrentLevelSection(int pLevelSection){
 		this.CurrentLevelSection = pLevelSection;
@@ -813,7 +816,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt zurueck, ob ein Checkpoint existiert
-	 * @param NICHTS
+	 *  
 	 */
 	public boolean CheckpointExists(){
 		if(this.CheckpointObject != null)
@@ -824,7 +827,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt zurueck, ob ein Checkpoint geladen wurde
-	 * @param NICHTS
+	 *  
 	 */
 	public boolean CheckpointLoaded(){
 		return this.CheckpointLoaded;
@@ -832,7 +835,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt den momentanen Checkpoint zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public NDynamic getCheckpoint(){
 		return this.CheckpointObject;
@@ -848,7 +851,7 @@ public class NPanel extends JPanel {
 
 	/**
 	 * Startet Das Spiel neu, Reset zum ersten Levelabschnitt
-	 * @param NICHTS
+	 *  
 	 */
 	public void neuStart(){
 		this.loadLevelIntoStaticObjects(0); // Lade ersten Levelabschnitt
@@ -856,7 +859,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Beendet das Spiel und geht zurueck zum Startmenue
-	 * @param NICHTS
+	 *  
 	 */
 	public void beendeSpiel(){
 		this.SpielFenster.dispose(); // Schliesst das Spielfenster
@@ -866,7 +869,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt Anzahl der Spieler zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int SpielerModus(){
 		return this.AnzahlSpieler;
@@ -874,7 +877,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt zurueck ob wir gerade im Debug-Modus sind(Fehlersuche)
-	 * @param NICHTS
+	 *  
 	 */
 	public boolean getDebugMode(){
 		return this.DebugMode;
@@ -882,7 +885,7 @@ public class NPanel extends JPanel {
 	
 	/** Messagedialog 
 	 * -> Spieler bekommen Spielstand
-	 * @param NICHTS
+	 *  
 	 */
 	public void Spielstand()
 	{
@@ -891,7 +894,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Beim Sterben und bei Checkpoint == true kommt ein Messagefenster mit JOptionPane
-	 * @param Keine Parameter
+	 *  
 	 */
 	public int Checkpoint(){//Fragt nach Checkpoint Benutzung wenn moeglich.
 		int opt = JOptionPane.showOptionDialog(null, "OH LEIDER GEGESSEN WORDEN!\nCheckpoint:\n"+this.DynamicObjects[0].CheckAussage(),
@@ -903,7 +906,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Die Positon des Letzten Checkpoints und Das Dynamische Objekt an der Stelle Painten
-	 * @param Keine Parameter
+	 *  
 	 */
 	public void RevivePaint(){
 		if(this.CheckpointLoaded == false){
@@ -918,7 +921,7 @@ public class NPanel extends JPanel {
 
 	/**
 	 * Gibt zurueck ob man Host ist
-	 * @param NICHTS 
+	 *   
 	 */
 	public boolean isHost(){
 		  return this.IsHost;
@@ -926,7 +929,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt zurueck welches DO man steuert
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getPlayerIndex(){
 		  return this.PlayerIndex;
@@ -935,7 +938,7 @@ public class NPanel extends JPanel {
 
 	/**
 	 * Gibt zurueck ob man verbunden ist
-	 * @param NICHTS 
+	 *   
 	 */
 	public boolean isConnected(){
 		  return this.Connected;
@@ -953,7 +956,7 @@ public class NPanel extends JPanel {
 
 	/**
 	 * Gibt die momentane Clientmessage zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public String getClientMessage(){
 		  return this.ClientMessage;
@@ -977,7 +980,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Resettet, die momentane ClientCessage
-	 * @param NICHTS
+	 *  
 	 */
 	public void resetClientMessage(){
 		this.ClientMessage = "";
@@ -985,7 +988,7 @@ public class NPanel extends JPanel {
 	
 	/**
 	 * Gibt die momentane Clientantwort zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public String getClientResponse(){
 		  return this.ClientResponse;
@@ -1004,7 +1007,7 @@ public class NPanel extends JPanel {
 
 	/**
 	 * Gibt die momentane IP-Adresse des anderen Spielers zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public String getClientIPAddress(){
 		  return this.ClientIPAddress;

@@ -2,6 +2,9 @@ package src.com.github.propa13_orga.gruppe71;
 
 import java.io.Serializable;
 
+/**
+* Haupt-Klasse , die das Spiel startet 
+*/
 public class DungeonCrawler implements Serializable{
 	/**
 	 * 

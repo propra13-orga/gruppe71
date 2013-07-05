@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
+/**
+* Klasse des Startmenus 
+*/
 public class DStartMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 	

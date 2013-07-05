@@ -1,5 +1,8 @@
 package src.com.github.propa13_orga.gruppe71;
 
+/**
+* Klasse der Statischen Objekte, nicht bewegliche Objekte wir Mauern, Fallen etc.
+*/
 public class StaticObject {
 	
 	private int Type;
@@ -19,21 +22,35 @@ public class StaticObject {
 	}
 	
 	
+	/**
+	 * Setzt Collision
+	 * @param pCollision Collision?
+	 */
 	public void setCollision(boolean pCollision) {
 		this.Collision = pCollision;
 	}
 	
 	
+	/**
+	 * Gibt die Collision zurueck
+	 */
 	public boolean getCollision() {
 	return this.Collision;
 	}
 	
 	
+	/**
+	 * Setzt den Typ
+	 * @param pType Typ?
+	 */
 	public void setType (int pType){
 	this.Type = pType;
 	}
 		
 	
+	/**
+	 * Gibt den Typ zurueck
+	 */
 	public int getType() {
 		return this.Type;
 	}

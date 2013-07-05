@@ -15,6 +15,9 @@ import javax.swing.WindowConstants;
 
 
 
+/**
+* Klasse des Shops im Netzwerkspiel
+*/
 public class NShop implements ActionListener {
 
 	public NPanel SpielPanel;
@@ -112,7 +115,7 @@ public class NShop implements ActionListener {
 		 * 
 		 * 
 		 */
-		this.ShopItems(); //6 St�ck gemacht
+		this.ShopItems(); //6 Stueck gemacht
 		
 		this.InitPreis();
 		
@@ -245,7 +248,7 @@ public class NShop implements ActionListener {
 	/**
 	 * Hier werden die Bilder platziert am besten in der Reihenfolge
 	 * der Items in DDynamic
-	 * @return
+	 * @return String[]
 	 */
 	public String[] Bild(){
 		this.bild=new String[SpielPanel.getDynamicObject(SpielPanel.getPlayerIndex()).NumberItems()];
@@ -292,7 +295,7 @@ public class NShop implements ActionListener {
 			this.hinweise[i].setBounds(500,250+z,260,120);
 			this.pan.add(hinweise[i]);
 			
-			//Anzahl Gesamt Gegenst�nde
+			//Anzahl Gesamt Gegenstuende
 			this.anzahl[i].setBounds(320,120+y,this.a[i].width+25,this.a[i].height+5);// hier justizieren
 			anzahl[i].setEditable(false);
 			this.pan.add(anzahl[i]);
@@ -560,7 +563,6 @@ public class NShop implements ActionListener {
 
 		/**
 		 * Setze Gesamtbetrag
-		 * @param Nichts
 		 */
 		public int setTotal(int p){
 			this.total+=p;
@@ -573,7 +575,6 @@ public class NShop implements ActionListener {
 
 		/**
 		 * Preisuebersicht bei Pricelist hier Init
-		 * @param Nichts
 		 */
 		public void InitPreis(){
 			this.money=new int[SpielPanel.getDynamicObject(SpielPanel.getPlayerIndex()).NumberItems()];
@@ -584,7 +585,6 @@ public class NShop implements ActionListener {
 		
 		/**
 		 * Preisliste $$$
-		 * @param Nichts
 		 */
 		public int getTotal(){
 			return this.total;
@@ -592,7 +592,6 @@ public class NShop implements ActionListener {
 		
 		/**
 		 * Zufallsfunktion?
-		 * @param Nichts
 		 */
 		public void PriceList(){
 				this.money[0]=150;
@@ -605,7 +604,6 @@ public class NShop implements ActionListener {
 		
 		/**
 		 * Setze Namen im Menue
-		 * @param Nichts
 		 */
 		public String[] ShopItems(){
 			this.namen=new String[SpielPanel.getDynamicObject(SpielPanel.getPlayerIndex()).NumberItems()];
@@ -629,7 +627,6 @@ public class NShop implements ActionListener {
 
 	/**
 	 * Zwischenspeicherung
-	 * @param Nichts
 	 */
 	public int[] InitItemStorage(){
 		this.wert2=new int[SpielPanel.getDynamicObject(SpielPanel.getPlayerIndex()).NumberItems()];
@@ -641,7 +638,6 @@ public class NShop implements ActionListener {
 	
 	/**
 	 * Gesamtbetrag wird berechnet
-	 * @param Nichts
 	 */
 	public int ItemGesamt(){
 		this.gesamt=0;

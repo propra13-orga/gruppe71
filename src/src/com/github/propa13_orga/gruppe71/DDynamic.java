@@ -1,4 +1,4 @@
-					package src.com.github.propa13_orga.gruppe71;
+package src.com.github.propa13_orga.gruppe71;
 
 import java.awt.Graphics;
 import java.io.Serializable;
@@ -8,10 +8,11 @@ import javax.swing.JOptionPane;
 
 
 
+/**
+* Klasse Dynamische Objekte 
+*/
 public class DDynamic implements Serializable {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 6109931997164167600L;
 	protected DSound sound;
 	protected DPanel SpielPanel;
@@ -45,8 +46,8 @@ public class DDynamic implements Serializable {
 	protected boolean info;
 	protected boolean key;
 	protected int hidden;
-	protected int ok;// Für Schlüssel JOptionPane
-	protected int posX;//Spezielle Positionen für key
+	protected int ok;// Fuer Schluessel JOptionPane
+	protected int posX;//Spezielle Positionen fuer key
 	protected int posY;
 	
 	protected int[] items;
@@ -57,7 +58,7 @@ public class DDynamic implements Serializable {
 	
 	protected int exp;//Erfahrungspunkte
 	protected int level; //Level des Spielers
-	protected int[] grenze;// für verschiedene Level Grenzen
+	protected int[] grenze;// fuer verschiedene Level Grenzen
 	protected int skills;
 	protected int[] rank;
 	protected int[] wisdom,greed;
@@ -133,7 +134,7 @@ public class DDynamic implements Serializable {
     
 	/**
 	 * Gibt Momentane Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int[]getCurrentPosition(){
 		  int[] CurrentPosition = new int[2]; //2 Rueckgabewerte: x und y
@@ -146,7 +147,7 @@ public class DDynamic implements Serializable {
 
 	/**
 	 * Gibt Momentane X-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentXPosition(){
 		  return this.CurrentXPos;
@@ -154,7 +155,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Gibt Momentane Y-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentYPosition(){
 		  return this.CurrentYPos;
@@ -173,7 +174,7 @@ public class DDynamic implements Serializable {
 
 	/**
 	 * Gibt zurueck, ob das Objekt sich gerade bewegt
-	 * @param NICHTS 
+	 *   
 	 */
 	public boolean IsMoving(){
 		return this.moves;
@@ -181,7 +182,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	* Gibt zurueck, ob das Objekt ein Bot ist
-	* @param NICHTS
+	*  
 	*/
 	public boolean IsBot(){
 	return this.isBot;
@@ -189,7 +190,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	* Gibt Type des Bots ist
-	* @param NICHTS
+	*  
 	*/
 	public int getType() {
 		return this.Type;
@@ -205,7 +206,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	* Gibt Type der Ruestung
-	* @param NICHTS
+	*  
 	*/
 	public int getRType() {
 		return this.RType;
@@ -228,7 +229,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Gibt MoveTo Position zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int[] getMoveToPosition(){
 		int[] PositionMoving=new int[2];
@@ -240,7 +241,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Gibt MoveTo X-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getMoveToXPosition(){
 		  return this.MoveToXPos;
@@ -248,7 +249,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Gibt MoveTo Y-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getMoveToYPosition(){
 		  return this.MoveToYPos;
@@ -256,7 +257,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Gibt StaticObjects zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public StaticObject[][] getStaticObjects(){
 		return this.StaticObjects;
@@ -272,8 +273,8 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setzt die neue Position x und y eines dyn. Objektes(z.B. Player), wo es hin gehen soll
-	 * @param pXStart Neue X Position
-	 * @param pYStart Neue Y Position
+	 * @param pXPos Neue X Position
+	 * @param pYPos Neue Y Position
 	 */
 	public void setMoveToPosition(int pXPos, int pYPos){
 		int maeuse=0;
@@ -584,21 +585,20 @@ public class DDynamic implements Serializable {
 	/**
 	 * Animiert das Objekt, hiermit wird das dyn. Objekt Stueck fuer Stueck um 2 Pixel bewegt, bis
 	 * es sich an der Position befindet wo es hin soll
-	 * @param pIndex Index des dyn. Objektes
 	 */
 	public void AnimateMoving(){
 		
 		if(this.CurrentXPos < this.MoveToXPos)
-			this.CurrentXPos += 3; //muss noch ein Stï¿½ck nach rechts
+			this.CurrentXPos += 3; //muss noch ein Stueck nach rechts
 
 			if(this.CurrentXPos > this.MoveToXPos)
-			this.CurrentXPos -= 3; //muss noch ein Stï¿½ck nach links
+			this.CurrentXPos -= 3; //muss noch ein Stueck nach links
 
 			if(this.CurrentYPos < this.MoveToYPos)
-			this.CurrentYPos += 3; //muss noch ein Stï¿½ck nach unten
+			this.CurrentYPos += 3; //muss noch ein Stueck nach unten
 
 			if(this.CurrentYPos > this.MoveToYPos)
-			this.CurrentYPos -= 3; //muss noch ein Stï¿½ck nach oben
+			this.CurrentYPos -= 3; //muss noch ein Stueck nach oben
 
 			//Wenn wir fertig sind, setzen wir die Variable wieder, dass es sich momentan nicht bewegt
 			if(this.CurrentYPos == this.MoveToYPos && this.CurrentXPos == this.MoveToXPos)
@@ -667,7 +667,6 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Wechselt Waffe, wenn vorhanden
-	 * @param pType Art der Aktion
 	 */
 	public void changeWeapon(){
 		if(this.items[0] > 0 && this.ActiveItem == 20){
@@ -686,7 +685,7 @@ public class DDynamic implements Serializable {
 
 	/**
 	 * Gibt Gesundheit zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getHealth(){
 		return this.Health;	
@@ -703,7 +702,7 @@ public class DDynamic implements Serializable {
 
 	/**
 	 * Gibt Leben zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getLives(){
 		return this.Lives;	
@@ -719,7 +718,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	* Gibt Money zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getMoney(){
 		return this.Money;	
@@ -737,7 +736,7 @@ public class DDynamic implements Serializable {
 
 	/**
 	* Gibt Mana zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getMana(){
 		return this.Mana;	
@@ -753,7 +752,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Gibt Punkte zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getPoints(){ //Bekomme Punkte
 		return this.Points;
@@ -761,7 +760,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setzt Punkte
-	 * @param pHealth Wieviele Punkte? 
+	 * @param pPoints Wieviele Punkte? 
 	 */
 	public void setPoints(int pPoints) //Erhoeht Punkte des Spielers bei Erreichen eines Levelabschnitts
 	{
@@ -770,7 +769,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	* Gibt Aktives Item zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getActiveItem(){
 		return this.ActiveItem;	
@@ -848,8 +847,8 @@ public class DDynamic implements Serializable {
 	}
 	
 	
-	/** Gibt die Aussage fÃ¼r das Checkpoint Fenster zurueck
-	 * @param NICHTS
+	/**
+	 * Gibt die Aussage fuer das Checkpoint Fenster zurueck 
 	 */
 	public String CheckAussage(){
 		if(this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == false)
@@ -861,24 +860,17 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Guckt wie viele Items gesetzt wurden
-	 * @param Keine Parameter
+	 *  
 	 */
 	public int NumberItems(){
 		return this.items.length;
 	}
-	
-
-	/**
-	 * Initialisiert Items 
-	 * @param Keine Parameter
-	 */
 
 	
 	/**
 	 * Initialisiert Items (bis jetzt ITEMS =!  7  ! im DPanel init)
-	 * @param Keine Parameter
-	 */
-	
+	 *  
+	 */	
 	public int[] InitItems(){
 		this.items=new int[NumberItems()];
 		for(int i=0;i<=NumberItems()-1;i++){
@@ -889,18 +881,27 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * 	Fuer DItems und DShop
+	 * @param p Parameter
 	 */
 	public int AnzahlItems(int p){
 	 
 		return this.items[p];
 	}
 	
-	//Addiere die neuen Items vom DShop
+	/**
+	 * 	Addiere die neuen Items vom Shop
+	 * @param i Parameter
+	 * @param p Parameter
+	 */
 	public int SetItems(int i,int p){
 		this.items[i]+=p;
 		return this.items[i];
 	}
 	
+	/**
+	 * Setze die neuen Items vom Shop
+	 * @param p Parameter
+	 */
 	public int[] setItems(int p){
 		for(int i=0;i<=NumberItems()-1;i++){
 			this.items[i]=p;
@@ -910,31 +911,46 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Fuer DItems
-	 * @param p
-	 * @return
+	 * @param p Index
 	 */
 	public String getName(int p){
 		return this.name[p];
 	}
-	//Teleport, Initializer
+	
+	/**
+	 * Initialisiert Teleporter
+	 * @param p Index
+	 */
 	public boolean SetSecret(boolean p){
 		return this.secret=p;	
 	}
+
+	/**
+	 * Gibt Teleporter zurueck
+	 */
 	public boolean getSecret(){
 		return this.secret;
 	}
 	
-	//Geheimtuer
+	/**
+	 * Initialisiert Geheimtuer
+	 * @param p Index
+	 */
 	public boolean SetSecret2(boolean p){
 		return this.secret2=p;	
 	}
+	
+	/**
+	 * Initialisiert Geheimtuer2
+	 *  
+	 */
 	public boolean getSecret2(){
 		return this.secret2;
 	}
 	
 	/**
 	 * Initialisiert Namensliste alles zuerst auf "Leer"
-	 * @param Keine Parameter
+	 *  
 	 */
 	public String[] InitName(){
 		
@@ -947,13 +963,15 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Kann per Taste i im Spiel aufgerufen werden
-	 * @param Keine Parameter
+	 *  
 	 */
 	public void ItemBag(){
 		DItems it = new DItems(SpielPanel);
 		}
+	
 	/**
 	 * Shop Interaktion, beim Betretten des Shops
+	 *  
 	 */
 	public void Shop(){
 		DShop shop=new DShop(SpielPanel);
@@ -961,7 +979,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Alle SoundDateien fuer DDynamic
-	 * @return
+	 * @return String[]
 	 */
 	public String[] SoundDateien(){
 		datei=new String[99];
@@ -982,6 +1000,7 @@ public class DDynamic implements Serializable {
 		return this.datei;
 		
 	}
+	
 	/**
 	 * Sound wird hier abgespielt -> Waffensound!
 	 * @param p ist der Typ der Projektile
@@ -1018,10 +1037,10 @@ public class DDynamic implements Serializable {
 	}
 	
 	}
+	
 	/**
 	 * ein counter fuer DSound Magie etc.
-	 * @param int p
-	 * @return
+	 * @param p Integer
 	 */
 	public int setCounter(int p){
 		this.counter+=p;
@@ -1030,7 +1049,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Quest Dialog 1
-	 * @param int p
+	 * @param p Integer
 	 */
 	public void Quest1(int p){
 		if(p==JOptionPane.YES_OPTION){
@@ -1054,7 +1073,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Quest Dialog 2
-	 * @param int p
+	 * @param p Integer
 	 */
 	public void Quest2(int p){
 		if(p==JOptionPane.YES_OPTION){
@@ -1078,7 +1097,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Quest Dialog 3
-	 * @param int p
+	 * @param p Integer
 	 */
 	public void Quest3(int p){
 		if(p==JOptionPane.YES_OPTION){
@@ -1104,7 +1123,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Informatio am Anfang des Spiels
-	 * 
+	 *  
 	 */
 	public void Information(){
 		JOptionPane.showMessageDialog(null, "Aufgepasst edler Burger.\nAuf eurer Reise werdet ihr viele Gefahren entdecken"
@@ -1127,9 +1146,9 @@ public class DDynamic implements Serializable {
 	}
 	/**
 	 * Belohnung 2
-	 * @param int p
-	 * @param int y
-	 * @param int z
+	 * @param p Index
+	 * @param y Index
+	 * @param z Index
 	 */
 	public void Belohnung2(int p,int y,int z){//Belohnung
 		if(this.ok==JOptionPane.OK_OPTION){
@@ -1145,9 +1164,9 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Belohnung 3
-	 * @param int p
-	 * @param int y
-	 * @param int z
+	 * @param p Index
+	 * @param y Index
+	 * @param z Index
 	 */
 	public void Belohnung3(int p,int y,int z){//Belohnung
 		if(this.ok==JOptionPane.OK_OPTION){
@@ -1172,9 +1191,7 @@ public class DDynamic implements Serializable {
 		}
 		return this.qreceived;
 	}
-	
-	//Checkt ob schon der NPC beruehrt wurde
-	
+		
 	/**
 	 * Initialisierung Quest Already
 	 * @return boolean[]
@@ -1189,7 +1206,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Bekomme Quest Already
-	 * @param int 
+	 * @param p Index
 	 * @return boolean
 	 */
 	public boolean getQuestLaufend(int p){
@@ -1216,7 +1233,7 @@ public class DDynamic implements Serializable {
 		}
 		
 	/**
-	 * Bekomme Quest Lï¿½nge
+	 * Bekomme Quest Luenge
 	 * @return int
 	 */
 	public int QuestLength(){
@@ -1233,17 +1250,17 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 *  Quest Marken setzen
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int setMarke(int p){
 		return this.marke+=p;
 	}
 
- /**
- * Initialisiereung Belohnungen
- * @return boolean[]
- */
+	/**
+	 * Initialisiereung Belohnungen
+	 * @return boolean[]
+	 */
 	public boolean[] InitBelohnungen(){
 		this.treasure=new boolean[3];
 		for(int i=0; i<this.treasure.length;i++){
@@ -1251,6 +1268,7 @@ public class DDynamic implements Serializable {
 		}
 		return this.treasure;
 	}
+	
 	/**
 	 * Initialisierung QuestDenied
 	 * @return boolean[]
@@ -1262,13 +1280,15 @@ public class DDynamic implements Serializable {
 		}
 		return this.qdenied;
 	}
+	
 	/**
 	 * Aufgabe,Quest wurde nicht angenommen.
-	 * @param int p
+	 * @param p Index
 	 */
 	public boolean QuestDenied(int p){
 		return this.qdenied[p];
 	}
+	
 	/**
 	 * bekomme Schatz Verhalten
 	 * @param p
@@ -1277,9 +1297,11 @@ public class DDynamic implements Serializable {
 	public boolean getTreasure(int p){
 		return this.treasure[p];
 	}
+	
 	/**
 	 * Schatz wird auf true oder false gesetzt.
-	 * @param boolean , int
+	 * @param m Index
+	 * @param p Index
 	 */
 	public boolean setTreasure(boolean m,int p){
 		return this.treasure[p]=m;
@@ -1293,31 +1315,32 @@ public class DDynamic implements Serializable {
 		return this.info;
 	}
 	/**
-	 * Bekomme Schlüssel Wert
-	 * @return
+	 * Bekomme Schluessel Wert
 	 */
 	public boolean getKey(){
 		return this.key;
 	}
 	
 	/**
-	 * Schüssel setzen
+	 * Schuessel setzen
 	 * @param p
 	 * @return boolean
 	 */
 	public boolean setKey(boolean p){
 		return this.key=p;
 	}
+	
 	/**
-	 * Setze Hidden Variable fuer versteckte Gegenstände
+	 * Setze Hidden Variable fuer versteckte Gegenstuende
 	 * @return int
 	 */
 	public int getHidden(){
 		return this.hidden;
 	}
+	
 	/**
 	 * Setze Hidden Variable siehe get
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int setHidden(int p){
@@ -1325,16 +1348,16 @@ public class DDynamic implements Serializable {
 	}
 	
 	/**
-	 * Spezielle Position des Schlüssels X
-	 * @return
+	 * Spezielle Position des Schluessels X
+	 * @return int
 	 */
 	public int getPosX(){
 		return this.posX;
 	}
 	
 	/**
-	 * Spezielle Position des Schlüssels Y
-	 * @return
+	 * Spezielle Position des Schluessels Y
+	 * @return int
 	 */
 	public int getPosY(){
 		return this.posY;
@@ -1342,7 +1365,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 *  Speichert key Position Y
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int setPosY(int p){
@@ -1352,7 +1375,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 *  Speichert key Position X
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int setPosX(int p){
@@ -1370,9 +1393,10 @@ public class DDynamic implements Serializable {
 	public int getExp(){
 		return this.exp;
 	}
+	
 	/**
 	 * Setze Erfahrungspunkte
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int setExp(int p){
@@ -1389,19 +1413,20 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setze Level
-	 * @param int p
-	 * @return
+	 * @param p Index
+	 * @return int
 	 */
 	public int setLevel(int p){
 		return this.level+=p;
 	}
+	
 	/**
 	 * Die Level Grenzen
 	 * @return int[]
 	 */
 	public int[] InitLevelGrenze(){
 		this.grenze=new int[10];
-		//Benötigte EXP
+		//Benuetigte EXP
 		this.grenze[0]=100; //Grenze zu Level 2
 		this.grenze[1]=150; //Grenze zu Level 3
 		this.grenze[2]=200; //Grenze zu Level 4
@@ -1433,6 +1458,7 @@ public class DDynamic implements Serializable {
 		}
 	}
 	}
+	
 	/**
 	 * Bekomme Skillpunkte
 	 * @return int
@@ -1443,6 +1469,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setze Skillpunkte
+	 * @param p Index
 	 * @return int
 	 */
 	public int setSkills(int p){
@@ -1478,7 +1505,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Bekomme Wisdom
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int getCurrentWisdom(int p){
@@ -1487,8 +1514,8 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setze Wisdom hoch
-	 * @param int p
-	 * @param int a
+	 * @param p Index
+	 * @param a Index
 	 * @return int
 	 */
 	public int setCurrentWisdom(int p,int a){
@@ -1504,7 +1531,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Bekomme Greed
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int getCurrentGreed(int p){
@@ -1513,8 +1540,8 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setze Greed hoch
-	 * @param int p
-	 * @param int a
+	 * @param p Index
+	 * @param a Index
 	 * @return int
 	 */
 	public int setCurrentGreed(int p,int a){
@@ -1544,7 +1571,7 @@ public class DDynamic implements Serializable {
 	}
 	
 	/**
-	 * Ranks der einzelnen Fähigkeiten
+	 * Ranks der einzelnen Fuehigkeiten
 	 * @return int[]
 	 */
 	public int[] InitRank(){
@@ -1554,6 +1581,7 @@ public class DDynamic implements Serializable {
 		}
 		return this.rank;
 	}
+	
 	/**
 	 * Bekomme Rank
 	 * @return int
@@ -1592,7 +1620,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Bekomme Crit Rate
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int getCurrentCrit(int p){
@@ -1601,8 +1629,8 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setze Crit hoch
-	 * @param int p
-	 * @param int a
+	 * @param p Index
+	 * @param a Index
 	 * @return int
 	 */
 	public int setCurrentCrit(int p,int a){
@@ -1624,7 +1652,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Setze critted 
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int setCritted(int p){
@@ -1632,7 +1660,7 @@ public class DDynamic implements Serializable {
 	}
 	/**
 	 *  Das Crit System arbeitet mit Random
-	 * @param int p
+	 * @param p Index
 	 * @return int
 	 */
 	public int CritSystem(int p){
@@ -1672,7 +1700,7 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * Methode Lifesteal benutzt Methode setHealth
-	 * @param int p
+	 * @param p Index
 	 */
 	
 	public void Lifesteal(int p){
@@ -1683,12 +1711,13 @@ public class DDynamic implements Serializable {
 	
 	/**
 	 * setUltima
-	 * @param boolean p
+	 * @param p Index
 	 * @return boolean
 	 */
 	public boolean setUltima(boolean p){
 		return this.ultimaready=p;
 	}
+	
 	/**
 	 * Methode getUltima
 	 * @return boolean

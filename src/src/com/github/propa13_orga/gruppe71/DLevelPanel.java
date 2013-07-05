@@ -26,6 +26,9 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+/**
+* Klasse des LevelPanels vom LevelEditor
+*/
 public class DLevelPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -155,7 +158,7 @@ public class DLevelPanel extends JPanel {
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_2player04.png"),//39 2.Spieler 0-Leben
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png"),//40 QUEST
 				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/Treasure.png"),//41 Truhe Belohnung Quests
-				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png")//Nach Quest Vervollst�ndigung
+				Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_wall01.png")//Nach Quest Vervollstuendigung
 				};
 	
 		//Zeichne das Bild
@@ -164,7 +167,7 @@ public class DLevelPanel extends JPanel {
 		
 	/**
 	 * Laed Level Nummer....
-	 * @param Nummer des Levels
+	 * @param pLevel Nummer des Levels
 	 */
 	public void loadLevel(int pLevel){	
 		if(this.levelExists(pLevel) == true){
@@ -180,7 +183,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Speichert Level Nummer....
-	 * @param Nummer des Levels
+	 * @param pLevel Nummer des Levels
 	 */
 	public void saveLevel(int pLevel){	
 		if(this.levelExists(pLevel) == true){
@@ -193,7 +196,7 @@ public class DLevelPanel extends JPanel {
 
 	/**
 	 * Neuen Level erstellen
-	 * @param NICHTS
+	 *  
 	 */
 	public void createNewLevel(){
 		File Level0File = new File("src/src/com/github/propa13_orga/gruppe71/level0.txt"); //Dateiname der LevelDatei
@@ -220,7 +223,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Level eins nach Links verschieben
-	 * @param NICHTS
+	 *  
 	 */
 	public void moveLevelLeft(){
 		
@@ -251,7 +254,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Level eins nach Rechts verschieben
-	 * @param NICHTS
+	 *  
 	 */
 	public void moveLevelRight(){
 		
@@ -282,7 +285,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Laed den naechsten Level
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadNextLevel(){
 		if(this.CurrentLevel < this.anzahlLevel()) //Max 3 Abschnitte, daher
@@ -293,7 +296,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Laed den vorigen Level
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadPreviousLevel(){
 		if(this.CurrentLevel > 0) //Max 3 Abschnitte, daher
@@ -312,7 +315,7 @@ public class DLevelPanel extends JPanel {
 
 	/**
 	 * Gibt Anzahl Level zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int anzahlLevel(){
 		boolean TmpLevelExists = true;
@@ -331,7 +334,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Liest eine Datei aus und laed sie als Level
-	 * @param Pfad/Dateiname der LevelDatei
+	 * @param pFilename Pfad/Dateiname der LevelDatei
 	 */
 	public void loadLevelFromFile(String pFilename){
 		
@@ -369,7 +372,7 @@ public class DLevelPanel extends JPanel {
 		    //Momentan haben wir nur String[], brauchen aber int
 		    int[][][] TmpLevelObjects = new int[3][12][20]; 
 		    
-		    //Dazu lesen wir jetzt den String Zeile für Zeile auf
+		    //Dazu lesen wir jetzt den String Zeile fuer Zeile auf
 		    //und speichern jedes Zeichen(Char) als Nummer(int) in das int[][]
 		    for (int z = 0; z < 3; z++){ //Level-Abschnitt
 		    	for (int y = 0; y < 12; y++){ //Spalte
@@ -463,7 +466,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Speichert eine Datei als Level
-	 * @param Pfad/Dateiname der LevelDatei
+	 * @param pFilename Pfad/Dateiname der LevelDatei
 	 */
 	public void saveLevelToFile(String pFilename){
 		
@@ -510,7 +513,7 @@ public class DLevelPanel extends JPanel {
 
 	/**
 	 * Konvertiert Typen zu Buchstaben
-	 * @param pLetter Eingabe
+	 * @param pDigit Eingabe
 	 */
 	public char DigittoLetter(int pDigit){
 		char TmpLetter = '0';
@@ -601,7 +604,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Konvertiert Typen zu Namen
-	 * @param pLetter Eingabe
+	 * @param pDigit Eingabe
 	 */
 	public String DigittoName(int pDigit){
 		String TmpText = "Boden";
@@ -983,7 +986,7 @@ public class DLevelPanel extends JPanel {
 		for (int y = 0; y < 12; y++) {
 			for (int x = 0; x < 20; x++) {
 				// Es wird ein neues StaticObject mit neuem Typ erzeugt(Typ = was auch immer in LevelObject
-				// steht, am Ende ist der StaticObject Array gefüllt mit neuen StatiObject Objekten
+				// steht, am Ende ist der StaticObject Array gefuellt mit neuen StatiObject Objekten
 				this.StaticObjects[y][x] = new StaticObject(LevelObjects[pSection][y][x]);
 			}
 		}
@@ -992,7 +995,7 @@ public class DLevelPanel extends JPanel {
 
 	/**
 	 * Laed den vorigen Levelabschnitt
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadPreviousLevelSection(){
 		if(this.CurrentLevelSection > 0){ //Max 3 Abschnitte, daher
@@ -1002,7 +1005,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Laed den naechsten Levelabschnitt
-	 * @param NICHTS
+	 *  
 	 */
 	public void loadNextLevelSection(){
 		if(this.CurrentLevelSection < 2){ //Max 3 Abschnitte, daher
@@ -1012,7 +1015,8 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Gibt eines der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.) zurueck
-	 * @param pIndex Index
+	 * @param pIndexX Index
+	 * @param pIndexY Index
 	 */
 	public StaticObject getStaticObject(int pIndexX, int pIndexY){
 		return this.StaticObjects[pIndexY][pIndexX];
@@ -1020,7 +1024,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Gibt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.) zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public StaticObject[][] getStaticObjects(){
 		return this.StaticObjects;
@@ -1037,7 +1041,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Gibt den Array der Level-Objekte zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int[][][] getLevelObjects(){
 		return this.LevelObjects;
@@ -1054,7 +1058,7 @@ public class DLevelPanel extends JPanel {
 
 	/**
 	 * Gibt den momentanen Level zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int getCurrentLevel(){
 		return this.CurrentLevel;
@@ -1070,7 +1074,7 @@ public class DLevelPanel extends JPanel {
 
 	/**
 	 * Gibt den momentanen Levelabschnitt zurueck
-	 * @param NICHTS
+	 *  
 	 */
 	public int getCurrentLevelSection(){
 		return this.CurrentLevelSection;
@@ -1078,7 +1082,7 @@ public class DLevelPanel extends JPanel {
 	
 	/**
 	 * Setzt den momentanen Levelabschnitt
-	 * @param pLevel Nummer des zu setzenden Levelabscnitts
+	 * @param pLevelSection Nummer des zu setzenden Levelabscnitts
 	 */
 	public void setCurrentLevelSection(int pLevelSection){
 		this.CurrentLevelSection = pLevelSection;
@@ -1086,7 +1090,7 @@ public class DLevelPanel extends JPanel {
 		
 	/**
 	 * Gibt zurueck ob wir gerade im Debug-Modus sind(Fehlersuche)
-	 * @param NICHTS
+	 *  
 	 */
 	public boolean getDebugMode(){
 		return this.DebugMode;

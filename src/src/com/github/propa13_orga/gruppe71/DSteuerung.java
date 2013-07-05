@@ -7,16 +7,15 @@ import javax.swing.JPanel;
 import java.awt.event.KeyAdapter;
 import java.io.Serializable;
 
+/**
+* Klasse der Steuerung
+*/
 public class DSteuerung implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4505870276814398897L;
 	private JFrame SpielFenster;
 	
 	
-	//private DPanel SpielPanel;
 	/**
 	 * Initialisiert das SpielFenster Fenster
 	 */
@@ -51,7 +50,7 @@ public class DSteuerung implements Serializable{
 		//Setze Listener damit die gedrueckte Taste erkannt werden kann
 	    SpielPanel.addKeyListener(new KeyAdapter(){
 	    
-	    	/*Methode für Taste herunter gedrueckt
+	    	/*Methode fuer Taste herunter gedrueckt
     		 * (non-Javadoc)
     		 * @see java.awt.event.KeyListener#keyPressed(java.awt.event.KeyEvent)
     		 */
@@ -140,7 +139,7 @@ public class DSteuerung implements Serializable{
 	    			}
 	    	}
 	    		
-	    		/**Methode für Taste loslassen
+	    		/**Methode fuer Taste loslassen
 	    		 * (non-Javadoc)
 	    		 * @see java.awt.event.KeyListener#keyReleased(java.awt.event.KeyEvent)
 	    		 */

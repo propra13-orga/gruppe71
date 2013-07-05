@@ -16,6 +16,9 @@ import java.io.*;
 import java.net.*;
 import java.util.Arrays;
 
+/**
+* Klasse des Netzwerkhandlers fuer den Server, jede Verbindung ein Handler
+*/
 public class NServerHandler implements Runnable{
 	private static final long serialVersionUID = 1L;
 

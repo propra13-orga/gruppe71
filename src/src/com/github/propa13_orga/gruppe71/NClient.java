@@ -15,6 +15,9 @@ import java.awt.event.KeyAdapter;
 import java.io.*;
 import java.net.*;
 
+/**
+* Klasse des Clients beim Netzwerkspiel
+*/
 public class NClient implements Runnable{
 	private static final long serialVersionUID = 1L;
 	

@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
+/**
+* Klasse der Items / Gegenstaende im Netzwerkspiel 
+*/
 public class NItems  {
 	
 	private static final long serialVersionUID = 1L;
@@ -101,7 +104,7 @@ public class NItems  {
 	}
 	
 	/**
-	 * Alles wird nun dem Panel zugef�gt , Dimension etc.
+	 * Alles wird nun dem Panel zugefuegt , Dimension etc.
 	 *
 	 */
 	public void AddToPan(){

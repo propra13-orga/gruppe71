@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 
 
 
+/**
+* Klasse der Regeln 
+*/
 public class DRules extends JFrame{
 	
 	

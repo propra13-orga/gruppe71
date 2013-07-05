@@ -23,6 +23,9 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+/**
+* Klasse des Benutzerinterfaces im Netzwerkspiel 
+*/
 public class NHUDPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -178,8 +181,9 @@ public class NHUDPanel extends JPanel {
 		//Jetzt kann alles was wir gerade gemalt haben neu gezeichnet werden
 		this.repaint();
 	}
+	
 	/**
-	 * 
+	 * Initialisiert Tasten
 	 */
 	public String[] InitTasten(){
 		this.keys=new String[4];
@@ -204,6 +208,10 @@ public class NHUDPanel extends JPanel {
 		}
 		
 	}
+
+	/**
+	 * Fuegt zum Panel hinzu
+	 */
 	public void AddToPan(){
 		int y=0;
 	for(int i=0;i<this.keys.length;i++){
@@ -213,6 +221,10 @@ public class NHUDPanel extends JPanel {
 	
 	}
 	}
+	
+	/**
+	 * Initialisiert das Seitenverhaeltnis
+	 */
 	public void InitDimension(){
 
 		this.h=new Dimension[keys.length];

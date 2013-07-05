@@ -6,7 +6,9 @@ import java.util.Random;
 import javax.swing.JOptionPane;
 
 
-
+/**
+* Klasse der Dynamischen Objekte im Netzwerkspiel 
+*/
 public class NDynamic {
 	
 	protected NPanel SpielPanel;
@@ -71,7 +73,7 @@ public class NDynamic {
     
 	/**
 	 * Gibt Momentane Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int[]getCurrentPosition(){
 		  int[] CurrentPosition = new int[2]; //2 Rueckgabewerte: x und y
@@ -84,7 +86,7 @@ public class NDynamic {
 
 	/**
 	 * Gibt Momentane X-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentXPosition(){
 		  return this.CurrentXPos;
@@ -92,7 +94,7 @@ public class NDynamic {
 	
 	/**
 	 * Gibt Momentane Y-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentYPosition(){
 		  return this.CurrentYPos;
@@ -111,7 +113,7 @@ public class NDynamic {
 
 	/**
 	 * Gibt zurueck, ob das Objekt sich gerade bewegt
-	 * @param NICHTS 
+	 *   
 	 */
 	public boolean IsMoving(){
 		return this.moves;
@@ -119,7 +121,7 @@ public class NDynamic {
 	
 	/**
 	* Gibt zurueck, ob das Objekt ein Bot ist
-	* @param NICHTS
+	*  
 	*/
 	public boolean IsBot(){
 	return this.isBot;
@@ -127,7 +129,7 @@ public class NDynamic {
 	
 	/**
 	* Gibt Type des Bots ist
-	* @param NICHTS
+	*  
 	*/
 	public int getType() {
 		return this.Type;
@@ -150,7 +152,7 @@ public class NDynamic {
 	
 	/**
 	 * Gibt MoveTo Position zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int[] getMoveToPosition(){
 		int[] PositionMoving=new int[2];
@@ -162,7 +164,7 @@ public class NDynamic {
 	
 	/**
 	 * Gibt MoveTo X-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getMoveToXPosition(){
 		  return this.MoveToXPos;
@@ -170,7 +172,7 @@ public class NDynamic {
 	
 	/**
 	 * Gibt MoveTo Y-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getMoveToYPosition(){
 		  return this.MoveToYPos;
@@ -178,7 +180,7 @@ public class NDynamic {
 	
 	/**
 	 * Gibt StaticObjects zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public StaticObject[][] getStaticObjects(){
 		return this.StaticObjects;
@@ -194,14 +196,14 @@ public class NDynamic {
 	
 	/**
 	 * Setzt die neue Position x und y eines dyn. Objektes(z.B. Player), wo es hin gehen soll
-	 * @param pXStart Neue X Position
-	 * @param pYStart Neue Y Position
+	 * @param pXPos Neue X Position
+	 * @param pYPos Neue Y Position
 	 */
 	public void setMoveToPosition(int pXPos, int pYPos){
 		
 		boolean tmpAndererBotAnPos = false; // Collision zwischen Bots
 		
-		// Schaden hinzufügen wenn Gegner und Spieler sich beruehren
+		// Schaden hinzufuegen wenn Gegner und Spieler sich beruehren
 		 for (int i = 0; i < this.DynamicObjects.length; i++){ // Wenn der Gegner an der gleichen Position ist verlieren beide ein Leben
 			 if(this.DynamicObjects[i] != null && (this.DynamicObjects[i].getHealth() > 0 && this.getHealth() > 0)){ //Wenn existieren und beide Gesundheit haben
 				 if(this.DynamicObjects[i].isBot != this.isBot && ((this.DynamicObjects[i].IsMoving() == false && this.DynamicObjects[i].getCurrentXPosition() == pXPos && this.DynamicObjects[i].getCurrentYPosition() == pYPos) || (this.DynamicObjects[i].IsMoving() == true && this.DynamicObjects[i].getMoveToXPosition() == pXPos && this.DynamicObjects[i].getMoveToYPosition() == pYPos) ) ) {
@@ -402,21 +404,20 @@ public class NDynamic {
 	/**
 	 * Animiert das Objekt, hiermit wird das dyn. Objekt Stueck fuer Stueck um 2 Pixel bewegt, bis
 	 * es sich an der Position befindet wo es hin soll
-	 * @param pIndex Index des dyn. Objektes
 	 */
 	public void AnimateMoving(){
 		
 		if(this.CurrentXPos < this.MoveToXPos)
-			this.CurrentXPos += 3; //muss noch ein St�ck nach rechts
+			this.CurrentXPos += 3; //muss noch ein Stueck nach rechts
 
 			if(this.CurrentXPos > this.MoveToXPos)
-			this.CurrentXPos -= 3; //muss noch ein St�ck nach links
+			this.CurrentXPos -= 3; //muss noch ein Stueck nach links
 
 			if(this.CurrentYPos < this.MoveToYPos)
-			this.CurrentYPos += 3; //muss noch ein St�ck nach unten
+			this.CurrentYPos += 3; //muss noch ein Stueck nach unten
 
 			if(this.CurrentYPos > this.MoveToYPos)
-			this.CurrentYPos -= 3; //muss noch ein St�ck nach oben
+			this.CurrentYPos -= 3; //muss noch ein Stueck nach oben
 
 			//Wenn wir fertig sind, setzen wir die Variable wieder, dass es sich momentan nicht bewegt
 			if(this.CurrentYPos == this.MoveToYPos && this.CurrentXPos == this.MoveToXPos)
@@ -489,7 +490,6 @@ public class NDynamic {
 	
 	/**
 	 * Wechselt Waffe, wenn vorhanden
-	 * @param pType Art der Aktion
 	 * @param pIsNetwork Wird die Aktion vom Netzwerk ausgefuehrt?
 	 */
 	public void changeWeapon(boolean pIsNetwork){
@@ -516,7 +516,7 @@ public class NDynamic {
 
 	/**
 	 * Gibt Gesundheit zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getHealth(){
 		return this.Health;	
@@ -541,7 +541,7 @@ public class NDynamic {
 
 	/**
 	 * Gibt Leben zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getLives(){
 		return this.Lives;	
@@ -565,7 +565,7 @@ public class NDynamic {
 	
 	/**
 	* Gibt Money zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getMoney(){
 		return this.Money;	
@@ -589,7 +589,7 @@ public class NDynamic {
 
 	/**
 	* Gibt Mana zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getMana(){
 		return this.Mana;	
@@ -613,7 +613,7 @@ public class NDynamic {
 	
 	/**
 	 * Gibt Punkte zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getPoints(){ //Bekomme Punkte
 		return this.Points;
@@ -621,7 +621,7 @@ public class NDynamic {
 	
 	/**
 	 * Setzt Punkte
-	 * @param pHealth Wieviele Punkte? 
+	 * @param pPoints Wieviele Punkte? 
 	 */
 	public void setPoints(int pPoints) //Erhoeht Punkte des Spielers bei Erreichen eines Levelabschnitts
 	{
@@ -630,7 +630,7 @@ public class NDynamic {
 	
 	/**
 	* Gibt Aktives Item zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getActiveItem(){
 		return this.ActiveItem;	
@@ -645,7 +645,6 @@ public class NDynamic {
 	}	
 	/** 
 	 * Methode Gesundheit verlieren kann in Verknuepfung mit Schadenssystem benutzt werden
-	 * @param Nichts
 	 */
 	public void LoseHealth(){ 
 		int p;
@@ -699,8 +698,8 @@ public class NDynamic {
 	}
 	
 	
-	/** Gibt die Aussage für das Checkpoint Fenster zurueck
-	 * @param NICHTS
+	/** Gibt die Aussage fuer das Checkpoint Fenster zurueck
+	 *  
 	 */
 	public String CheckAussage(){
 		if(this.SpielPanel.CheckpointExists() == true && this.SpielPanel.CheckpointLoaded() == false)
@@ -712,7 +711,7 @@ public class NDynamic {
 	
 	/**
 	 * Guckt wie viele Items gesetzt wurden
-	 * @param Keine Parameter
+	 *  
 	 */
 	public int NumberItems(){
 		return this.items.length;
@@ -721,7 +720,7 @@ public class NDynamic {
 
 	/**
 	 * Initialisiert Items 
-	 * @param Keine Parameter
+	 *  
 	 */
 	public int[] InitItems(){
 		this.items=new int[NumberItems()];
@@ -739,12 +738,20 @@ public class NDynamic {
 		return this.items[p];
 	}
 	
-	//Addiere die neuen Items vom DShop
+	/**
+	* Setzt Items
+	* @param i Index
+	* @param p Index
+	*/
 	public int SetItems(int i,int p){
 		this.items[i]+=p;
 		return this.items[i];
 	}
 	
+	/**
+	* Setzt Items
+	* @param p Index
+	*/
 	public int[] setItems(int p){
 		for(int i=0;i<=NumberItems()-1;i++){
 			this.items[i]=p;
@@ -771,7 +778,7 @@ public class NDynamic {
 	
 	/**
 	* Setzt Namen von Items
-	* @param pItems ItemsArray
+	* @param pName ItemsNamenArray
 	*/
 	public void setName2(String[] pName){
 		this.name = pName;
@@ -784,25 +791,42 @@ public class NDynamic {
 	public String getName(int p){
 		return this.name[p];
 	}
-	//Teleport, Initializer
+	
+	/**
+	 * Initialisiert Teleporter
+	 * @param p Index
+	 */
 	public boolean SetSecret(boolean p){
 		return this.secret=p;	
 	}
+
+	/**
+	 * Gibt Teleporter zurueck
+	 */
 	public boolean getSecret(){
 		return this.secret;
 	}
 	
-	//Geheimtuer
+	/**
+	 * Initialisiert Geheimtuer
+	 * @param p Index
+	 */
 	public boolean SetSecret2(boolean p){
 		return this.secret2=p;	
 	}
+	
+	/**
+	 * Initialisiert Geheimtuer2
+	 *  
+	 */
 	public boolean getSecret2(){
 		return this.secret2;
 	}
+
 	
 	/**
 	 * Initialisiert Namensliste alles zuerst auf "Leer"
-	 * @param Keine Parameter
+	 *  
 	 */
 	public String[] InitName(){
 		
@@ -815,7 +839,7 @@ public class NDynamic {
 	
 	/**
 	 * Kann per Taste i im Spiel aufgerufen werden
-	 * @param Keine Parameter
+	 *  
 	 */
 	public void ItemBag(){
 		NItems it = new NItems(this.SpielPanel);

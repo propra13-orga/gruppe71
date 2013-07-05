@@ -23,6 +23,9 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+/**
+* Klasse des Benutzerinterfaces 
+*/
 public class HUDPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
@@ -214,7 +217,7 @@ public class HUDPanel extends JPanel {
 		this.repaint();
 	}
 	/**
-	 * 
+	 * Initialisiert die Tasten
 	 */
 	public String[] InitTasten(){
 		this.keys=new String[4];
@@ -239,6 +242,10 @@ public class HUDPanel extends JPanel {
 		}
 		
 	}
+	
+	/**
+	 * Fuegt zum Panel hinzu
+	 */
 	public void AddToPan(){
 		int y=0;
 	for(int i=0;i<this.keys.length;i++){
@@ -250,6 +257,9 @@ public class HUDPanel extends JPanel {
 	}
 	
 	
+	/**
+	 * Initialisiert das Seitenverhaeltnis
+	 */
 	public void InitDimension(){
 
 		this.h=new Dimension[keys.length];

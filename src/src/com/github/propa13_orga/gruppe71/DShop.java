@@ -15,6 +15,9 @@ import javax.swing.WindowConstants;
 
 
 
+/**
+* Klasse des Shops 
+*/
 public class DShop implements ActionListener {
 
 	public DPanel SpielPanel;
@@ -112,7 +115,7 @@ public class DShop implements ActionListener {
 		 * 
 		 * 
 		 */
-		this.ShopItems(); //6 Stï¿½ck gemacht
+		this.ShopItems(); //6 Stueck gemacht
 		
 		this.InitPreis();
 		
@@ -237,7 +240,7 @@ public class DShop implements ActionListener {
 	}
 	
 	/**
-	 * Das Bild für die Währung im String
+	 * Das Bild fuer die Waehrung im String
 	 * @return String
 	 */
 	public String Dollar(){
@@ -248,7 +251,7 @@ public class DShop implements ActionListener {
 	/**
 	 * Hier werden die Bilder platziert am besten in der Reihenfolge
 	 * der Items in DDynamic
-	 * @return
+	 * @return String[]
 	 */
 	public String[] Bild(){
 		this.bild=new String[SpielPanel.getDynamicObject(0).NumberItems()];
@@ -295,7 +298,7 @@ public class DShop implements ActionListener {
 			this.hinweise[i].setBounds(500,250+z,260,120);
 			this.pan.add(hinweise[i]);
 			
-			//Anzahl Gesamt Gegenstï¿½nde
+			//Anzahl Gesamt Gegenstuende
 			this.anzahl[i].setBounds(320,120+y,this.a[i].width+25,this.a[i].height+5);// hier justizieren
 			anzahl[i].setEditable(false);
 			this.pan.add(anzahl[i]);
@@ -310,11 +313,6 @@ public class DShop implements ActionListener {
 		
 			}
 	}
-	
-	/**
-	 * Zeigt wie vie Gold der Spieler in diesem Zeitpunkt hat
-	 * 
-	 */
 	
 	
 	
@@ -562,7 +560,7 @@ public class DShop implements ActionListener {
 
 		/**
 		 * Setze Gesamtbetrag
-		 * @param Nichts
+		 * 
 		 */
 		public int setTotal(int p){
 			this.total+=p;
@@ -575,7 +573,7 @@ public class DShop implements ActionListener {
 
 		/**
 		 * Preisuebersicht bei Pricelist hier Init
-		 * @param Nichts
+		 * 
 		 */
 		public void InitPreis(){
 			this.money=new int[SpielPanel.getDynamicObject(0).NumberItems()];
@@ -586,7 +584,7 @@ public class DShop implements ActionListener {
 		
 		/**
 		 * Preisliste $$$
-		 * @param Nichts
+		 *  
 		 */
 		public int getTotal(){
 			return this.total;
@@ -594,7 +592,7 @@ public class DShop implements ActionListener {
 		
 		/**
 		 * Zufallsfunktion?
-		 * @param Nichts
+		 * 
 		 */
 		public void PriceList(){
 				this.money[0]=150;
@@ -607,7 +605,7 @@ public class DShop implements ActionListener {
 		
 		/**
 		 * Setze Namen im Menue
-		 * @param Nichts
+		 * 
 		 */
 		public String[] ShopItems(){
 			this.namen=new String[SpielPanel.getDynamicObject(0).NumberItems()];
@@ -631,7 +629,7 @@ public class DShop implements ActionListener {
 
 	/**
 	 * Zwischenspeicherung
-	 * @param Nichts
+	 * 
 	 */
 	public int[] InitItemStorage(){
 		this.wert2=new int[SpielPanel.getDynamicObject(0).NumberItems()];
@@ -643,7 +641,7 @@ public class DShop implements ActionListener {
 	
 	/**
 	 * Gesamtbetrag wird berechnet
-	 * @param Nichts
+	 * 
 	 */
 	public int ItemGesamt(){
 		this.gesamt=0;

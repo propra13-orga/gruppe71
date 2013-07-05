@@ -16,6 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
+/**
+* Klasse der Items 
+*/
 public class DItems  {
 	
 	private static final long serialVersionUID = 1L;

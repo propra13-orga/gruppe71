@@ -6,6 +6,9 @@ import javax.swing.JOptionPane;
 
 
 
+/**
+* Klasse der Projektile, die Spieler und Gegner abschiessen im Netzwerkspiel 
+*/
 public class NProjectile {
 	private NPanel SpielPanel;
 	private StaticObject[][] StaticObjects;
@@ -40,7 +43,7 @@ public class NProjectile {
 	
 	/**
 	 * Initalisiert die Standardwerte des Objekts
-	 * @param NICHTS 
+	 *   
 	 */
 	public void init(){
 		this.StaticObjects = null;
@@ -94,7 +97,7 @@ public class NProjectile {
     
 	/**
 	 * Gibt Momentane Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int[] getCurrentPosition(){
 		  int[] CurrentPosition = new int[2]; //2 Rueckgabewerte: x und y
@@ -107,7 +110,7 @@ public class NProjectile {
 
 	/**
 	 * Gibt Momentane X-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentXPosition(){
 		  return this.CurrentXPos;
@@ -115,7 +118,7 @@ public class NProjectile {
 	
 	/**
 	 * Gibt Momentane Y-Position des Objekts zurueck
-	 * @param NICHTS 
+	 *   
 	 */
 	public int getCurrentYPosition(){
 		  return this.CurrentYPos;
@@ -134,7 +137,7 @@ public class NProjectile {
 	
 	/**
 	* Gibt Typ zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getType(){
 	return this.Type;	
@@ -142,7 +145,7 @@ public class NProjectile {
 
 	/**
 	* Setzt Typ
-	* @param pTyp Welcher Typ?
+	* @param pType Welcher Typ?
 	*/
 	public void setType(int pType){
 	this.Type = pType;
@@ -151,7 +154,7 @@ public class NProjectile {
 	
 	/**
 	* Gibt Richtung zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getDirection(){
 	return this.Direction;	
@@ -167,7 +170,7 @@ public class NProjectile {
 
 	/**
 	* Gibt Momentane Weite zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getCurrentRange(){
 	return this.CurrentRange;
@@ -183,7 +186,7 @@ public class NProjectile {
 	
 	/**
 	* Gibt Max Weite zurueck
-	* @param NICHTS
+	*  
 	*/
 	public int getMaxRange(){
 	return this.MaxRange;
@@ -199,7 +202,7 @@ public class NProjectile {
 	
 	/**
 	* Gibt Schuetzen zurueck
-	* @param NICHTS
+	*  
 	*/
 	public NDynamic getShooter(){
 		return this.Shooter;
@@ -215,7 +218,7 @@ public class NProjectile {
 	
 	/**
 	* Gibt zurueck ob aktiv oder nicht
-	* @param NICHTS
+	*  
 	*/
 	public boolean IsEnabled(){
 	return this.Enabled;	
@@ -232,7 +235,7 @@ public class NProjectile {
 	
 	/**
 	 * Animiert das Projektil, bewegt es um ein Stueck bei jedem Aufruf
-	 * @param NICHTS
+	 *  
 	 */
 	public void AnimateMoving(){
 		if(this.MaxRange > this.CurrentRange){
@@ -281,7 +284,7 @@ public class NProjectile {
 		
 		if(this.StaticObjects[(cleanYPos/30)][(cleanXPos/30)].getCollision() == false){ // Keine Kollision also weiter
 			
-			// Schaden hinzufügen wenn ein DynamicObject beruehrt wird
+			// Schaden hinzufuegen wenn ein DynamicObject beruehrt wird
 			for (int i = 0; i < this.DynamicObjects.length; i++){
 				 if(this.DynamicObjects[i] != null && this.DynamicObjects[i] != this.Shooter && this.Shooter.IsBot() != this.DynamicObjects[i].IsBot() && this.DynamicObjects[i].getHealth() > 0){
 					 // Wenn Objekt nicht der, der es abgeschossen hat ist und nicht beides Spieler/Bots
