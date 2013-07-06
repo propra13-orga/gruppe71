@@ -145,6 +145,17 @@ public class NSteuerung {
 	    			// Wenn man T drueckt wird was hier steht ausgefuehrt
     				SpielPanel.getDynamicObject(0).ItemBag();
 	    		}
+	else if(e.getKeyCode()==KeyEvent.VK_F) //Spiel laden
+    	    	{
+				if(SpielPanel.isHost() == true){
+    	    		// Wenn man F drueckt wird was hier steht ausgefuehrt
+        			SpielPanel.getDynamicObject(0).SkillBaum();
+        			
+	    		}
+				else{
+				SpielPanel.getDynamicObject(0).SkillBaum();
+				}	
+    	    	}
 	    			else 
 	    			{	
 	    				System.out.println("Keine Lauftaste 1"); // tue nichts	

@@ -43,6 +43,10 @@ public class NHUDPanel extends JPanel {
 	private JLabel[] tasten;
 	private String[] keys;
 	private Dimension[] h;
+	private JLabel[] exp;
+	private JLabel[] level;
+	private JLabel[] skills;
+	
 	
 	/**
 	 * Initialisiert die Klassenattribute
@@ -62,7 +66,9 @@ public class NHUDPanel extends JPanel {
 		this.Spieler_Weapon = new JLabel[2];
 		this.Spieler_Weapon_Icon = new JLabel[2];
 		this.Spieler_Weapon_Amount = new JLabel[2];			
-		
+		this.exp=new JLabel[2];
+		this.level=new JLabel[2];
+		this.skills=new JLabel[2];
 		this.InitTasten();
 		this.InitKeys();
 		this.InitDimension();
@@ -76,6 +82,28 @@ public class NHUDPanel extends JPanel {
 			this.Spieler_Name[i].setBounds(20, 0+(i*40), 100, 60);
 			this.add(this.Spieler_Name[i]);
 
+			
+			
+			//Level
+			this.level[i] = new JLabel("Level: "); // create some stuff
+			this.level[i].setFont(new Font("Serif", Font.BOLD, 20));
+			this.level[i].setBounds(20, 35+(i*40), 100, 60);
+			this.add(this.level[i]);
+			
+			
+			//Skills Unused
+			this.skills[i] = new JLabel("Skillpoints Left: "); // create some stuff
+			this.skills[i].setFont(new Font("Serif", Font.BOLD, 20));
+			this.skills[i].setBounds(170, 35+(i*40), 200, 60);
+			this.add(this.skills[i]);
+			
+			
+			//EXP
+			this.exp[i] = new JLabel("EXP: "); // create some stuff
+			this.exp[i].setFont(new Font("Serif", Font.BOLD, 18));
+			this.exp[i].setBounds(420, 35+(i*40), 100, 60);
+			this.add(this.exp[i]);
+			
 			
 			//Leben
 			Image Image_Lives = Toolkit.getDefaultToolkit().getImage("src/src/com/github/propa13_orga/gruppe71/bb_live.png");
@@ -155,8 +183,12 @@ public class NHUDPanel extends JPanel {
 		for(int i = 0; i < this.SpielPanel.SpielerModus(); i++){
 			
 			this.Spieler_Lives[i].setText(Integer.toString(this.DynamicObjects[i].getLives())); // Lebensanzeige
-			this.Spieler_Mana[i].setText(Integer.toString(this.DynamicObjects[i].getMana())); // Lebensanzeige
-			this.Spieler_Money[i].setText(Integer.toString(this.DynamicObjects[i].getMoney())); // Lebensanzeige
+			this.Spieler_Mana[i].setText(Integer.toString(this.DynamicObjects[i].getMana())); // Mana
+			this.Spieler_Money[i].setText(Integer.toString(this.DynamicObjects[i].getMoney())); // Geld
+			this.exp[i].setText("EXP:  "+this.DynamicObjects[i].getExp()); // EXP
+			this.level[i].setText("LEVEL:  "+this.DynamicObjects[i].SpielerLevel()); // Level
+			this.skills[i].setText("Skillpoints Left:  "+this.DynamicObjects[i].getSkills()); // Level
+			
 			
 			Image Image_Weapon = null;
 			
