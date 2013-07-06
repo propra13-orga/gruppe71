@@ -330,7 +330,7 @@ public class NPanel extends JPanel {
 						}
 						
 						//Quest 1
-						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && this.DynamicObjects[i].getMarke()>=5 && geheimY > 0 && geheimX > 0){
+						else if(this.DynamicObjects[i].getQuestLaufend(0)==true && (this.DynamicObjects[0].getMarke()+this.DynamicObjects[1].getMarke()>=5) && geheimY > 0 && geheimX > 0){
 							
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);
@@ -338,7 +338,7 @@ public class NPanel extends JPanel {
 						}
 						
 						//Quest 3
-						else if(this.DynamicObjects[i].getQuestLaufend(2)==true && this.DynamicObjects[i].getMarke()>=12 && geheimY > 0 && geheimX > 0){
+						else if(this.DynamicObjects[i].getQuestLaufend(2)==true && (this.DynamicObjects[0].getMarke()+this.DynamicObjects[1].getMarke()>=12) && geheimY > 0 && geheimX > 0){
 							
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);

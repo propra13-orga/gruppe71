@@ -52,17 +52,17 @@ public class DStartMenu extends JFrame {
 	
 	//Regel - Knopf
 	bRules=new JButton("Rules");
-	bRules.setBounds(225,200,100,100);
+	bRules.setBounds(220,120,100,100);
 	bRules.addActionListener(new TestListenerRules());
 	add(bRules);
 	
-	//Multiplayer -Knopf
+	/*Multiplayer -Knopf disabled
 	bMulti=new JButton("Multi");
 	bMulti.setBounds(225,50,100,100);
 	bMulti.addActionListener(null);
 	bMulti.addActionListener(new TestListenerMulti());
 	add(bMulti);
-	
+	*/
 
 	//Netzwerk-Knopf
 	bNetzwerk = new JButton("Netzwerk") ;

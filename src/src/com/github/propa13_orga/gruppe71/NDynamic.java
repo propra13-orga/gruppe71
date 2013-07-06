@@ -494,7 +494,7 @@ public class NDynamic {
 				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				
-			case 41: // Ruestung02
+			case 41: // Truhe
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0){
 					maeuse+=150+this.DynamicObjects[0].getCurrentGreed(this.DynamicObjects[0].getCurrentRank(1));
 					kaese+=10;
