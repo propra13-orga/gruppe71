@@ -436,6 +436,7 @@ public class DDynamic implements Serializable {
 			                  JOptionPane.WARNING_MESSAGE, null, 
 			                  new String[]{"Hoere ich recht?", "Schon wieder ein Hund..."}, "Schon wieder ein Hund...");
 				   this.Quest2(quest[1]);
+				   this.marke=0;
 				}
 				//NPC 2 nach Schluesel Abgabe
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[1]==true && this.getKey()==true ){
@@ -445,6 +446,8 @@ public class DDynamic implements Serializable {
 			                  new String[]{"ICH BEKOMME NICHTS?"}, "ICH BEKOMME NICHTS?");
 					 this.key=false;
 					 this.hidden+=1;
+					 this.marke=0;
+					 
 				   
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.key==false && this.hidden==2 ){
@@ -472,6 +475,7 @@ public class DDynamic implements Serializable {
 			                  JOptionPane.WARNING_MESSAGE, null, 
 			                  new String[]{"Hoffentlich das letzte Mal...", "Ich bin nicht zu haben."}, "Ich bin nicht zu haben.");
 				   this.Quest3(quest[2]);
+				   this.marke=0;
 				}
 				break;
 
