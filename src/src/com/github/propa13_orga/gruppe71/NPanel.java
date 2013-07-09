@@ -60,6 +60,7 @@ public class NPanel extends JPanel {
 
 	private Thread SpielClientThread;
 	private String ClientMessage;
+	private String[] ClientMessage2;
 	private String ClientResponse;
 
 	
@@ -96,6 +97,8 @@ public class NPanel extends JPanel {
 		this.Connected = false;
 
 		this.ClientMessage = "";
+		this.ClientMessage2 = new String[5];
+		
 		this.ClientResponse = "";
 		
 		if(pIsHost == true){
@@ -335,6 +338,8 @@ public class NPanel extends JPanel {
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);
 							
+							this.setClientMessage("SO Y:"+geheimY+" X:"+geheimX+" T:0 ");
+							
 						}
 						
 						//Quest 3
@@ -342,22 +347,29 @@ public class NPanel extends JPanel {
 							
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);
-							
+
+							this.setClientMessage("SO Y:"+geheimY+" X:"+geheimX+" T:0 ");
 						}
 						
 						//Schluessel nicht sichtbar
 						else if(this.DynamicObjects[i].getKey()==false && keyX>0 && keyY>0 && this.DynamicObjects[i].getHidden()==0){
 							this.StaticObjects[keyY][keyX].setCollision(false);
 							this.StaticObjects[keyY][keyX].setType(0);
+							
 							this.DynamicObjects[i].setHidden(1);
 							this.DynamicObjects[i].setPosX(keyX);
 							this.DynamicObjects[i].setPosY(keyY);
+							
+							this.setClientMessage("SO Y:"+keyY+" X:"+keyX+" T:0 DO"+i+" SETXPOS:"+keyX+" SETYPOS:"+keyY+" SETHIDDEN 1 ");
 						}
 						
 						//Schluessel sichtbar
 						else if(this.DynamicObjects[i].getKey()==true){
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(0);
+							
+
+							this.setClientMessage("SO Y:"+this.DynamicObjects[i].getPosY()+" X:"+this.DynamicObjects[i].getPosX()+" T:0 ");
 							
 						}
 						//Quest 2
@@ -366,23 +378,27 @@ public class NPanel extends JPanel {
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(47);
 							
+							this.setClientMessage("SO Y:"+this.DynamicObjects[i].getPosY()+" X:"+this.DynamicObjects[i].getPosX()+" T:47 ");
 							
 						}
 						
 						else if(this.DynamicObjects[i].getInfo()==true && infoY > 0 && infoX > 0){//Information
 							this.StaticObjects[infoY][infoX].setType(0);
 							
+							this.setClientMessage("SO Y:"+infoY+" X:"+infoX+" T:0 ");
+							
+							
 						}
 						else if(this.DynamicObjects[i].getTreasure(0)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 1
 							
 							this.StaticObjects[belohnungY][belohnungX].setType(0);
-							
+							this.setClientMessage("SO Y:"+belohnungY+" X:"+belohnungX+" T:0 ");
 							
 						}
 						else if(this.DynamicObjects[i].getTreasure(2)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 3
 							
 							this.StaticObjects[belohnungY][belohnungX].setType(0);
-							
+							this.setClientMessage("SO Y:"+belohnungY+" X:"+belohnungX+" T:0 ");
 							
 						}
 							
@@ -393,13 +409,17 @@ public class NPanel extends JPanel {
 						else if(this.DynamicObjects[i].getSecret()==true && landungX > 0 && landungY > 0){
 							this.DynamicObjects[i].setCurrentPosition((landungX*30),(landungY*30));
 							this.DynamicObjects[i].SetSecret(false);
+							
+							this.setClientMessage("DO"+i+" SETXPOS:"+(landungX*30)+" SETYPOS:"+(landungY*30)+" SETSECRET FALSE ");
 						}
 						
 				
 						else if(this.DynamicObjects[i].getSecret2()==true && openY > 0 && openX > 0){
 										this.StaticObjects[openY][openX].setType(0);
 										this.StaticObjects[openY][openX].setCollision(false);
+										
 										this.DynamicObjects[i].SetSecret2(false);
+										this.setClientMessage("SO Y:"+openY+" X:"+openX+" T:0 DO"+i+" SETSECRET2 FALSE ");
 										
 								}
 						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
@@ -409,6 +429,9 @@ public class NPanel extends JPanel {
 								sound.Abspielen();
 							this.StaticObjects[questY][questX].setType(0);
 							this.StaticObjects[questY][questX].setCollision(false);
+
+							this.setClientMessage("SO Y:"+questY+" X:"+questX+" T:0 DO"+i+" SETQUEST TRUE Z:"+z+" ");
+							
 							this.DynamicObjects[i].setQuest(false,z);
 							break;
 							}
@@ -524,7 +547,7 @@ public class NPanel extends JPanel {
 							} else {
 							Random zufallsZahl = new Random();						// ZufallsZahl
 							int randomnumber = zufallsZahl.nextInt(4);
-							int delaycounter = zufallsZahl.nextInt(200);			//Verzoegerung von Zufalls-Bewegung
+							int delaycounter = zufallsZahl.nextInt(3000);			//Verzoegerung von Zufalls-Bewegung
 							
 							if(delaycounter == 0){								
 								switch(randomnumber){								// Zufalls-Bewegung
@@ -913,6 +936,15 @@ public class NPanel extends JPanel {
 	}
 	
 	/**
+	 * Gibt ein Statisches Objekt zurueck an der Stelle pX pY
+	 * @param pX X Koord
+	 * @param pY Y Koord
+	 */
+	public StaticObject getStaticObject(int pX, int pY){
+		return this.StaticObjects[pY][pX];
+	}
+	
+	/**
 	 * Setzt den Array der Statischen Objekte(unbewegliche Objekte wie Boden/Mauern/Eingang etc.)
 	 * zu einem uebergebenen Wert
 	 * @param pStaticObjects Array von Statischen Objekten
@@ -1120,7 +1152,7 @@ public class NPanel extends JPanel {
 	
 
 	/**
-	 * Setzt, die momentane ClientCessage
+	 * Setzt, die momentane ClientMessage
 	 * @param pClientMessage Neue Nachricht 
 	 */
 	public boolean setClientMessage(String pClientMessage){
@@ -1128,10 +1160,14 @@ public class NPanel extends JPanel {
 		  this.ClientMessage = pClientMessage;
 		  this.ClientResponse = "";
 		  System.out.println(this.IsHostName+": setClientMessage: "+pClientMessage);
-		  return true;
 		}else{
-			return false;
+			for(int i=0; i < 5; i++){
+				if(this.ClientMessage2[i] == ""){
+					this.ClientMessage2[i] = pClientMessage;
+				}
+			}
 		}
+		return true;
 	}
 	
 	/**
@@ -1140,6 +1176,15 @@ public class NPanel extends JPanel {
 	 */
 	public void resetClientMessage(){
 		this.ClientMessage = "";
+		
+		for(int i=0; i < 5; i++){
+			if(this.ClientMessage2[i] != ""){
+				this.ClientMessage = this.ClientMessage2[i];
+				this.ClientMessage2[i] = "";
+				this.ClientResponse = "";
+			}
+		}
+		
 	}
 	
 	/**

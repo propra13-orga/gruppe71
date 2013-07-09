@@ -35,10 +35,10 @@ public class NDynamic {
 	protected int Points; //Punkte
 	protected int RType; // Ruestungstyp
 	
-	protected int[] quest; // Quest fuer JOPTIONPANE
+	public int[] quest; // Quest fuer JOPTIONPANE
 	protected int[] qenabled;//fuer SpielPanel Environment aendern
 	protected boolean[] qreceived;//wenn schon bekommen Quest
-	protected boolean[] qalready;
+	public boolean[] qalready;
 	protected boolean[] qdenied;//KEINE QUEST
 	protected boolean[] treasure;//Belohnungen
 	protected int marke;
@@ -384,7 +384,7 @@ public class NDynamic {
 			case 21: // Healthpack
 				if(this.Health < 4) //Wenn keine Ruestung
 				this.Health = 4; // Gesundheit wieder voll machen
-				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem);
+				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem+" MARKE:"+this.marke);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
@@ -402,7 +402,7 @@ public class NDynamic {
 
 			case 23: // Leben
 				this.Lives++;
-				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem);
+				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem+" MARKE:"+this.marke);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				break;
 
@@ -416,38 +416,45 @@ public class NDynamic {
 				break;
 
 			case 25: // NPC
-				if((this.SpielPanel.isHost() == true && this.DynamicObjectIndex == 0)||(this.SpielPanel.isHost() == false && this.DynamicObjectIndex == 1)){
 				//NPC1
 				if(this.SpielPanel.getCurrentLevel() == 0 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[0]==false){//Quest 1
-				   this.quest[0]=JOptionPane.showOptionDialog(null, "Hoert mich an EDLER BURGER!",
+					if((this.SpielPanel.isHost() == true && this.DynamicObjectIndex == 0)||(this.SpielPanel.isHost() == false && this.DynamicObjectIndex == 1)){
+						this.quest[0]=JOptionPane.showOptionDialog(null, "Hoert mich an EDLER BURGER!",
 			                  "Quest 1", JOptionPane.YES_NO_CANCEL_OPTION,
 			                  JOptionPane.WARNING_MESSAGE, null, 
 			                  new String[]{"Schiesst los heisser Hund!", "ICH AUF EINE NIEDERE SPEISE HOEREN?????!"}, "ICH AUF EINE NIEDERE SPEISE HOEREN?????!");
-				   this.Quest1(quest[0]);
+				   this.Quest1(quest[0],false,false);
+					}
 				}
 				//NPC 2
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[1]==false ){
-					 this.quest[1]=JOptionPane.showOptionDialog(null, "Das Unheil...",
+					if((this.SpielPanel.isHost() == true && this.DynamicObjectIndex == 0)||(this.SpielPanel.isHost() == false && this.DynamicObjectIndex == 1)){
+						 this.quest[1]=JOptionPane.showOptionDialog(null, "Das Unheil...",
 			                  "Quest 2", JOptionPane.YES_NO_CANCEL_OPTION,
 			                  JOptionPane.WARNING_MESSAGE, null, 
 			                  new String[]{"Hoere ich recht?", "Schon wieder ein Hund..."}, "Schon wieder ein Hund...");
-				   this.Quest2(quest[1]);
+				   this.Quest2(quest[1],false,false);
+					}
 				}
 				//NPC 2 nach Schluesel Abgabe
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[1]==true && this.getKey()==true ){
-					 this.ok=JOptionPane.showOptionDialog(null, "Danke..."+"\n Ihr seid doch ein Held?",
+					if((this.SpielPanel.isHost() == true && this.DynamicObjectIndex == 0)||(this.SpielPanel.isHost() == false && this.DynamicObjectIndex == 1)){
+						this.ok=JOptionPane.showOptionDialog(null, "Danke..."+"\n Ihr seid doch ein Held?",
 			                  "Quest 2", JOptionPane.OK_OPTION,
 			                  JOptionPane.INFORMATION_MESSAGE, null, 
 			                  new String[]{"ICH BEKOMME NICHTS?"}, "ICH BEKOMME NICHTS?");
+					}
 					 this.key=false;
 					 this.hidden+=1;
 				   
 				}
 				else if(this.SpielPanel.getCurrentLevel() == 1 && this.SpielPanel.getCurrentLevelSection() == 0 && this.key==false && this.hidden==2 ){
-					 JOptionPane.showOptionDialog(null, "Ahso...",
+					if((this.SpielPanel.isHost() == true && this.DynamicObjectIndex == 0)||(this.SpielPanel.isHost() == false && this.DynamicObjectIndex == 1)){
+						 JOptionPane.showOptionDialog(null, "Ahso...",
 			                  "Quest 2 FERTIG", JOptionPane.OK_OPTION,
 			                  JOptionPane.INFORMATION_MESSAGE, null, 
 			                  new String[]{"MANIEREN HABT IHR KEINE!"}, "MANIEREN HABT IHR KEINE!");
+					}
 					 maeuse=1000;
 					 kaese=15;
 					 messer=1;
@@ -463,19 +470,20 @@ public class NDynamic {
 				}
 				//NPC 3
 				else if(this.SpielPanel.getCurrentLevel() == 2 && this.SpielPanel.getCurrentLevelSection() == 0 && this.qalready[2]==false ){
-					this.quest[2]=JOptionPane.showOptionDialog(null, "Euch schicken die 3 Sterne Koeche!",
+					if((this.SpielPanel.isHost() == true && this.DynamicObjectIndex == 0)||(this.SpielPanel.isHost() == false && this.DynamicObjectIndex == 1)){
+						this.quest[2]=JOptionPane.showOptionDialog(null, "Euch schicken die 3 Sterne Koeche!",
 			                  "Quest 3", JOptionPane.YES_NO_CANCEL_OPTION,
 			                  JOptionPane.WARNING_MESSAGE, null, 
 			                  new String[]{"Hoffentlich das letzte Mal...", "Ich bin nicht zu haben."}, "Ich bin nicht zu haben.");
-				   this.Quest3(quest[2]);
+						this.Quest3(quest[2], false, false);
+					}
 				}
-}
 				break;
 
 			case 26: // Ruestung
 				System.out.println("Ruestung aufgenommen");
 				this.Health = 8; // Ruestung = Doppelte Gesundheit
-				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem);
+				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem+" MARKE:"+this.marke);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				this.setRType(3); // RType setzen
 				break;
@@ -491,7 +499,7 @@ public class NDynamic {
 			case 28: // Zaubertrank
 				System.out.println("Zaubertrank aufgenommen");
 				this.Mana += 10;
-				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem);
+				this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" ATTRIBUTES L:"+this.Lives+" H:"+this.Health+" G:"+this.Money+" M:"+this.Mana+" AI:"+this.ActiveItem+" MARKE:"+this.marke);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0); // Entferne Gegenstand
 				
 			case 41: // Truhe
@@ -1129,7 +1137,8 @@ public class NDynamic {
 	 * Quest Dialog 1
 	 * @param p Integer
 	 */
-	public void Quest1(int p){
+	public void Quest1(int p, boolean pIsNetwork, boolean pAlready){
+		if(pIsNetwork == false){
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[0]=JOptionPane.showOptionDialog(null, "\nENDLICH EIN EDLER SEINER ZUNFT! DIE SOSSEN SOLLEN DIR IMMER HOLD SEIN..." +
 		 		"\nDIE KAEFER SIND WIEDER IM ANMARSCH! WENN IHR --5-- von IHNEN TOETEN KOENNTET, WUERDET IHR \nDEN HEISSEN HUNDEN CLAN FUER IMMER IN ERRINNERUNG BLEIBEN\n" +
@@ -1141,19 +1150,33 @@ public class NDynamic {
 		 this.qreceived[0]=true;
 		 }
 		 this.qalready[0]=true;
+
+			this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST1 QUEST:"+p+" QALREADY:1 ");
+		 
 		}
 		else if(p!=JOptionPane.YES_OPTION){
 			 JOptionPane.showMessageDialog(null, "VERFLUCHET SEID IHR!!!");
 			 this.qreceived[0]=true;
 			 this.qdenied[0]=true;
-		 }
+			 
+			this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST1 QUEST:"+p+" ");
+
 		}
+		}else{
+			this.quest[0] = p;
+			this.qalready[0] = pAlready;
+			
+			if(pAlready == false)
+			this.qreceived[0]=true;
+		}
+	}
 	
 	/**
 	 * Quest Dialog 2
 	 * @param p Integer
 	 */
-	public void Quest2(int p){
+	public void Quest2(int p, boolean pIsNetwork, boolean pAlready){
+		if(pIsNetwork == false){
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[1]=JOptionPane.showOptionDialog(null, "\n SCHLUESSEL...VERSCHWUNDEN...ZU SPAET...\n" +
 		 		"\nZU VIELE...EIN BURGER?... RETTUNG?..." +
@@ -1171,13 +1194,23 @@ public class NDynamic {
 			 this.qreceived[1]=true;
 			 this.qdenied[1]=true;
 		 }
+		this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST2 QUEST:"+p+" QALREADY:1 ");
+		
+		}else{
+			this.quest[1] = p;
+			this.qalready[1] = pAlready;
+			
+			if(pAlready == false)
+			this.qreceived[1]=true;
+		}
 		}
 	
 	/**
 	 * Quest Dialog 3
 	 * @param p Integer
 	 */
-	public void Quest3(int p){
+	public void Quest3(int p, boolean pIsNetwork, boolean pAlready){
+		if(pIsNetwork == false){
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[2]=JOptionPane.showOptionDialog(null, "\nWIE IHR HIER?" +
 		 		"\nHmm... BEWEIST EUREN MUT\n TOETET 12 BESTIEN..." +
@@ -1195,6 +1228,14 @@ public class NDynamic {
 			 this.qreceived[2]=true;
 			 this.qdenied[2]=true;
 		 }
+		this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST3 QUEST:"+p+" QALREADY:1 ");
+		}else{
+			this.quest[2] = p;
+			this.qalready[2] = pAlready;
+			
+			if(pAlready == false)
+			this.qreceived[2]=true;
+		}
 		}
 	
 	
@@ -1325,14 +1366,24 @@ public class NDynamic {
 	public int getMarke(){
 		return this.marke;
 	}
-	
+
 	/**
-	 *  Quest Marken setzen
+	 *  Quest Marken erhoehen
 	 * @param p Index
 	 * @return int
 	 */
 	public int setMarke(int p){
 		return this.marke+=p;
+	}
+	
+
+	/**
+	 *  Quest Marken setzen
+	 * @param p Index
+	 * @return int
+	 */
+	public int setMarke2(int p){
+		return this.marke=p;
 	}
 
 	/**

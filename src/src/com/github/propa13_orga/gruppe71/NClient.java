@@ -88,6 +88,100 @@ public class NClient implements Runnable{
 				if(HostResponse.contains("DO") == true){
 					int TmpDynamicObjectIndex = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("DO")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("DO")+2)))));
 						
+					if(TmpDynamicObjectIndex >= 0 && TmpDynamicObjectIndex < 50){
+					
+					if(HostResponse.contains("SETHIDDEN") == true){
+
+						if(HostResponse.contains("SETHIDDEN 1") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setHidden(1);
+
+						if(HostResponse.contains("SETHIDDEN 0") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setHidden(0);
+					}
+					
+					if(HostResponse.contains("SETSECRET1") == true){
+
+						if(HostResponse.contains("SETSECRET1 TRUE") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).SetSecret(true);
+
+						if(HostResponse.contains("SETSECRET1 FALSE") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).SetSecret(false);
+						
+					}
+					
+					if(HostResponse.contains("SETSECRET2") == true){
+
+						if(HostResponse.contains("SETSECRET2 TRUE") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).SetSecret2(true);
+
+						if(HostResponse.contains("SETSECRET2 FALSE") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).SetSecret2(false);
+					}
+					
+					
+					if(HostResponse.contains("SETQUEST") == true){
+
+						int TmpZ = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("Z:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("Z:")+2)))));
+						
+						System.out.println("EXECUTING SETQUEST "+TmpZ);
+						
+						
+						if(HostResponse.contains("SETQUEST TRUE") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setQuest(true,TmpZ);
+
+						if(HostResponse.contains("SETQUEST FALSE") == true)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setQuest(false,TmpZ);
+					}
+					
+					
+					
+					if(HostResponse.contains("SETXPOS") == true){
+
+						int TmpXPos = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("SETXPOS:")+8),HostResponse.indexOf(" ", (HostResponse.indexOf("SETXPOS:")+8)))));
+						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setPosX(TmpXPos);	
+						
+					}
+					
+					
+					if(HostResponse.contains("SETYPOS") == true){
+
+						int TmpYPos = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("SETYPOS:")+8),HostResponse.indexOf(" ", (HostResponse.indexOf("SETYPOS:")+8)))));
+						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setPosY(TmpYPos);	
+						
+					}
+					
+					
+					if(HostResponse.contains("QUEST1") == true){
+
+						int TmpQUEST = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("QUEST:")+6),HostResponse.indexOf(" ", (HostResponse.indexOf("QUEST:")+6)))));
+						int TmpQALREADY = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("QALREADY:")+9),HostResponse.indexOf(" ", (HostResponse.indexOf("QALREADY:")+9)))));
+						
+						if(TmpQALREADY == 1)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).Quest1(TmpQUEST, true, true);	
+						
+					}
+					
+					if(HostResponse.contains("QUEST2") == true){
+
+						int TmpQUEST = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("QUEST:")+6),HostResponse.indexOf(" ", (HostResponse.indexOf("QUEST:")+6)))));
+						int TmpQALREADY = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("QALREADY:")+9),HostResponse.indexOf(" ", (HostResponse.indexOf("QALREADY:")+9)))));
+						
+						if(TmpQALREADY == 1)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).Quest2(TmpQUEST, true, true);	
+						
+					}
+					
+					if(HostResponse.contains("QUEST3") == true){
+
+						int TmpQUEST = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("QUEST:")+6),HostResponse.indexOf(" ", (HostResponse.indexOf("QUEST:")+6)))));
+						int TmpQALREADY = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("QALREADY:")+9),HostResponse.indexOf(" ", (HostResponse.indexOf("QALREADY:")+9)))));
+						
+						if(TmpQALREADY == 1)
+							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).Quest3(TmpQUEST, true, true);	
+						
+					}
+
+					
 					if(HostResponse.contains("ACTION") == true){
 						if(HostResponse.contains("ACTION 0") == true){
 							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).Action(0,true);
@@ -110,13 +204,15 @@ public class NClient implements Runnable{
 						int TmpHealth = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("H:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("H:")+2)))));
 						int TmpMoney = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("G:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("G:")+2)))));
 						int TmpMana = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("M:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("M:")+2)))));
-						int TmpActiveItem = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("AI:")+3),HostResponse.length())));
+						int TmpActiveItem = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("AI:")+3),HostResponse.indexOf(" ", (HostResponse.indexOf("AI:")+3)))));
+						int TmpMarke = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("MARKE:")+6),HostResponse.length())));
 
 						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setLives2(TmpLives);
 						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setHealth2(TmpHealth);
 						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setMoney2(TmpMoney);
 						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setMana2(TmpMana);
 						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setActiveItem(TmpActiveItem);
+						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setMarke2(TmpMarke);
 						
 					}else if(HostResponse.contains("ITEMS") == true){
 
@@ -139,14 +235,14 @@ public class NClient implements Runnable{
 						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setItems2(TmpItems);
 						this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).setName2(TmpName);
 						
-					}else{
+					}else if(HostResponse.contains("UP") == true || HostResponse.contains("DOWN") == true || HostResponse.contains("LEFT") == true || HostResponse.contains("RIGHT") == true){
 
 						int TmpCurrentXPos = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("X:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("X:")+2)))));
 						int TmpCurrentYPos = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("Y:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("Y:")+2)))));
 
 						int TmpMoveToXPos = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("MX:")+3),HostResponse.indexOf(" ", (HostResponse.indexOf("MX:")+3)))));
 						int TmpMoveToYPos = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("MY:")+3),HostResponse.length())));
-						
+												
 						boolean TmpMoves;
 						if((TmpCurrentXPos == TmpMoveToXPos && TmpCurrentYPos == TmpMoveToYPos)||(TmpMoveToXPos==-1 && TmpMoveToYPos == -1))
 							TmpMoves = false;
@@ -173,9 +269,23 @@ public class NClient implements Runnable{
 							
 						}else if(HostResponse.contains("RIGHT") == true){
 							this.SpielPanel.getDynamicObject(TmpDynamicObjectIndex).moveTo("right",true);
-							
 						}
+						
+						
 					}
+				}
+				}
+				
+				if(HostResponse.contains("SO") == true){ //StaticObject
+					
+					int TmpStaticObjectY = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("Y:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("Y:")+1))))); // X Pos
+					int TmpStaticObjectX = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("X:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("X:")+1))))); // Y Pos
+					int TmpStaticObjectType = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("T:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("T:")+1))))); // Type
+
+					this.SpielPanel.getStaticObject(TmpStaticObjectY,TmpStaticObjectX).setType(TmpStaticObjectType);
+					
+					if(TmpStaticObjectType == 0)
+						this.SpielPanel.getStaticObject(TmpStaticObjectY,TmpStaticObjectX).setCollision(false);
 				}
 				
 			} catch (IOException e) {
