@@ -41,7 +41,7 @@ public class NClient implements Runnable{
 		while(true){
 			
 			try {
-				Thread.sleep(100);
+				Thread.sleep(50);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -85,6 +85,11 @@ public class NClient implements Runnable{
 				
 				ClientSocket.close();
 					
+
+				if(HostResponse.contains("NEW LEVEL RESET") == true){
+					this.SpielPanel.resetAllClientMessages();
+				}else{
+				
 				if(HostResponse.contains("DO") == true){
 					int TmpDynamicObjectIndex = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("DO")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("DO")+2)))));
 						
@@ -282,10 +287,13 @@ public class NClient implements Runnable{
 					int TmpStaticObjectX = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("X:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("X:")+1))))); // Y Pos
 					int TmpStaticObjectType = Integer.parseInt((HostResponse.substring((HostResponse.indexOf("T:")+2),HostResponse.indexOf(" ", (HostResponse.indexOf("T:")+1))))); // Type
 
+					if(this.SpielPanel.getStaticObject(TmpStaticObjectY,TmpStaticObjectX) != null){
 					this.SpielPanel.getStaticObject(TmpStaticObjectY,TmpStaticObjectX).setType(TmpStaticObjectType);
 					
 					if(TmpStaticObjectType == 0)
 						this.SpielPanel.getStaticObject(TmpStaticObjectY,TmpStaticObjectX).setCollision(false);
+					}
+				}
 				}
 				
 			} catch (IOException e) {

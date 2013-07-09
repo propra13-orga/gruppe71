@@ -351,6 +351,7 @@ public class DDynamic implements Serializable {
 				if(this.getSecret2()==true){
 					this.SetSecret2(false);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setCollision(false);
 				}
 				break;
 			
@@ -361,6 +362,7 @@ public class DDynamic implements Serializable {
 				 sound.Abspielen();
 				this.SetSecret2(true);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setCollision(false);
 				break;
 			
 				

@@ -48,6 +48,13 @@ public class NServerHandler implements Runnable{
 				String ClientMessage = HostIn.readUTF();
 				System.out.println("Server Received: "+ClientMessage);
 
+
+				if(ClientMessage.contains("NEW LEVEL RESET") == true){
+					this.resetQueues();
+					HostOut.writeUTF("NEW LEVEL RESET OK");
+
+				}else{
+				
 				if(ClientMessage.contains("QUERY") == true){
 					if(ClientMessage.contains("CLIENT1") == true){
 						this.CurrentClient = 1;
@@ -62,6 +69,7 @@ public class NServerHandler implements Runnable{
 						
 						HostOut.writeUTF(this.ClientQueues[this.CurrentClient][0]);
 
+						
 						this.ClientQueues[this.CurrentClient][0] = null;
 						for(int i = 0; i < 98; i++){
 							if(this.ClientQueues[this.CurrentClient][(i+1)] != null){
@@ -95,10 +103,25 @@ public class NServerHandler implements Runnable{
 					
 					System.out.println("CLIENTQUEUES BEFORE INPUT:\n"+Arrays.deepToString(this.ClientQueues[this.CurrentClient]));
 
-					for(int i = 0; i < 98; i++){
-						if(this.ClientQueues[this.CurrentClient][i] == null){
-							this.ClientQueues[this.CurrentClient][i] = ClientMessage;
-							i = 98;
+					boolean AlreadyInQueue = false;
+					
+					for(int i = 0; i < 100; i++){
+						if(this.ClientQueues[this.CurrentClient][i] != null){
+							if(this.ClientQueues[this.CurrentClient][i] == ClientMessage){
+								AlreadyInQueue = true;
+								i = 100;
+							}
+						}else{
+							i=100;
+						}
+					}
+					
+					if(AlreadyInQueue == false){
+						for(int i = 0; i < 98; i++){
+							if(this.ClientQueues[this.CurrentClient][i] == null){
+								this.ClientQueues[this.CurrentClient][i] = ClientMessage;
+								i = 98;
+							}
 						}
 					}
 					System.out.println("CLIENTQUEUES AFTER INPUT:\n"+Arrays.deepToString(this.ClientQueues[this.CurrentClient]));
@@ -109,7 +132,7 @@ public class NServerHandler implements Runnable{
 					
 					
 				}
-				
+				}
 				this.HostSocket.close();
 				
 		} catch (IOException e) {
@@ -117,4 +140,15 @@ public class NServerHandler implements Runnable{
 			e.printStackTrace();
 		}
 	}
+
+	  /**
+	   * Resettet die ClientQueues
+	   */
+	  public void resetQueues(){
+		  for(int a = 0; a < 2; a++){
+			for(int i = 0; i < 100; i++){
+			  	this.ClientQueues[a][i] = null;
+		  	}
+		  }
+	  }
 }

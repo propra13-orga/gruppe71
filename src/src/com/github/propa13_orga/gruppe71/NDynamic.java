@@ -347,6 +347,7 @@ public class NDynamic {
 				if(this.getSecret2()==true){
 					this.SetSecret2(false);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setCollision(false);
 				}
 				break;
 			
@@ -357,6 +358,7 @@ public class NDynamic {
 				 sound.Abspielen();
 				this.SetSecret2(true);
 				this.StaticObjects[(pYPos/30)][(pXPos/30)].setType(0);
+				this.StaticObjects[(pYPos/30)][(pXPos/30)].setCollision(false);
 				break;
 			
 				
@@ -1176,6 +1178,8 @@ public class NDynamic {
 	 * @param p Integer
 	 */
 	public void Quest2(int p, boolean pIsNetwork, boolean pAlready){
+		System.out.println("EXECUTE QUEST2");
+		
 		if(pIsNetwork == false){
 		if(p==JOptionPane.YES_OPTION){
 		 this.qenabled[1]=JOptionPane.showOptionDialog(null, "\n SCHLUESSEL...VERSCHWUNDEN...ZU SPAET...\n" +
@@ -1188,13 +1192,15 @@ public class NDynamic {
 		 this.qreceived[1]=true;
 		 }
 		 this.qalready[1]=true;
+			this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST2 QUEST:"+p+" QALREADY:1 ");
 		}
 		else if(p!=JOptionPane.YES_OPTION){
 			 JOptionPane.showMessageDialog(null, "SCHOENEN TAG...");
 			 this.qreceived[1]=true;
 			 this.qdenied[1]=true;
+			
+			 this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST2 QUEST:"+p+" ");
 		 }
-		this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST2 QUEST:"+p+" QALREADY:1 ");
 		
 		}else{
 			this.quest[1] = p;
@@ -1222,13 +1228,15 @@ public class NDynamic {
 		 this.qreceived[2]=true;
 		 }
 		 this.qalready[2]=true;
+		 this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST3 QUEST:"+p+" QALREADY:1 ");
+			
 		}
 		else if(p!=JOptionPane.YES_OPTION){
 			 JOptionPane.showMessageDialog(null, "Hier gibts kein Entkommen...");
 			 this.qreceived[2]=true;
 			 this.qdenied[2]=true;
+			 this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST3 QUEST:"+p+" ");
 		 }
-		this.SpielPanel.setClientMessage("DO"+this.DynamicObjectIndex+" QUEST3 QUEST:"+p+" QALREADY:1 ");
 		}else{
 			this.quest[2] = p;
 			this.qalready[2] = pAlready;

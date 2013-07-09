@@ -50,6 +50,7 @@ public class NPanel extends JPanel {
 	protected boolean loaded;
 	protected boolean DebugMode;
 	private String ClientIPAddress;
+	private boolean[] QuestKiller;
 	
 	
 	private boolean IsHost; //Host oder Client?
@@ -88,8 +89,15 @@ public class NPanel extends JPanel {
 		this.CurrentLevelSection = 0;
 		this.CurrentLevel = 0;
 		this.AnzahlSpieler = 2;
-		this.loadLevel(0); //Laed 1. Level
 		this.loaded=false;
+		this.QuestKiller = new boolean[10];
+		
+		for(int i = 0; i < 10; i++){
+			this.QuestKiller[i] = false;
+		}
+		
+
+		this.loadLevel(0); //Laed 1. Level
 		
 		this.DebugMode = true; //Debug-Mode? Um Bugs zu finden beim Programmieren
 
@@ -338,8 +346,10 @@ public class NPanel extends JPanel {
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);
 							
-							this.setClientMessage("SO Y:"+geheimY+" X:"+geheimX+" T:0 ");
-							
+							if(this.QuestKiller[0] == false){
+								this.setClientMessage("SO Y:"+geheimY+" X:"+geheimX+" T:0 ");
+								this.QuestKiller[0] = true;
+							}
 						}
 						
 						//Quest 3
@@ -348,7 +358,10 @@ public class NPanel extends JPanel {
 							this.StaticObjects[geheimY][geheimX].setCollision(false);
 							this.StaticObjects[geheimY][geheimX].setType(0);
 
-							this.setClientMessage("SO Y:"+geheimY+" X:"+geheimX+" T:0 ");
+							if(this.QuestKiller[1] == false){
+								this.setClientMessage("SO Y:"+geheimY+" X:"+geheimX+" T:0 ");
+								this.QuestKiller[1] = true;
+							}
 						}
 						
 						//Schluessel nicht sichtbar
@@ -360,7 +373,14 @@ public class NPanel extends JPanel {
 							this.DynamicObjects[i].setPosX(keyX);
 							this.DynamicObjects[i].setPosY(keyY);
 							
-							this.setClientMessage("SO Y:"+keyY+" X:"+keyX+" T:0 DO"+i+" SETXPOS:"+keyX+" SETYPOS:"+keyY+" SETHIDDEN 1 ");
+				            /*try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}*/
+							
+							//this.setClientMessage("SO Y:"+keyY+" X:"+keyX+" T:0 DO"+i+" SETXPOS:"+keyX+" SETYPOS:"+keyY+" SETHIDDEN 1 ");
 						}
 						
 						//Schluessel sichtbar
@@ -368,37 +388,49 @@ public class NPanel extends JPanel {
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(0);
 							
-
-							this.setClientMessage("SO Y:"+this.DynamicObjects[i].getPosY()+" X:"+this.DynamicObjects[i].getPosX()+" T:0 ");
-							
+							if(this.QuestKiller[2] == false){
+								this.setClientMessage("SO Y:"+this.DynamicObjects[i].getPosY()+" X:"+this.DynamicObjects[i].getPosX()+" T:0 ");
+								this.QuestKiller[2] = true;
+							}
 						}
 						//Quest 2
-						else if(this.DynamicObjects[i].getQuestLaufend(1)==true && this.DynamicObjects[i].getMarke()>=5 ){
+						else if(this.DynamicObjects[i].getQuestLaufend(1)==true && this.DynamicObjects[i].getMarke()>=5){
 							
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setCollision(false);
 							this.StaticObjects[this.DynamicObjects[i].getPosY()][this.DynamicObjects[i].getPosX()].setType(47);
 							
-							this.setClientMessage("SO Y:"+this.DynamicObjects[i].getPosY()+" X:"+this.DynamicObjects[i].getPosX()+" T:47 ");
-							
+							if(this.QuestKiller[3] == false){
+								this.setClientMessage("SO Y:"+this.DynamicObjects[i].getPosY()+" X:"+this.DynamicObjects[i].getPosX()+" T:47 ");
+								this.QuestKiller[3] = true;
+							}
 						}
 						
 						else if(this.DynamicObjects[i].getInfo()==true && infoY > 0 && infoX > 0){//Information
 							this.StaticObjects[infoY][infoX].setType(0);
 							
-							this.setClientMessage("SO Y:"+infoY+" X:"+infoX+" T:0 ");
-							
+							if(this.QuestKiller[4] == false){
+								this.setClientMessage("SO Y:"+infoY+" X:"+infoX+" T:0 ");
+								this.QuestKiller[4] = true;
+							}
 							
 						}
 						else if(this.DynamicObjects[i].getTreasure(0)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 1
 							
 							this.StaticObjects[belohnungY][belohnungX].setType(0);
-							this.setClientMessage("SO Y:"+belohnungY+" X:"+belohnungX+" T:0 ");
+							if(this.QuestKiller[5] == false){
+								this.setClientMessage("SO Y:"+belohnungY+" X:"+belohnungX+" T:0 ");
+								this.QuestKiller[5] = true;
+							}
 							
 						}
 						else if(this.DynamicObjects[i].getTreasure(2)==true && belohnungY > 0 && belohnungX > 0){//Belohnung 3
 							
 							this.StaticObjects[belohnungY][belohnungX].setType(0);
-							this.setClientMessage("SO Y:"+belohnungY+" X:"+belohnungX+" T:0 ");
+							
+							if(this.QuestKiller[6] == false){
+								this.setClientMessage("SO Y:"+belohnungY+" X:"+belohnungX+" T:0 ");
+								this.QuestKiller[6] = true;
+							}
 							
 						}
 							
@@ -409,8 +441,11 @@ public class NPanel extends JPanel {
 						else if(this.DynamicObjects[i].getSecret()==true && landungX > 0 && landungY > 0){
 							this.DynamicObjects[i].setCurrentPosition((landungX*30),(landungY*30));
 							this.DynamicObjects[i].SetSecret(false);
-							
-							this.setClientMessage("DO"+i+" SETXPOS:"+(landungX*30)+" SETYPOS:"+(landungY*30)+" SETSECRET FALSE ");
+
+							if(this.QuestKiller[7] == false){
+								this.setClientMessage("DO"+i+" SETXPOS:"+(landungX*30)+" SETYPOS:"+(landungY*30)+" SETSECRET FALSE ");
+								this.QuestKiller[7] = true;
+							}
 						}
 						
 				
@@ -419,7 +454,10 @@ public class NPanel extends JPanel {
 										this.StaticObjects[openY][openX].setCollision(false);
 										
 										this.DynamicObjects[i].SetSecret2(false);
-										this.setClientMessage("SO Y:"+openY+" X:"+openX+" T:0 DO"+i+" SETSECRET2 FALSE ");
+										if(this.QuestKiller[8] == false){
+											this.setClientMessage("SO Y:"+openY+" X:"+openX+" T:0 DO"+i+" SETSECRET2 FALSE ");
+											this.QuestKiller[8] = true;
+										}
 										
 								}
 						for(int z=0;z<DynamicObjects[i].QuestLength();z++){
@@ -430,11 +468,16 @@ public class NPanel extends JPanel {
 							this.StaticObjects[questY][questX].setType(0);
 							this.StaticObjects[questY][questX].setCollision(false);
 
-							this.setClientMessage("SO Y:"+questY+" X:"+questX+" T:0 DO"+i+" SETQUEST TRUE Z:"+z+" ");
-							
+							if(this.QuestKiller[9] == false){
+								this.setClientMessage("SO Y:"+questY+" X:"+questX+" T:0 DO"+i+" SETQUEST TRUE Z:"+z+" ");
+								this.QuestKiller[9] = true;
+							}
 							this.DynamicObjects[i].setQuest(false,z);
 							break;
 							}
+						
+						
+
 						
 						
 					}	
@@ -676,6 +719,11 @@ public class NPanel extends JPanel {
 	 * @param pLevel Nummer des Levels
 	 */
 	public void loadLevel(int pLevel){	
+
+		for(int i = 0; i < 10; i++){
+			this.QuestKiller[i] = false;
+		}
+		
 		//Lade eine Level Datei in den Zwischenspeicher
 		this.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(pLevel)+".txt");
 		this.CurrentLevel = pLevel;
@@ -690,6 +738,10 @@ public class NPanel extends JPanel {
 	 *  
 	 */
 	public void loadNextLevel(){
+		
+		this.resetAllClientMessages();
+		this.setClientMessage("NEW LEVEL RESET");
+		
 		if(this.CurrentLevel < 2) //Max 3 Abschnitte, daher
 			this.loadLevel((this.CurrentLevel+1));
 	}
@@ -881,6 +933,14 @@ public class NPanel extends JPanel {
 	 *  
 	 */
 	public void loadNextLevelSection(){
+
+		for(int i = 0; i < 10; i++){
+			this.QuestKiller[i] = false;
+		}
+
+		this.resetAllClientMessages();
+		this.setClientMessage("NEW LEVEL RESET");
+		
 		if(this.CurrentLevelSection < 2){ //Max 3 Abschnitte, daher
 		this.CheckpointLoaded = false;
 		this.loadLevelIntoStaticObjects((this.CurrentLevelSection+1));
@@ -941,7 +1001,10 @@ public class NPanel extends JPanel {
 	 * @param pY Y Koord
 	 */
 	public StaticObject getStaticObject(int pX, int pY){
-		return this.StaticObjects[pY][pX];
+		if(pX >=0 && pX < 20 && pY >=0 && pY < 12)
+			return this.StaticObjects[pY][pX];
+		else
+			return null;
 	}
 	
 	/**
@@ -1171,7 +1234,7 @@ public class NPanel extends JPanel {
 	}
 	
 	/**
-	 * Resettet, die momentane ClientCessage
+	 * Resettet, die momentane ClientMessage
 	 *  
 	 */
 	public void resetClientMessage(){
@@ -1183,6 +1246,20 @@ public class NPanel extends JPanel {
 				this.ClientMessage2[i] = "";
 				this.ClientResponse = "";
 			}
+		}
+		
+	}
+	
+	/**
+	 * Resettet, alle ClientMessages
+	 *  
+	 */
+	public void resetAllClientMessages(){
+		this.ClientMessage = "";
+		this.ClientResponse = "";
+		
+		for(int i=0; i < 5; i++){
+				this.ClientMessage2[i] = "";
 		}
 		
 	}

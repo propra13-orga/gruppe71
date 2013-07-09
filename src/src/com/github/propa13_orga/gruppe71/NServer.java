@@ -58,17 +58,14 @@ public class NServer implements Runnable{
 	      try
 	      {
 	        //Blocken, bis eine Anfrage kommt:
-	        System.out.println ("Server: Waiting for Connect");
 	        Socket NewSocket = this.HostServerSocket.accept();
 	        
 	        //Wenn die Anfrage da ist, dann wird ein Thread gestartet, der 
 	        //die weitere Verarbeitung uebernimmt.
-	        System.out.println ("Server: Client Connected");
 	        Thread SocketThread = new Thread(new NServerHandler(this.ClientQueues,NewSocket, this.SpielPanel) );
 	        SocketThread.start();
 			
-			System.out.println ("Redirected Client to SocketThread...");
-	      }
+		  }
 	      catch (IOException e)
 	      {
 		      System.out.println("Socket couldnt be started: " + e.getMessage());
