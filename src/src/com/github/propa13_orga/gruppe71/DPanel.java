@@ -1034,19 +1034,30 @@ public class DPanel extends JPanel implements Serializable {
 	 *  
 	 */
 	public void SaveGame(){
+		if (this.CurrentLevelSection != 2) { // Spiel speichern WENN man sicht nicht in der dritten LevelSection befindet
 		ObjectOutputStream output = null;
 	
 		try{
 			output = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("Spielstand.dun")));
-			output.writeObject(DynamicObjects[0]); // Speichert Spieler1
-			output.writeObject(DynamicObjects[1]); // Speichert Spieler2
-			output.writeInt(AnzahlSpieler); 
-			output.writeInt(CurrentLevelSection); 
-			output.writeInt(CurrentLevel);
+			output.writeInt(DynamicObjects[0].Health);  // Speichert Gesundheit von Spieler1
+			output.writeInt(this.DynamicObjects[0].Lives); 
+			output.writeInt(this.DynamicObjects[0].Money);
+			output.writeInt(this.DynamicObjects[0].Mana);
+			output.writeInt(this.DynamicObjects[0].Points);
+			output.writeInt(DynamicObjects[1].Health); // Speichert Gesundheit von Spieler2
+			output.writeInt(this.DynamicObjects[1].Lives);
+			output.writeInt(this.DynamicObjects[1].Money);
+			output.writeInt(this.DynamicObjects[1].Mana);
+			output.writeInt(this.DynamicObjects[1].Points);
+			output.writeInt(AnzahlSpieler);  // Speichert die Anzahl der Spieler
+			output.writeInt(CurrentLevelSection);  // Speichert LevelAbschnitt
+			output.writeInt(CurrentLevel); // Speichert Level
 			output.close();
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
+		}
+		System.out.println("Spiel gespeichert");
 		}
 	}
 	
@@ -1055,22 +1066,43 @@ public class DPanel extends JPanel implements Serializable {
 	 *  
 	 */
 	public void LoadGame(){
+		ObjectInputStream input = null;
+		
 		try{
-			ObjectInputStream input = null;
+			
 			input = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Spielstand.dun")));
 			
-			this.DynamicObjects[0] = (DDynamic) input.readObject();
-			this.DynamicObjects[1] = (DDynamic) input.readObject();
-			this.AnzahlSpieler = input.readInt();
-			this.CurrentLevelSection = input.readInt();
-			this.CurrentLevel = input.readInt();
+			this.DynamicObjects[0].Health = input.readInt(); // LŠdt Gesundheit von Spieler1
+			this.DynamicObjects[0].Lives = input.readInt();
+			this.DynamicObjects[0].Money = input.readInt();
+			this.DynamicObjects[0].Mana = input.readInt();
+			this.DynamicObjects[0].Points = input.readInt();
+			this.DynamicObjects[1].Health = input.readInt();  // LŠdt Gesundheit von Spieler2
+			this.DynamicObjects[1].Lives = input.readInt();
+			this.DynamicObjects[1].Money = input.readInt();
+			this.DynamicObjects[1].Mana = input.readInt();
+			this.DynamicObjects[1].Points = input.readInt();
+			this.AnzahlSpieler = input.readInt(); // LŠdt Anzahl der Spieler
+			this.CurrentLevelSection = input.readInt();   // LŠdt LevelAbschnitt
+			this.CurrentLevel = input.readInt(); // LŠdt Level
 			input.close();
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
 		}
+		System.out.println("Die Anzahl der Spieler ist " + this.AnzahlSpieler);
+		System.out.println("Die CurrentLevelSecetion ist " + this.CurrentLevelSection);
+		System.out.println("Das CurrentLevel ist " + this.CurrentLevel);
+		System.out.println("Die Health ist " + this.DynamicObjects[0].Health);
+		System.out.println("Die Lives ist " + this.DynamicObjects[0].Lives);
 		
-		this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
+		//Jetzt Spiel neu laden
+		
+		//Lade eine Level Datei in den Zwischenspeicher
+				this.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(this.CurrentLevel)+".txt");
+				
+				//Lade den Levelabschnitt nach Statische Objekte
+				this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
 		
 	}
 
