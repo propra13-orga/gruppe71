@@ -26,7 +26,7 @@ public class DStartMenu extends JFrame {
 	public DStartMenu() {
 	    //Hintergrundmusik
 		
-		title=new DSound("src/com/github/propa13_orga/gruppe71/TitleMusic.wav");
+		title=new DSound("src/com/github/propa13_orga/gruppe71/Titel.wav");
 		title.SetVolume(-20);
 		title.Title();
 	//Fenster-Eigenschaften werden gesetzt
