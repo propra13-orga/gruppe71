@@ -53,6 +53,7 @@ public class DPanel extends JPanel implements Serializable {
 	protected int AnzahlSpieler;
 	protected boolean loaded;
 	protected boolean DebugMode;
+	protected boolean LoadedGame;
 	
 	/**
 	 * Initialisiert die Klassenattribute
@@ -80,6 +81,7 @@ public class DPanel extends JPanel implements Serializable {
 		this.AnzahlSpieler = pAnzahlSpieler;
 		this.loadLevel(0); //Laed 1. Level
 		this.loaded=false;
+		this.LoadedGame = false;
 		
 		this.DebugMode = true; //Debug-Mode? Um Bugs zu finden beim Programmieren
 	}
@@ -202,8 +204,10 @@ public class DPanel extends JPanel implements Serializable {
 				else
 				{
 					//Wenn schon einmal etwas initialisiert wurde, z.B. Naechster Levelabschnitt
-					this.DynamicObjects[0].setCurrentPosition((TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang
-					this.DynamicObjects[1].setCurrentPosition((TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang	
+					if(this.LoadedGame == false){
+						this.DynamicObjects[0].setCurrentPosition((TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang
+						this.DynamicObjects[1].setCurrentPosition((TmpXStart*30), (TmpYStart*30)); //initialisiere, damit Objekt neben Eingang	
+					}
 					this.DynamicObjects[0].setMoves(false); //Objekt bewegt sich nicht
 					this.DynamicObjects[1].setMoves(false); //Objekt bewegt sich nicht	
 					this.DynamicObjects[0].setStaticObjects(this.StaticObjects); //StaticObjects vom neuen Levelabschnitt
@@ -1044,11 +1048,18 @@ public class DPanel extends JPanel implements Serializable {
 			output.writeInt(this.DynamicObjects[0].Money);
 			output.writeInt(this.DynamicObjects[0].Mana);
 			output.writeInt(this.DynamicObjects[0].Points);
+			output.writeInt(this.DynamicObjects[0].CurrentXPos);
+			output.writeInt(this.DynamicObjects[0].CurrentYPos);
+
+			System.out.println("X Pos "+this.DynamicObjects[0].CurrentXPos+" Y Pos " + this.DynamicObjects[0].CurrentYPos);
+			
 			output.writeInt(DynamicObjects[1].Health); // Speichert Gesundheit von Spieler2
 			output.writeInt(this.DynamicObjects[1].Lives);
 			output.writeInt(this.DynamicObjects[1].Money);
 			output.writeInt(this.DynamicObjects[1].Mana);
 			output.writeInt(this.DynamicObjects[1].Points);
+			output.writeInt(this.DynamicObjects[1].getPosX());
+			output.writeInt(this.DynamicObjects[1].getPosY());
 			output.writeInt(AnzahlSpieler);  // Speichert die Anzahl der Spieler
 			output.writeInt(CurrentLevelSection);  // Speichert LevelAbschnitt
 			output.writeInt(CurrentLevel); // Speichert Level
@@ -1066,44 +1077,70 @@ public class DPanel extends JPanel implements Serializable {
 	 *  
 	 */
 	public void LoadGame(){
+
+		this.LoadedGame = true;
+		
 		ObjectInputStream input = null;
+		int[] TmpInput = new int[17]; // Zwischenspeichern
 		
 		try{
 			
 			input = new ObjectInputStream(new BufferedInputStream(new FileInputStream("Spielstand.dun")));
 			
-			this.DynamicObjects[0].Health = input.readInt(); // LŠdt Gesundheit von Spieler1
-			this.DynamicObjects[0].Lives = input.readInt();
-			this.DynamicObjects[0].Money = input.readInt();
-			this.DynamicObjects[0].Mana = input.readInt();
-			this.DynamicObjects[0].Points = input.readInt();
-			this.DynamicObjects[1].Health = input.readInt();  // LŠdt Gesundheit von Spieler2
-			this.DynamicObjects[1].Lives = input.readInt();
-			this.DynamicObjects[1].Money = input.readInt();
-			this.DynamicObjects[1].Mana = input.readInt();
-			this.DynamicObjects[1].Points = input.readInt();
-			this.AnzahlSpieler = input.readInt(); // LŠdt Anzahl der Spieler
-			this.CurrentLevelSection = input.readInt();   // LŠdt LevelAbschnitt
-			this.CurrentLevel = input.readInt(); // LŠdt Level
+			for(int u = 0; u < 17; u++){
+				TmpInput[u] = input.readInt();
+			}
 			input.close();
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
 		}
+		
+		//Jetzt Spiel neu laden
+		
+		//Lade eine Level Datei in den Zwischenspeicher
+		this.loadLevel(TmpInput[16]); //Laed 1. Level
+		
+		//Lade den Levelabschnitt nach Statische Objekte
+		this.loadLevelIntoStaticObjects(TmpInput[15]);
+		
+		this.DynamicObjects[0].Health = TmpInput[0]; // Laedt Gesundheit von Spieler1
+		this.DynamicObjects[0].Lives = TmpInput[1];
+		this.DynamicObjects[0].Money = TmpInput[2];
+		this.DynamicObjects[0].Mana = TmpInput[3];
+		this.DynamicObjects[0].Points = TmpInput[4];
+		this.DynamicObjects[0].CurrentXPos = TmpInput[5];
+		this.DynamicObjects[0].CurrentYPos = TmpInput[6];
+		this.DynamicObjects[1].Health = TmpInput[7];  // Laedt Gesundheit von Spieler2
+		this.DynamicObjects[1].Lives = TmpInput[8];
+		this.DynamicObjects[1].Money = TmpInput[9];
+		this.DynamicObjects[1].Mana = TmpInput[10];
+		this.DynamicObjects[1].Points = TmpInput[11];
+		this.DynamicObjects[1].CurrentXPos = TmpInput[12];
+		this.DynamicObjects[1].CurrentYPos = TmpInput[13];
+		this.AnzahlSpieler = TmpInput[14]; // Laedt Anzahl der Spieler
+		this.CurrentLevelSection = TmpInput[15];   // Laedt LevelAbschnitt
+		this.CurrentLevel = TmpInput[16]; // Laedt Level
+		
+
 		System.out.println("Die Anzahl der Spieler ist " + this.AnzahlSpieler);
 		System.out.println("Die CurrentLevelSecetion ist " + this.CurrentLevelSection);
 		System.out.println("Das CurrentLevel ist " + this.CurrentLevel);
 		System.out.println("Die Health ist " + this.DynamicObjects[0].Health);
 		System.out.println("Die Lives ist " + this.DynamicObjects[0].Lives);
+		System.out.println("X Pos "+TmpInput[5]+" Y Pos " + TmpInput[6]);
 		
-		//Jetzt Spiel neu laden
-		
-		//Lade eine Level Datei in den Zwischenspeicher
-				this.loadLevelFromFile("src/src/com/github/propa13_orga/gruppe71/level"+ Integer.toString(this.CurrentLevel)+".txt");
-				
-				//Lade den Levelabschnitt nach Statische Objekte
-				this.loadLevelIntoStaticObjects(this.CurrentLevelSection);
-		
+
+		this.DynamicObjects[0].setMoves(false);
+		this.DynamicObjects[0].setMoveToPosition(TmpInput[5], TmpInput[6]);
+		this.DynamicObjects[0].setMoves(false);
+		this.DynamicObjects[0].setCurrentPosition(TmpInput[5], TmpInput[6]);
+		this.DynamicObjects[1].setMoves(false);
+		this.DynamicObjects[1].setMoveToPosition(TmpInput[12], TmpInput[13]);
+		this.DynamicObjects[1].setMoves(false);
+		this.DynamicObjects[1].setCurrentPosition(TmpInput[12], TmpInput[13]);
+		System.out.println("XC Pos "+this.DynamicObjects[0].getCurrentXPosition()+" YC Pos " + this.DynamicObjects[0].getCurrentYPosition());
+	
 	}
 
 }
