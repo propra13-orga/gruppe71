@@ -238,8 +238,9 @@ public class NShop implements ActionListener {
 			}
 	
 	}
-	
-	//Der einsame Dollar String
+	/**
+	 * Der einsame Dollar String
+	 */
 	public String Dollar(){
 		this.dollar=new String();
 		this.dollar="src/src/com/github/propa13_orga/gruppe71/bb_money.png";
