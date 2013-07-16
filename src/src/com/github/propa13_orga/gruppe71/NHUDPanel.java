@@ -79,7 +79,7 @@ public class NHUDPanel extends JPanel {
 			// Spieler Name hinzugefuegt
 			this.Spieler_Name[i] = new JLabel("Spieler "+(i+1)); // create some stuff
 			this.Spieler_Name[i].setFont(new Font("Serif", Font.BOLD, 22));
-			this.Spieler_Name[i].setBounds(20, 0+(i*40), 100, 60);
+			this.Spieler_Name[i].setBounds(20, 0+(i*110), 100, 60);
 			this.add(this.Spieler_Name[i]);
 
 			
@@ -87,21 +87,21 @@ public class NHUDPanel extends JPanel {
 			//Level
 			this.level[i] = new JLabel("Level: "); // create some stuff
 			this.level[i].setFont(new Font("Serif", Font.BOLD, 20));
-			this.level[i].setBounds(20, 35+(i*40), 100, 60);
+			this.level[i].setBounds(20, 35+(i*110), 100, 60);
 			this.add(this.level[i]);
 			
 			
 			//Skills Unused
 			this.skills[i] = new JLabel("Skillpoints Left: "); // create some stuff
 			this.skills[i].setFont(new Font("Serif", Font.BOLD, 20));
-			this.skills[i].setBounds(170, 35+(i*40), 200, 60);
+			this.skills[i].setBounds(170, 35+(i*110), 200, 60);
 			this.add(this.skills[i]);
 			
 			
 			//EXP
 			this.exp[i] = new JLabel("EXP: "); // create some stuff
 			this.exp[i].setFont(new Font("Serif", Font.BOLD, 18));
-			this.exp[i].setBounds(420, 35+(i*40), 100, 60);
+			this.exp[i].setBounds(420, 35+(i*110), 100, 60);
 			this.add(this.exp[i]);
 			
 			
@@ -110,12 +110,12 @@ public class NHUDPanel extends JPanel {
 			Image Image_Lives_Scaled = Image_Lives.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);//Skaliert auf 30x30
 			ImageIcon Lives_ImageIcon = new ImageIcon(Image_Lives_Scaled);
 			JLabel Lives_Icon = new JLabel(Lives_ImageIcon);
-			Lives_Icon.setBounds(120, 15+(i*40), 30, 30);
+			Lives_Icon.setBounds(120, 15+(i*110), 30, 30);
 			this.add(Lives_Icon);//Icon hinzugefuegt
 			
 			this.Spieler_Lives[i] = new JLabel("3"); // Lebensanzeige
 			this.Spieler_Lives[i].setFont(new Font("Arial", Font.BOLD, 18));
-			this.Spieler_Lives[i].setBounds(165, 0+(i*40), 100, 60);
+			this.Spieler_Lives[i].setBounds(165, 0+(i*110), 100, 60);
 			this.add(this.Spieler_Lives[i]);
 
 			//Mana
@@ -123,12 +123,12 @@ public class NHUDPanel extends JPanel {
 			Image Image_Mana_Scaled = Image_Mana.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);//Skaliert auf 30x30
 			ImageIcon Mana_ImageIcon = new ImageIcon(Image_Mana_Scaled);
 			JLabel Mana_Icon = new JLabel(Mana_ImageIcon);
-			Mana_Icon.setBounds(220, 15+(i*40), 30, 30);
+			Mana_Icon.setBounds(220, 15+(i*110), 30, 30);
 			this.add(Mana_Icon);//Icon hinzugefuegt
 
 			this.Spieler_Mana[i] = new JLabel("10"); // Manaanzeige
 			this.Spieler_Mana[i].setFont(new Font("Arial", Font.BOLD, 18));
-			this.Spieler_Mana[i].setBounds(265, 0+(i*40), 100, 60);
+			this.Spieler_Mana[i].setBounds(265, 0+(i*110), 100, 60);
 			this.add(this.Spieler_Mana[i]);
 			
 
@@ -137,18 +137,18 @@ public class NHUDPanel extends JPanel {
 			Image Image_Money_Scaled = Image_Money.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);//Skaliert auf 30x30
 			ImageIcon Money_ImageIcon = new ImageIcon(Image_Money_Scaled);
 			JLabel Money_Icon = new JLabel(Money_ImageIcon);
-			Money_Icon.setBounds(320, 15+(i*40), 30, 30);
+			Money_Icon.setBounds(320, 15+(i*110), 30, 30);
 			this.add(Money_Icon);//Icon hinzugefuegt
 
 			this.Spieler_Money[i] = new JLabel("0"); // Geldanzeige
 			this.Spieler_Money[i].setFont(new Font("Arial", Font.BOLD, 18));
-			this.Spieler_Money[i].setBounds(365, 0+(i*40), 100, 60);
+			this.Spieler_Money[i].setBounds(365, 0+(i*110), 100, 60);
 			this.add(this.Spieler_Money[i]);
 			
 			//Waffen
 			this.Spieler_Weapon[i] = new JLabel("Weapon:"); // Waffenanzeige
 			this.Spieler_Weapon[i].setFont(new Font("Arial", Font.BOLD, 18));
-			this.Spieler_Weapon[i].setBounds(420, 0+(i*40), 100, 60);
+			this.Spieler_Weapon[i].setBounds(420, 0+(i*110), 100, 60);
 			this.add(this.Spieler_Weapon[i]);
 			
 			//WeaponIcon
@@ -156,14 +156,14 @@ public class NHUDPanel extends JPanel {
 			Image Image_Weapon_Scaled = Image_Weapon.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH);//Skaliert auf 30x30
 			ImageIcon Weapon_ImageIcon = new ImageIcon(Image_Weapon_Scaled);
 			this.Spieler_Weapon_Icon[i] = new JLabel(Weapon_ImageIcon);
-			this.Spieler_Weapon_Icon[i].setBounds(500, 15+(i*40), 30, 30);
+			this.Spieler_Weapon_Icon[i].setBounds(500, 15+(i*110), 30, 30);
 			this.add(this.Spieler_Weapon_Icon[i]);//Icon hinzugefuegt
 			
 
 			//Waffen Zaehler
 			this.Spieler_Weapon_Amount[i] = new JLabel("0"); // Waffenanzeige
 			this.Spieler_Weapon_Amount[i].setFont(new Font("Arial", Font.BOLD, 18));
-			this.Spieler_Weapon_Amount[i].setBounds(550, 0+(i*40), 100, 60);
+			this.Spieler_Weapon_Amount[i].setBounds(550, 0+(i*110), 100, 60);
 			this.add(this.Spieler_Weapon_Amount[i]);
 			
 			

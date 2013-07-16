@@ -35,7 +35,7 @@ public class NSteuerung {
 		this.SpielFenster = new JFrame();
 		
 		//Fenster-Eigenschaften werden gesetzt
-		this.SpielFenster.setSize(610, 520);
+		this.SpielFenster.setSize(610, 580);
 		this.SpielFenster.setLocation(350, 150) ;
 		this.SpielFenster.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.SpielFenster.setTitle("DungeonCrawler");
@@ -63,7 +63,7 @@ public class NSteuerung {
 		
 		
 		final NHUDPanel InfoLeiste = new NHUDPanel(this.SpielFenster, SpielPanel);
-		InfoLeiste.setBounds(0, 360, 610, 160);
+		InfoLeiste.setBounds(0, 360, 610, 220);
 		InfoLeiste.setLayout(null);
 		this.SpielFenster.add(InfoLeiste);
 		
